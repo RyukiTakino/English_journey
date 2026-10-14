@@ -13,6 +13,7 @@
  * （Unity の SceneManager.LoadScene に近い役割です。シーン名の代わりに URL で指定します）
  */
 import { esc } from "./components/html.js";
+import { EVENTS } from "../application/events.js";
 
 export class Router {
   /** 画面切り替えの通し番号。読み込み中に別の画面へ移ったかを判定するのに使う */
@@ -22,8 +23,9 @@ export class Router {
 
   /**
    * @param {object} ctx 画面に渡す道具一式
-   * @param {{pattern: RegExp, scene: typeof import("./scenes/BaseScene.js").BaseScene}[]} routes
-   *        pattern に一致した URL に対応する画面クラス。pattern の () で囲んだ部分が params になる
+   * @param {{name: string, pattern: RegExp, scene: typeof import("./scenes/BaseScene.js").BaseScene}[]} routes
+   *        name は画面の種類（演出の切り替えに使う）。pattern に一致した URL に対応する画面クラス。
+   *        pattern の () で囲んだ部分が params になる
    * @param {HTMLElement} appEl 画面を描く場所（#app）
    */
   constructor(ctx, routes, appEl) {
@@ -43,9 +45,10 @@ export class Router {
     // この切り替えの番号を取る。await のあとで番号が変わっていたら、別の切り替えが始まっている
     const token = ++this.#token;
 
-    // 今の画面の後片付け
+    // 今の画面の後片付け。開いたままのウィンドウ（スタンプ獲得など）も、画面を移るときに閉じる
     this.#current?.unmount();
     this.#current = null;
+    this.ctx.modal?.close();
 
     // "#/country/uk" → "/country/uk"。何も無ければ "/"
     const path = location.hash.replace(/^#/, "") || "/";
@@ -75,6 +78,9 @@ export class Router {
     this.appEl.innerHTML = scene.render();
     this.#current = scene;
     scene.mount(this.appEl);
+    window.scrollTo(0, 0);
+    // 画面が出たことを知らせる（BGM やキャラクターの切り替えは、これを聞いた EffectsDirector が行う）
+    this.ctx.events.emit(EVENTS.ROUTE_CHANGED, { path, name: found.route.name });
   }
 
   /**

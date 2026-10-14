@@ -27,3 +27,32 @@ export function esc(value) {
   // 正規表現で特殊文字を1文字ずつ見つけて、対応表の安全な表記に置き換える
   return String(value ?? "").replace(/[&<>"']/g, (c) => ESCAPES[c]);
 }
+
+/**
+ * "2026-10-13T20:15:00" → "2026/10/13"
+ * @param {string|null|undefined} value
+ */
+export function formatDate(value) {
+  return value ? value.slice(0, 10).replace(/-/g, "/") : "";
+}
+
+/**
+ * 英文を、単語ごとの <span class="w"> に分ける（単語をタップして意味を調べられるようにする）。
+ * highlight にある単語（辞書に載っている単語）には kw クラスを付けて、下線を引く。
+ * 戻り値は安全な HTML（中の文字は、すべてエスケープ済み）。
+ *
+ * @param {string} text
+ * @param {Set<string>} [highlight] 小文字の単語の集まり
+ * @returns {string}
+ */
+export function tokenize(text, highlight = new Set()) {
+  // 単語と記号に分けてから、それぞれエスケープする（先に全体をエスケープすると &quot; などが壊れる）
+  return text
+    .split(/(\p{L}[\p{L}'’-]*)/u)
+    .map((part, i) => {
+      if (i % 2 === 0) return esc(part); // 偶数番目は、単語ではない部分（記号・空白）
+      const kw = highlight.has(part.toLowerCase()) ? " kw" : "";
+      return `<span class="w${kw}" data-word="${esc(part)}">${esc(part)}</span>`;
+    })
+    .join("");
+}

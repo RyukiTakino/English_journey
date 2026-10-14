@@ -4,7 +4,7 @@
  * 層：application
  * 担当：フロント
  *
- * 画面を作るのに必要なデータ（国の一覧など）を、1か所にまとめて持ちます。
+ * 画面を作るのに必要なデータ（国の一覧、自分の学習記録など）を、1か所にまとめて持ちます。
  * 画面は、ここから読むだけにします。書き換えるのは actions（application/actions/）だけです。
  * こうしておくと「データを誰が変えたか」を追いかけやすくなります。
  *
@@ -15,6 +15,8 @@
  */
 
 /** @typedef {import("../domain/models.js").Country} Country */
+/** @typedef {import("../domain/models.js").Me} Me */
+/** @typedef {import("../domain/models.js").Badge} Badge */
 
 export class Store {
   /**
@@ -25,9 +27,31 @@ export class Store {
    */
   #countries = null;
 
+  /**
+   * 自分の情報と学習記録。まだ読み込んでいないときは null。
+   * @type {Me | null}
+   */
+  #me = null;
+
+  /**
+   * バッジの一覧（まだ取っていないものも含む）。まだ読み込んでいないときは null。
+   * @type {Badge[] | null}
+   */
+  #badges = null;
+
   /** 読み込み済みの国の一覧。未読み込みなら null */
   get countries() {
     return this.#countries;
+  }
+
+  /** 自分の学習記録。未読み込みなら null */
+  get me() {
+    return this.#me;
+  }
+
+  /** バッジの一覧。未読み込みなら null */
+  get badges() {
+    return this.#badges;
   }
 
   /**
@@ -39,6 +63,22 @@ export class Store {
   }
 
   /**
+   * 学習記録を入れ替える。呼んでよいのは actions だけ。
+   * @param {Me} me
+   */
+  setMe(me) {
+    this.#me = me;
+  }
+
+  /**
+   * バッジの一覧を入れ替える。呼んでよいのは actions だけ。
+   * @param {Badge[]} badges
+   */
+  setBadges(badges) {
+    this.#badges = badges;
+  }
+
+  /**
    * id から国を探す。見つからなければ undefined。
    * @param {string} countryId 例: "uk"
    * @returns {Country | undefined}
@@ -46,5 +86,14 @@ export class Store {
   findCountry(countryId) {
     // ?. は、左が null / undefined のときに何もせず undefined を返す書き方（C# の ?. と同じ）
     return this.#countries?.find((c) => c.id === countryId);
+  }
+
+  /**
+   * id から記事（観光名所・文化）を探す。見つからなければ undefined。
+   * @param {string} tripId 例: "bigben"
+   * @returns {import("../domain/models.js").Trip | undefined}
+   */
+  findTrip(tripId) {
+    return this.#countries?.flatMap((c) => c.trips).find((t) => t.id === tripId);
   }
 }

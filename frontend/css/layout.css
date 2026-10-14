@@ -1,50 +1,104 @@
 /* =========================================================
-   layout.css … 画面の外枠（ヘッダー、中身の幅と余白）
+   layout.css … 画面の外枠（ヘッダー、ナビ、スマホのタブバー、中身の幅と余白）
    担当：フロント
-   構造は index.html の <header class="app-header"> と <main id="app" class="app-main"> です。
+   構造は index.html の <header class="app-header">、<main id="app" class="app-main">、<nav class="tabbar"> です。
+   中身は js/ui/components/AppShell.js が描きます。
    ========================================================= */
 
 /* ----- ヘッダー ----- */
 .app-header {
   position: sticky;
   top: 0;
-  z-index: 10;
-  height: var(--header-h);
+  z-index: 20;
   background: var(--navy);
   color: #fff;
-  box-shadow: var(--shadow);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .15);
 }
 .app-header__inner {
-  max-width: var(--content-w);
-  height: 100%;
+  max-width: 1180px;
+  min-height: var(--header-h);
   margin: 0 auto;
   padding: 0 var(--space-3);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-4);
+}
+.app-header__right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
 }
 
 /* ロゴ（今は文字だけ。ロゴ画像ができたら中身を差し替える） */
 .logo {
   font-family: var(--display);
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 600;
   color: #fff;
   letter-spacing: .02em;
+  white-space: nowrap;
 }
 .logo:hover { text-decoration: none; }
 .logo em { font-style: normal; color: var(--accent); }
 
-/* ナビ（リンクが増えたらここに並ぶ） */
-.app-nav { display: flex; gap: var(--space-2); }
+/* ナビ（PC のヘッダーに並ぶ） */
+.app-nav { display: flex; gap: var(--space-1); }
 .app-nav a {
-  padding: var(--space-1) var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px var(--space-3) 6px 8px;
   border-radius: 999px;
-  color: #dbe5f2;
-  font-weight: 700;
-  font-size: .95rem;
+  color: #cbd8ea;
+  font-weight: 800;
+  font-size: .9rem;
+  white-space: nowrap;
+  transition: background .15s, color .15s;
 }
-.app-nav a:hover { background: var(--navy-2); text-decoration: none; }
+.app-nav a:hover { background: var(--navy-2); color: #fff; text-decoration: none; }
+.app-nav a.is-on { background: var(--navy-2); color: #fff; box-shadow: inset 0 0 0 2px var(--accent); }
+.nav-icon { display: block; border-radius: 10px; }
+
+/* 学習の記録（連続日数・スタンプ・バッジ） */
+.hud { display: flex; gap: var(--space-2); }
+.hud__item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+  font-size: .9rem;
+}
+.hud__item:hover { text-decoration: none; background: rgba(255, 255, 255, .18); }
+.hud__item .icon { color: var(--mustard); }
+.hud__item span { opacity: .7; font-size: .8rem; }
+
+/* アイコンだけのボタン（音のオン・オフなど） */
+.icon-btn {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+  cursor: pointer;
+}
+.icon-btn:hover { background: rgba(255, 255, 255, .2); }
+.icon-btn__slash {   /* オフのときの斜線 */
+  position: absolute;
+  width: 22px;
+  height: 2px;
+  background: var(--accent);
+  transform: rotate(-45deg);
+  border-radius: 2px;
+}
+.sound-toggles { display: flex; gap: var(--space-1); }
 
 /* ----- 画面の中身 ----- */
 .app-main {
@@ -52,6 +106,7 @@
   margin: 0 auto;
   padding: var(--space-4) var(--space-3) var(--space-6);
 }
+.app-main.is-wide { max-width: 1100px; }
 
 /* 画面が切り替わったときに、ふわっと出す */
 .app-main > * { animation: scene-enter .25s ease-out; }
@@ -60,13 +115,57 @@
   to { opacity: 1; transform: none; }
 }
 
-/* スマホ */
-@media (max-width: 600px) {
+/* ----- スマホ用のタブバー（PC では隠す） ----- */
+.tabbar { display: none; }
+
+@media (max-width: 760px) {
+  .app-nav { display: none; }              /* ヘッダーのナビは隠して、下のタブバーを使う */
+  .app-header__inner { gap: var(--space-2); min-height: 52px; }
+  .logo { font-size: 1.25rem; }
+  .hud__item span { display: none; }
+  .app-main { padding: var(--space-3) var(--space-3) calc(var(--tabbar-h) + var(--space-5)); }
   h1 { font-size: 1.5rem; }
-  .app-main { padding-top: var(--space-3); }
+
+  .tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    height: var(--tabbar-h);
+    padding-bottom: env(safe-area-inset-bottom);
+    display: flex;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -4px 14px rgba(20, 35, 58, .08);
+  }
+  .tabbar a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: var(--muted);
+    font-size: .68rem;
+    font-weight: 800;
+  }
+  .tabbar a:hover { text-decoration: none; }
+  .tabbar a.is-on { color: var(--navy); }
+  .tabbar a.is-on .nav-icon { box-shadow: 0 0 0 2px var(--accent); }
+}
+
+/* 狭いスマホ（幅 480px 以下）：ヘッダーがあふれないように、音のボタンはマイページの設定に任せ、記録の表示を詰める */
+@media (max-width: 480px) {
+  .sound-toggles { display: none; }
+  .app-header__inner { gap: var(--space-2); padding: 0 var(--space-2); }
+  .app-header__right { gap: var(--space-1); }
+  .hud { gap: 4px; }
+  .hud__item { padding: 3px 8px; font-size: .85rem; }
 }
 
 /* 「動きを減らす」設定のときは、動きを止める */
 @media (prefers-reduced-motion: reduce) {
   .app-main > * { animation: none; }
+  .app-nav a { transition: none; }
 }

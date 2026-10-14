@@ -1,16 +1,17 @@
 /* =========================================================
-   scenes.css … 画面ごとの個別の見た目
+   scenes.css … 画面ごとの個別の見た目（旧：ホーム・国の詳細）
    担当：フロント
-   クラス名は画面名で始めます（例：.country-…）。他の画面と名前がぶつからないようにするためです。
+   ホーム・国の詳細・地図・世界一周の見た目は、すべて scene-world.css に移しました。
+   ここには、画面をまたいで使う小さな共通クラスだけを置きます。
    ========================================================= */
 
-/* ----- ホーム ----- */
-.home-lead {
-  color: var(--ink-2);
-  margin-bottom: var(--space-4);
+/* 「← ホームに戻る」などの戻るリンク */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  margin-bottom: var(--space-2);
+  font-weight: 800;
+  color: var(--primary);
 }
-
-/* ----- 国の詳細 ----- */
-.country-title { margin-bottom: var(--space-1); }
-.country-title__en { color: var(--muted); font-size: 1rem; font-weight: 500; }
-.country-extract { margin-top: var(--space-3); }

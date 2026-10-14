@@ -1,0 +1,69 @@
+<!doctype html>
+<!-- 開発用：案内キャラクターと演出の確認ページ（アプリ本体からはリンクしない）
+     http://localhost:8800/dev/guide-test.html?mode=hero&event=graded-good
+       mode  : hero / corner
+       event : graded-good（正解）/ graded-bad（不正解）/ stamp / なし
+     ボタンでも出来事を発火できる。-->
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guide test</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/guide.css">
+  <style>
+    .test-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .test-slot { width: 360px; max-width: 100%; margin: 0 auto; min-height: 360px; }
+  </style>
+</head>
+<body>
+  <main class="app-main">
+    <div class="test-bar">
+      <button class="btn" data-ev="good">正解</button>
+      <button class="btn" data-ev="bad">不正解</button>
+      <button class="btn" data-ev="stamp">スタンプ</button>
+      <button class="btn" data-ev="hero">hero</button>
+      <button class="btn" data-ev="corner">corner</button>
+    </div>
+    <div class="test-slot" data-guide-slot></div>
+  </main>
+  <div id="guide" class="guide guide--corner" hidden></div>
+  <script type="module">
+    import { EventBus, EVENTS } from "../js/application/events.js";
+    import { Settings } from "../js/infrastructure/storage.js";
+    import { Sound } from "../js/infrastructure/sound.js";
+    import { Guide } from "../js/ui/components/Guide.js";
+    import { EffectsDirector } from "../js/ui/effects/EffectsDirector.js";
+
+    const q = new URLSearchParams(location.search);
+    const events = new EventBus();
+    const sound = new Sound(new Settings());
+    const guide = new Guide(document.getElementById("guide"));
+    new EffectsDirector(events, sound, guide).start();
+
+    const fire = {
+      good: () => events.emit(EVENTS.GRADED, { kind: "read", correct: 3, total: 3 }),
+      bad: () => events.emit(EVENTS.GRADED, { kind: "read", correct: 1, total: 3 }),
+      stamp: () => events.emit(EVENTS.STAMP_EARNED, { countryId: "uk" }),
+      hero: () => guide.setMode("hero", document.querySelector("[data-guide-slot]")),
+      corner: () => guide.setMode("corner")
+    };
+    document.querySelectorAll("[data-ev]").forEach((b) => b.addEventListener("click", () => fire[b.dataset.ev]()));
+
+    await guide.start();
+    guide.setMode(q.get("mode") ?? "hero", document.querySelector("[data-guide-slot]"));
+    const ev = q.get("event");
+    if (ev === "graded-good") setTimeout(fire.good, 800);
+    if (ev === "graded-bad") setTimeout(fire.bad, 800);
+    if (ev === "stamp") setTimeout(fire.stamp, 800);
+    // hold=1 : 反応を元に戻さず、そのまま保つ（スクリーンショットの確認用）
+    if (q.has("hold")) setTimeout(() => {
+      guide.setExpression(ev === "graded-bad" ? "sad" : "happy");
+      guide.say(ev === "graded-bad" ? "1 / 3 問。もう一度読んでみよう。" : "3 / 3 問 正解！", 0);
+    }, 1500);
+  </script>
+</body>
+</html>

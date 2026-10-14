@@ -1,0 +1,22 @@
+{
+  // F5 の前に実行される。ビルドは不要なので、frontend/ を配信するサーバーを起動するだけ。
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "serve-frontend",
+      "type": "shell",
+      "command": "python tools/dev/serve.py 8800",
+      "isBackground": true,
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": {
+        "owner": "serve-frontend",
+        "pattern": { "regexp": "^__never_matches__$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^__never_matches__$",
+          "endsPattern": "^Serving on http://localhost:8800/"
+        }
+      }
+    }
+  ]
+}

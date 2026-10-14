@@ -63,4 +63,16 @@ export class HttpApi {
     }
     return data;
   }
+
+  /**
+   * 観光地の画像の URL。サーバーが Wikipedia の画像へ転送してくれる。
+   * @param {string} key
+   * @param {boolean} large
+   * @returns {Promise<string>}
+   *
+   * TODO(Backend): GET /api/images?key=…&size=large を用意する。
+   */
+  async imageUrl(key, large) {
+    return `${this.baseUrl}/api/images?key=${encodeURIComponent(key)}${large ? "&size=large" : ""}`;
+  }
 }

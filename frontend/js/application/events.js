@@ -18,7 +18,25 @@
  */
 export const EVENTS = Object.freeze({
   /** 国の一覧を読み込んだ（payload: Country[]） */
-  COUNTRIES_LOADED: "catalog:countries-loaded"
+  COUNTRIES_LOADED: "catalog:countries-loaded",
+  /** 学習記録（スタンプ・履歴など）を読み込んだ・変わった（payload: Me） */
+  ME_CHANGED: "profile:me-changed",
+  /** 画面が切り替わった（payload: { path: string, name: string }。name は画面の種類。例: "home"） */
+  ROUTE_CHANGED: "route:changed",
+  /** 選択肢を選んだ（payload: { questionIndex, choiceIndex }） */
+  ANSWER_SELECTED: "quiz:answer-selected",
+  /** ヒントを開いた（payload: { questionIndex }） */
+  HINT_OPENED: "quiz:hint-opened",
+  /** 採点結果が出た（payload: { kind: "read"|"listen", correct: number, total: number }） */
+  GRADED: "quiz:graded",
+  /** スタンプを獲得した（payload: { countryId, earnedAt }） */
+  STAMP_EARNED: "reward:stamp",
+  /** バッジを獲得した（payload: { badge }） */
+  BADGE_EARNED: "reward:badge",
+  /** 単語を単語帳に保存した（payload: { word }） */
+  WORD_SAVED: "word:saved",
+  /** 行きたいリストが変わった（payload: { tripId, wanted }） */
+  WANT_CHANGED: "want:changed"
 });
 
 export class EventBus {

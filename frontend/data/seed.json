@@ -1,0 +1,1956 @@
+{
+ "countries": [
+  {
+   "id": "uk",
+   "name": "イギリス",
+   "nameEn": "United Kingdom",
+   "code": "GB",
+   "region": "europe",
+   "lat": 52.5,
+   "lng": -1.5,
+   "color": "#2f5d8a",
+   "wikiJa": "イギリス",
+   "capital": "ロンドン",
+   "language": "英語",
+   "currency": "ポンド",
+   "phrase": {
+    "local": "Cheers!",
+    "ja": "ありがとう／乾杯（カジュアル）"
+   },
+   "desc": "ロンドンの街並みや、先史時代の遺跡ストーンヘンジがある国。英語が公用語なので、現地の英語にそのまま触れられます。",
+   "trips": [
+    {
+     "id": "bigben",
+     "name": "ビッグ・ベン",
+     "nameEn": "Big Ben",
+     "wiki": "Big_Ben",
+     "category": "sight",
+     "city": "ロンドン",
+     "tip": "定番の撮影スポットはテムズ川の対岸やウェストミンスター橋の上。毎正時には鐘の音が聞こえます。",
+     "desc": "ロンドンのシンボル。国会議事堂の時計塔と大鐘。",
+     "level": "A2",
+     "minutes": 4,
+     "article": {
+      "title": "Big Ben: The Voice of London",
+      "paragraphs": [
+       "Big Ben is the nickname for the great bell inside the clock tower at the Palace of Westminster in London. Many people use the name for the whole tower, but its official name is the Elizabeth Tower.",
+       "The tower was completed in 1859. Its clock is known for being very accurate, and the bell's deep sound can be heard across central London.",
+       "After a long repair project, the tower reopened in 2022 with its clock faces painted in their original blue and gold colors."
+      ]
+     },
+     "questions": [
+      {
+       "q": "What is \"Big Ben\" originally the name of?",
+       "choices": [
+        "The whole palace",
+        "The great bell",
+        "A famous king",
+        "A river in London"
+       ],
+       "answer": 1,
+       "hint": "第1段落の最初の文 “the nickname for …” に注目。",
+       "explain": "“Big Ben is the nickname for the great bell” とあり、もともとは大鐘の愛称です。"
+      },
+      {
+       "q": "What is the official name of the tower?",
+       "choices": [
+        "The London Tower",
+        "The Elizabeth Tower",
+        "The Victoria Tower",
+        "The Big Tower"
+       ],
+       "answer": 1,
+       "hint": "“official name” という語を探そう。",
+       "explain": "“its official name is the Elizabeth Tower” と書かれています。"
+      },
+      {
+       "q": "What happened in 2022?",
+       "choices": [
+        "The tower was built",
+        "The tower reopened after repairs",
+        "The bell was sold",
+        "The clock stopped forever"
+       ],
+       "answer": 1,
+       "hint": "最後の段落の “reopened” の意味は？",
+       "explain": "長い修復工事の後、2022年に再公開されました（reopened in 2022）。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "bell",
+        "鐘"
+       ],
+       [
+        "Elizabeth",
+        "エリザベス"
+       ],
+       [
+        "London",
+        "ロンドン"
+       ],
+       [
+        "1859"
+       ],
+       [
+        "repair",
+        "修復",
+        "改修",
+        "修理"
+       ]
+      ],
+      "model": "Big Ben is the great bell in the Elizabeth Tower in London. The tower was completed in 1859 and reopened in 2022 after repairs."
+     }
+    },
+    {
+     "category": "sight",
+     "city": "ロンドン",
+     "tip": "王室の宝石（クラウン・ジュエルズ）が見られます。人気のため、時間帯の予約が必要かは公式サイトで確認しましょう。",
+     "desc": "要塞・宮殿・牢獄として使われてきた、ロンドンの歴史的な城塞。",
+     "level": "B1",
+     "minutes": 5,
+     "article": {
+      "title": "Tower of London: A Fortress with Many Stories",
+      "paragraphs": [
+       "The Tower of London stands beside the River Thames in the heart of London. William the Conqueror began building it after he became king of England in 1066. Over the centuries, it has been a royal palace, a fortress, and even a prison.",
+       "Today, visitors can see the Crown Jewels there, including crowns and swords used in royal ceremonies. Guards called Yeoman Warders, often known as Beefeaters, live in the Tower and guide visitors with stories from its long history.",
+       "The Tower is also famous for its ravens. An old legend says that if the ravens ever leave, the kingdom will fall. For this reason, the birds are looked after carefully. The site became a World Heritage Site in 1988."
+      ]
+     },
+     "questions": [
+      {
+       "q": "Who began building the Tower of London?",
+       "choices": [
+        "Queen Victoria",
+        "William the Conqueror",
+        "Winston Churchill",
+        "King Arthur"
+       ],
+       "answer": 1,
+       "hint": "第1段落の2文目を読みましょう。",
+       "explain": "「征服王ウィリアム（William the Conqueror）が建て始めた」と書かれています。"
+      },
+      {
+       "q": "What can visitors see at the Tower today?",
+       "choices": [
+        "Dinosaur bones",
+        "The Crown Jewels",
+        "Modern paintings",
+        "A zoo"
+       ],
+       "answer": 1,
+       "hint": "第2段落の最初の文です。",
+       "explain": "現在は「王室の宝石（Crown Jewels）」が見られます。"
+      },
+      {
+       "q": "Why are the ravens looked after carefully?",
+       "choices": [
+        "They are very rare",
+        "They lay golden eggs",
+        "A legend says the kingdom will fall if they leave",
+        "They help guide visitors"
+       ],
+       "answer": 2,
+       "hint": "第3段落の2文目と3文目です。",
+       "explain": "「カラスがいなくなると王国が滅びる」という言い伝えがあるため、大切に世話されています。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "fortress",
+        "palace",
+        "要塞",
+        "城塞",
+        "宮殿"
+       ],
+       [
+        "Crown Jewels",
+        "王冠",
+        "宝石",
+        "ジュエルズ"
+       ],
+       [
+        "ravens",
+        "カラス",
+        "ワタリガラス"
+       ],
+       [
+        "1066"
+       ],
+       [
+        "London",
+        "ロンドン"
+       ]
+      ],
+      "model": "The Tower of London is an old fortress and palace in London. Visitors can see the Crown Jewels, and a legend says the kingdom will fall if the ravens leave."
+     },
+     "id": "tower-of-london",
+     "name": "ロンドン塔",
+     "nameEn": "Tower of London",
+     "wiki": "Tower_of_London"
+    },
+    {
+     "id": "stonehenge",
+     "name": "ストーンヘンジ",
+     "nameEn": "Stonehenge",
+     "wiki": "Stonehenge",
+     "category": "sight",
+     "city": "ソールズベリー近郊",
+     "tip": "ロンドンから日帰りツアーが多数出ている。平原は風が強いので上着があると安心。夏至の日の出の時期は特に人気。",
+     "desc": "約5000年前に造られた巨石遺跡。謎の多い世界遺産。",
+     "level": "B1",
+     "minutes": 5,
+     "article": {
+      "title": "The Mystery of Stonehenge",
+      "paragraphs": [
+       "Stonehenge is a circle of huge standing stones on Salisbury Plain in southern England. It was built in several stages, starting about 5,000 years ago.",
+       "Some of the smaller stones came from Wales, more than 200 kilometers away. Nobody knows exactly how people moved them without modern machines.",
+       "The stones line up with the sun on the longest and shortest days of the year. Because of this, many people think Stonehenge was used as a calendar or a place for ceremonies."
+      ]
+     },
+     "questions": [
+      {
+       "q": "When did people start building Stonehenge?",
+       "choices": [
+        "About 500 years ago",
+        "About 5,000 years ago",
+        "In 1859",
+        "About 50,000 years ago"
+       ],
+       "answer": 1,
+       "hint": "第1段落の “starting about …” を読もう。",
+       "explain": "“starting about 5,000 years ago” とあります。"
+      },
+      {
+       "q": "Where did some of the smaller stones come from?",
+       "choices": [
+        "France",
+        "Wales",
+        "Scotland",
+        "London"
+       ],
+       "answer": 1,
+       "hint": "“came from” の後ろに地名があります。",
+       "explain": "小さめの石の一部は200km以上離れたウェールズから運ばれました。"
+      },
+      {
+       "q": "Why do people think it was used as a calendar?",
+       "choices": [
+        "It has numbers on it",
+        "The stones line up with the sun",
+        "It was built in 365 days",
+        "There are 12 stones"
+       ],
+       "answer": 1,
+       "hint": "“Because of this” の “this” が指す内容は？",
+       "explain": "石が夏至・冬至の太陽の向きと一直線に並ぶため、暦や儀式に使われたと考えられています。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "stone",
+        "石"
+       ],
+       [
+        "5,000",
+        "5000",
+        "5千"
+       ],
+       [
+        "sun",
+        "太陽"
+       ],
+       [
+        "calendar",
+        "暦",
+        "カレンダー"
+       ],
+       [
+        "ceremon",
+        "儀式"
+       ]
+      ],
+      "model": "Stonehenge is a circle of huge stones built about 5,000 years ago. The stones line up with the sun, so it may have been a calendar."
+     }
+    }
+   ],
+   "news": {
+    "headline": "Bike Commuting Doubles in Central London",
+    "script": "Good evening. Cycling in central London has reached a record high. According to a new city report, the number of people riding bikes to work has doubled in the past five years. Officials say new bike lanes and lower traffic are the main reasons. Some drivers, however, complain that the roads have become too narrow. The city plans to add fifty more kilometers of bike lanes by next year.",
+    "summaryJa": "ロンドン中心部で自転車通勤が過去5年で倍増。新しい自転車レーンと交通量の減少が主な理由。一方で道が狭くなったと不満を持つドライバーも。市は来年までにレーンを50km増やす予定。",
+    "summaryEn": "Bike commuting in central London has doubled in five years thanks to new bike lanes and less traffic. The city will add 50 km more lanes next year.",
+    "questions": [
+     {
+      "q": "How much has bike commuting increased?",
+      "choices": [
+       "It has doubled",
+       "It has tripled",
+       "It has decreased",
+       "It stayed the same"
+      ],
+      "answer": 0,
+      "hint": "“has doubled” が聞こえたかな？",
+      "explain": "“has doubled in the past five years” = 過去5年で2倍になった。"
+     },
+     {
+      "q": "What do some drivers complain about?",
+      "choices": [
+       "Expensive gas",
+       "The roads became too narrow",
+       "Too many buses",
+       "Bad weather"
+      ],
+      "answer": 1,
+      "hint": "“complain that …” の後ろを聴こう。",
+      "explain": "“the roads have become too narrow” と不満を述べています。"
+     },
+     {
+      "q": "What does the city plan to do?",
+      "choices": [
+       "Close all roads",
+       "Add fifty more kilometers of bike lanes",
+       "Ban bikes",
+       "Build a new airport"
+      ],
+      "answer": 1,
+      "hint": "最後の文 “The city plans to …”",
+      "explain": "来年までに自転車レーンを50km追加する計画です。"
+     }
+    ]
+   },
+   "tour_order": 1
+  },
+  {
+   "id": "france",
+   "name": "フランス",
+   "nameEn": "France",
+   "code": "FR",
+   "region": "europe",
+   "lat": 46.6,
+   "lng": 2.4,
+   "color": "#3b5ba5",
+   "wikiJa": "フランス",
+   "capital": "パリ",
+   "language": "フランス語",
+   "currency": "ユーロ",
+   "phrase": {
+    "local": "Bonjour !",
+    "ja": "こんにちは"
+   },
+   "desc": "パリのエッフェル塔や、海に浮かぶ修道院モン・サン＝ミシェルがある国。カフェや食事も旅の楽しみのひとつです。",
+   "trips": [
+    {
+     "id": "eiffel",
+     "name": "エッフェル塔",
+     "nameEn": "Eiffel Tower",
+     "wiki": "Eiffel_Tower",
+     "category": "sight",
+     "city": "パリ",
+     "tip": "チケットは公式サイトで事前予約がおすすめ。夜は毎正時に数分間きらめくライトアップを見逃さずに。",
+     "img": "fr:Tour_Eiffel",
+     "desc": "1889年の万国博覧会のために建てられたパリの象徴。",
+     "level": "A2",
+     "minutes": 4,
+     "article": {
+      "title": "The Eiffel Tower: From \"Ugly\" to Icon",
+      "paragraphs": [
+       "The Eiffel Tower is the most famous symbol of Paris. It was built for the World's Fair in 1889 and designed by the company of engineer Gustave Eiffel. At first, many artists criticized the iron tower and called it ugly.",
+       "Today, about seven million people visit it every year. The tower is 330 meters tall, and visitors can take elevators or climb more than 600 steps to the second floor.",
+       "At night, the tower sparkles with thousands of lights for five minutes every hour."
+      ]
+     },
+     "questions": [
+      {
+       "q": "Why was the Eiffel Tower built?",
+       "choices": [
+        "For the World's Fair in 1889",
+        "As a home for Gustave Eiffel",
+        "To watch ships on the river",
+        "As a radio station for the army"
+       ],
+       "answer": 0,
+       "hint": "第1段落の “built for …” に注目。",
+       "explain": "“It was built for the World's Fair in 1889” とあります。"
+      },
+      {
+       "q": "How did many artists feel about the tower at first?",
+       "choices": [
+        "They loved it",
+        "They criticized it",
+        "They wanted to paint it",
+        "They did not know about it"
+       ],
+       "answer": 1,
+       "hint": "“At first” から始まる文を読もう。",
+       "explain": "当初、多くの芸術家が “ugly（醜い）” と批判しました。"
+      },
+      {
+       "q": "What happens at night?",
+       "choices": [
+        "The tower closes at 5 p.m.",
+        "The lights sparkle every hour",
+        "Visitors must use the stairs",
+        "The tower changes color every day"
+       ],
+       "answer": 1,
+       "hint": "最後の段落 “sparkles” の意味は？",
+       "explain": "夜は毎正時に5分間、数千の電球がきらめきます。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "1889"
+       ],
+       [
+        "World's Fair",
+        "万博",
+        "万国博覧会"
+       ],
+       [
+        "Paris",
+        "パリ"
+       ],
+       [
+        "symbol",
+        "象徴",
+        "シンボル"
+       ],
+       [
+        "visit",
+        "訪れ",
+        "観光客",
+        "訪問"
+       ]
+      ],
+      "model": "The Eiffel Tower was built for the 1889 World's Fair. Once criticized, it is now the symbol of Paris and about seven million people visit it every year."
+     }
+    },
+    {
+     "category": "sight",
+     "city": "パリ",
+     "tip": "屋上の展望台からは、凱旋門を中心に 12 本の通りが広がる景色が見られます。階段で上るので、歩きやすい靴で行きましょう。",
+     "desc": "ナポレオンの勝利を記念して建てられた、パリの象徴的な門。",
+     "level": "B1",
+     "minutes": 4,
+     "article": {
+      "title": "The Arc de Triomphe: A Monument at the Center of Paris",
+      "paragraphs": [
+       "The Arc de Triomphe stands at the top of the Champs-Élysées in Paris. Napoleon ordered it to be built in 1806 to honor the soldiers of the French army. It was finished in 1836, many years after his order.",
+       "The arch is about fifty meters tall, and twelve avenues meet around it in the shape of a star. From the top, visitors can enjoy a wide view of the city. Many people say it is one of the best places to see Paris.",
+       "Under the arch lies the Tomb of the Unknown Soldier from the First World War. A flame is lit there every evening to remember the soldiers who gave their lives. Parades and national ceremonies are often held around the monument."
+      ]
+     },
+     "questions": [
+      {
+       "q": "Why did Napoleon order the arch to be built?",
+       "choices": [
+        "To honor the soldiers of the French army",
+        "To welcome tourists",
+        "To hold a market",
+        "To protect the river"
+       ],
+       "answer": 0,
+       "hint": "第1段落の2文目です。",
+       "explain": "「フランス軍の兵士たちをたたえるため」に建てるよう命じました。"
+      },
+      {
+       "q": "How many avenues meet around the arch?",
+       "choices": [
+        "Two",
+        "Six",
+        "Twelve",
+        "Twenty"
+       ],
+       "answer": 2,
+       "hint": "第2段落に数字が出てきます。",
+       "explain": "「12 本の大通り（twelve avenues）」が星の形に集まっています。"
+      },
+      {
+       "q": "What happens at the tomb every evening?",
+       "choices": [
+        "A flame is lit",
+        "A bell rings",
+        "A parade starts",
+        "A market opens"
+       ],
+       "answer": 0,
+       "hint": "第3段落の2文目です。",
+       "explain": "亡くなった兵士たちを思い出すために、毎晩「炎（flame）」がともされます。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "Napoleon",
+        "ナポレオン"
+       ],
+       [
+        "1806"
+       ],
+       [
+        "twelve",
+        "12",
+        "十二"
+       ],
+       [
+        "Unknown Soldier",
+        "無名戦士"
+       ],
+       [
+        "flame",
+        "炎"
+       ]
+      ],
+      "model": "Napoleon ordered the Arc de Triomphe in 1806. Twelve avenues meet around it, and a flame is lit every evening at the Tomb of the Unknown Soldier."
+     },
+     "id": "arc-de-triomphe",
+     "name": "凱旋門",
+     "nameEn": "Arc de Triomphe",
+     "wiki": "Arc_de_Triomphe"
+    },
+    {
+     "category": "sight",
+     "city": "ヴェルサイユ（パリ近郊）",
+     "tip": "パリ中心部から電車で約 1 時間。庭園は広く、1 日かけて歩くつもりで行くと楽しめます。定休日は公式サイトで確認しましょう。",
+     "desc": "ルイ 14 世が築いた、豪華な鏡の間で知られる宮殿。",
+     "level": "B2",
+     "minutes": 5,
+     "article": {
+      "title": "The Palace of Versailles: A Symbol of Royal Power",
+      "paragraphs": [
+       "The Palace of Versailles lies about twenty kilometers southwest of Paris. It began as a small hunting lodge of Louis XIII, but his son, Louis XIV, enlarged it dramatically. In 1682, he moved the royal court there, and the palace became the center of French politics for over a century.",
+       "The most famous room is the Hall of Mirrors, a long gallery lined with hundreds of mirrors and tall windows that face the gardens. In the evening, candlelight made the room shine. In 1919, the treaty that ended the First World War was signed in this very hall.",
+       "Outside, the vast gardens were designed by André Le Nôtre, who arranged fountains, flower beds, and long paths in perfect symmetry. The palace and its gardens were added to the World Heritage list in 1979, and they attract millions of visitors every year."
+      ]
+     },
+     "questions": [
+      {
+       "q": "What was the Palace of Versailles at first?",
+       "choices": [
+        "A hunting lodge",
+        "A school",
+        "A prison",
+        "A church"
+       ],
+       "answer": 0,
+       "hint": "第1段落の2文目です。",
+       "explain": "もともとはルイ 13 世の小さな狩猟用の館（hunting lodge）でした。"
+      },
+      {
+       "q": "What is the Hall of Mirrors known for?",
+       "choices": [
+        "Its underground tunnels",
+        "A long gallery with many mirrors and windows",
+        "A royal zoo",
+        "A library of rare books"
+       ],
+       "answer": 1,
+       "hint": "第2段落の最初の文を読みましょう。",
+       "explain": "多くの鏡と大きな窓が並ぶ、長い回廊です。"
+      },
+      {
+       "q": "Who designed the gardens?",
+       "choices": [
+        "Louis XIV",
+        "Napoleon",
+        "André Le Nôtre",
+        "William the Conqueror"
+       ],
+       "answer": 2,
+       "hint": "第3段落の最初の文です。",
+       "explain": "庭園を設計したのは、アンドレ・ル・ノートルです。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "Louis XIV",
+        "ルイ14世",
+        "ルイ 14 世"
+       ],
+       [
+        "Hall of Mirrors",
+        "鏡の間"
+       ],
+       [
+        "1682"
+       ],
+       [
+        "gardens",
+        "庭園"
+       ],
+       [
+        "World Heritage",
+        "世界遺産"
+       ]
+      ],
+      "model": "Louis XIV turned a hunting lodge into the grand Palace of Versailles. It is famous for the Hall of Mirrors and its large gardens, and it is a World Heritage site."
+     },
+     "id": "versailles",
+     "name": "ヴェルサイユ宮殿",
+     "nameEn": "Palace of Versailles",
+     "wiki": "Palace_of_Versailles"
+    }
+   ],
+   "news": {
+    "headline": "French Bakeries Struggle with Rising Butter Prices",
+    "script": "French bakeries are facing a difficult year. The price of butter has risen by almost thirty percent, and many bakers say they cannot keep their croissants cheap. A baker in Lyon told reporters that she now pays twice as much as two years ago. Some shops have started making smaller croissants, while others have raised prices. Customers say they will still buy them, but less often.",
+    "summaryJa": "フランスのパン屋がバター価格の高騰（約30％上昇）に苦しんでいる。リヨンのパン職人は2年前の2倍を払っていると話す。クロワッサンを小さくする店や値上げする店も。客は買う頻度を減らすと話している。",
+    "summaryEn": "Butter prices in France have risen by almost 30 percent. Some bakeries are making smaller croissants or raising prices, and customers will buy them less often.",
+    "questions": [
+     {
+      "q": "How much has the price of butter risen?",
+      "choices": [
+       "About 3 percent",
+       "Almost 30 percent",
+       "100 percent",
+       "It went down"
+      ],
+      "answer": 1,
+      "hint": "“thirty” と “thirteen” の聞き分けに注意。",
+      "explain": "“risen by almost thirty percent” = 約30％上昇。"
+     },
+     {
+      "q": "Where is the baker who talked to reporters?",
+      "choices": [
+       "Paris",
+       "Lyon",
+       "Nice",
+       "Marseille"
+      ],
+      "answer": 1,
+      "hint": "“A baker in …” の地名を聴こう。",
+      "explain": "“A baker in Lyon told reporters …” とあります。"
+     },
+     {
+      "q": "What have some shops started doing?",
+      "choices": [
+       "Closing on weekends",
+       "Making smaller croissants",
+       "Selling only bread",
+       "Importing butter from Japan"
+      ],
+      "answer": 1,
+      "hint": "“Some shops have started …”",
+      "explain": "一部の店はクロワッサンを小さくし始めました。"
+     }
+    ]
+   },
+   "tour_order": 2
+  },
+  {
+   "id": "canada",
+   "name": "カナダ",
+   "nameEn": "Canada",
+   "code": "CA",
+   "region": "americas",
+   "lat": 56.1,
+   "lng": -106.3,
+   "color": "#9b3d3d",
+   "wikiJa": "カナダ",
+   "capital": "オタワ",
+   "language": "英語・フランス語",
+   "currency": "カナダ・ドル",
+   "phrase": {
+    "local": "Have a good one!",
+    "ja": "よい一日を！（別れぎわのあいさつ）"
+   },
+   "desc": "ロッキー山脈の湖や大瀑布、大都市トロントなど、広い国土に自然と街が広がる国。英語とフランス語の両方が使われています。",
+   "news": {
+    "headline": "Toronto Adds New Bike Lanes Along the Lake",
+    "script": "Good evening. Toronto is building new bike lanes along the edge of Lake Ontario. The city says the lanes will connect the waterfront with the downtown area. Work starts next month and should finish before winter. Many residents welcome the plan, but some shop owners worry about fewer parking spaces. The city promises to listen to their concerns.",
+    "summaryJa": "トロントで、オンタリオ湖沿いに新しい自転車レーンが作られます。来月に工事が始まり、冬までに終わる予定です。歓迎する人が多い一方、駐車スペースが減ることを心配する店主もいます。",
+    "summaryEn": "Toronto is building new bike lanes along the lake. Work starts next month. Some shop owners worry about parking.",
+    "questions": [
+     {
+      "q": "Where are the new bike lanes being built?",
+      "choices": [
+       "Along Lake Ontario",
+       "Inside a national park",
+       "Around an airport",
+       "On a mountain road"
+      ],
+      "answer": 0,
+      "hint": "最初の文を聞き取りましょう。",
+      "explain": "原稿の最初に「オンタリオ湖のふち（edge of Lake Ontario）に作っている」とあります。"
+     },
+     {
+      "q": "When should the work finish?",
+      "choices": [
+       "Next week",
+       "Before winter",
+       "In ten years",
+       "Last month"
+      ],
+      "answer": 1,
+      "hint": "work starts next month のあとの文です。",
+      "explain": "「冬になる前（before winter）に終わる予定」と言っています。"
+     },
+     {
+      "q": "What do some shop owners worry about?",
+      "choices": [
+       "Too many tourists",
+       "Higher prices",
+       "Fewer parking spaces",
+       "Noisy construction"
+      ],
+      "answer": 2,
+      "hint": "worry about を探しましょう。",
+      "explain": "一部の店主は「駐車スペースが減ること（fewer parking spaces）」を心配しています。"
+     }
+    ]
+   },
+   "trips": [
+    {
+     "category": "sight",
+     "city": "ナイアガラ（オンタリオ州）",
+     "tip": "カナダ側から見ると、滝全体を正面から見渡せます。水しぶきでぬれるので、防水の上着があると安心です。",
+     "desc": "カナダとアメリカの国境にある、世界的に有名な大瀑布。",
+     "level": "A2",
+     "minutes": 4,
+     "article": {
+      "title": "Niagara Falls: Where Water Meets Thunder",
+      "paragraphs": [
+       "Niagara Falls is on the border between Canada and the United States. It is made up of three waterfalls. The biggest one is called Horseshoe Falls, because it has the shape of a horse's shoe. It is about fifty meters tall.",
+       "Millions of people visit the falls every year. Many of them take a boat tour called the Maid of the Mist. The boat goes very close to the falls, and the visitors wear raincoats because of the spray. The sound of the water is as loud as thunder.",
+       "The falls are also useful. Their strong water flow is used to make electricity for homes and factories. At night, colorful lights shine on the water, and the falls look different from the daytime."
+      ]
+     },
+     "questions": [
+      {
+       "q": "Where is Niagara Falls?",
+       "choices": [
+        "Between Canada and the United States",
+        "Between France and England",
+        "In the middle of Australia",
+        "Between Egypt and Italy"
+       ],
+       "answer": 0,
+       "hint": "第1段落の最初の文です。",
+       "explain": "ナイアガラの滝は、カナダとアメリカの国境にあります。"
+      },
+      {
+       "q": "Why do visitors wear raincoats on the boat tour?",
+       "choices": [
+        "Because it rains every day",
+        "Because of the spray from the falls",
+        "Because it is a rule of the city",
+        "Because the boat has no roof"
+       ],
+       "answer": 1,
+       "hint": "第2段落の3文目です。",
+       "explain": "船が滝に近づくので、水しぶき（spray）でぬれるからです。"
+      },
+      {
+       "q": "What is the water power of the falls used for?",
+       "choices": [
+        "Making ice",
+        "Making electricity",
+        "Washing boats",
+        "Growing rice"
+       ],
+       "answer": 1,
+       "hint": "第3段落の2文目です。",
+       "explain": "強い水の流れは、電気（electricity）を作るために使われています。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "Canada",
+        "カナダ"
+       ],
+       [
+        "three",
+        "3つ",
+        "三つ",
+        "3本"
+       ],
+       [
+        "Horseshoe",
+        "馬蹄",
+        "ホースシュー"
+       ],
+       [
+        "boat",
+        "船",
+        "ボート"
+       ],
+       [
+        "electricity",
+        "電気"
+       ]
+      ],
+      "model": "Niagara Falls is made up of three waterfalls on the border of Canada and the United States. Visitors take boat tours, and the water is used to make electricity."
+     },
+     "id": "niagara",
+     "name": "ナイアガラの滝",
+     "nameEn": "Niagara Falls",
+     "wiki": "Niagara_Falls"
+    },
+    {
+     "category": "sight",
+     "city": "トロント",
+     "tip": "展望台の床の一部がガラスになっていて、真下が見えます。天気のよい日は、遠くのナイアガラ方面まで見えることがあります。",
+     "desc": "トロントの空にそびえる、高さ約 553 メートルの塔。",
+     "level": "A2",
+     "minutes": 4,
+     "article": {
+      "title": "The CN Tower: Toronto's Tall Landmark",
+      "paragraphs": [
+       "The CN Tower is a very tall tower in Toronto, Canada. It was completed in 1976 and is about 553 meters high. For many years, it was the tallest free-standing structure in the world.",
+       "The tower was built to send television and radio signals across the city. Today, it is also a popular place for tourists. A fast elevator takes visitors to the observation deck in less than a minute. There is even a glass floor, and people can look straight down at the city below.",
+       "Brave visitors can try the EdgeWalk, a walk around the outside of the tower, high above the ground. Others enjoy dinner at the revolving restaurant, which slowly turns and gives a full view of Toronto and Lake Ontario."
+      ]
+     },
+     "questions": [
+      {
+       "q": "When was the CN Tower completed?",
+       "choices": [
+        "In 1876",
+        "In 1976",
+        "In 2016",
+        "In 1936"
+       ],
+       "answer": 1,
+       "hint": "第1段落の2文目です。",
+       "explain": "塔は 1976 年に完成しました。"
+      },
+      {
+       "q": "What was the tower first built for?",
+       "choices": [
+        "To send television and radio signals",
+        "To protect the city from floods",
+        "To hold a school",
+        "To watch for ships"
+       ],
+       "answer": 0,
+       "hint": "第2段落の最初の文です。",
+       "explain": "テレビやラジオの電波を、街じゅうに送るために建てられました。"
+      },
+      {
+       "q": "What can visitors do at the top of the tower?",
+       "choices": [
+        "Swim in a pool",
+        "Walk outside on the EdgeWalk",
+        "Ride a roller coaster",
+        "Go fishing"
+       ],
+       "answer": 1,
+       "hint": "第3段落の最初の文です。",
+       "explain": "勇気のある人は、塔の外側を歩く EdgeWalk に挑戦できます。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "Toronto",
+        "トロント"
+       ],
+       [
+        "553"
+       ],
+       [
+        "1976"
+       ],
+       [
+        "glass floor",
+        "ガラスの床",
+        "ガラス"
+       ],
+       [
+        "EdgeWalk",
+        "エッジウォーク"
+       ]
+      ],
+      "model": "The CN Tower in Toronto was completed in 1976 and is about 553 meters high. Visitors can stand on a glass floor or try the EdgeWalk."
+     },
+     "id": "cn-tower",
+     "name": "CNタワー",
+     "nameEn": "CN Tower",
+     "wiki": "CN_Tower"
+    },
+    {
+     "category": "sight",
+     "city": "アルバータ州（カナディアン・ロッキー）",
+     "tip": "夏は湖の色が最もきれいに見えます。野生動物（エルクやクマ）には近づかず、距離を保ちましょう。",
+     "desc": "ロッキー山脈の青緑色の湖と雪山が広がる、カナダ最古級の国立公園。",
+     "level": "B1",
+     "minutes": 5,
+     "article": {
+      "title": "Banff National Park: A Jewel of the Canadian Rockies",
+      "paragraphs": [
+       "Banff National Park is in the Rocky Mountains of Alberta, Canada. It was created in 1885 and is the oldest national park in the country. The park is known for its tall snowy mountains, thick forests, and clear blue-green lakes.",
+       "Lake Louise and Moraine Lake are two of its most famous lakes. Their color comes from tiny pieces of rock, called rock flour, which are carried into the water by glaciers. When the sunlight hits the water, the lakes shine in a beautiful turquoise.",
+       "Visitors enjoy hiking, skiing, and relaxing in hot springs. Wild animals such as elk and bears live in the park, so visitors must keep a safe distance from them. The area is part of a World Heritage Site called the Canadian Rocky Mountain Parks."
+      ]
+     },
+     "questions": [
+      {
+       "q": "Where is Banff National Park?",
+       "choices": [
+        "In the Rocky Mountains of Alberta",
+        "On the coast of Nova Scotia",
+        "In the city of Toronto",
+        "On an island near Sydney"
+       ],
+       "answer": 0,
+       "hint": "第1段落の最初の文です。",
+       "explain": "アルバータ州のロッキー山脈にあります。"
+      },
+      {
+       "q": "Why do the lakes look turquoise?",
+       "choices": [
+        "Because of paint from the mountains",
+        "Because of tiny pieces of rock carried by glaciers",
+        "Because of colorful fish",
+        "Because of lights at night"
+       ],
+       "answer": 1,
+       "hint": "第2段落の2文目です。",
+       "explain": "氷河が運んでくる、細かな岩の粉（rock flour）が水に混ざっているためです。"
+      },
+      {
+       "q": "What must visitors do when they see wild animals?",
+       "choices": [
+        "Feed them",
+        "Take them home",
+        "Keep a safe distance",
+        "Chase them away"
+       ],
+       "answer": 2,
+       "hint": "第3段落の2文目です。",
+       "explain": "野生動物とは安全な距離（safe distance）を保つ必要があります。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "1885"
+       ],
+       [
+        "Rocky Mountains",
+        "ロッキー"
+       ],
+       [
+        "Lake Louise",
+        "ルイーズ湖",
+        "湖"
+       ],
+       [
+        "glacier",
+        "氷河"
+       ],
+       [
+        "World Heritage",
+        "世界遺産"
+       ]
+      ],
+      "model": "Banff National Park, created in 1885, lies in the Canadian Rockies. Its turquoise lakes get their color from rock flour carried by glaciers, and it is a World Heritage site."
+     },
+     "id": "banff",
+     "name": "バンフ国立公園",
+     "nameEn": "Banff National Park",
+     "wiki": "Banff_National_Park"
+    }
+   ],
+   "tour_order": 3
+  },
+  {
+   "id": "australia",
+   "name": "オーストラリア",
+   "nameEn": "Australia",
+   "code": "AU",
+   "region": "oceania",
+   "lat": -25.3,
+   "lng": 134,
+   "color": "#c0573a",
+   "wikiJa": "オーストラリア",
+   "capital": "キャンベラ",
+   "language": "英語",
+   "currency": "オーストラリア・ドル",
+   "phrase": {
+    "local": "G'day!",
+    "ja": "やあ、こんにちは（オーストラリア英語）"
+   },
+   "desc": "シドニーのオペラハウスや、世界最大のサンゴ礁がある国。英語が主な言語で、独特の言い回しもあります。",
+   "trips": [
+    {
+     "id": "opera",
+     "name": "シドニー・オペラハウス",
+     "nameEn": "Sydney Opera House",
+     "wiki": "Sydney_Opera_House",
+     "category": "sight",
+     "city": "シドニー",
+     "tip": "建物の内部を見学できるガイドツアーがある。対岸からはハーバーブリッジと一緒に撮影できる。",
+     "desc": "帆のような屋根が特徴の20世紀を代表する建築。",
+     "level": "B1",
+     "minutes": 5,
+     "article": {
+      "title": "Sails on the Harbour",
+      "paragraphs": [
+       "The Sydney Opera House is one of the most famous buildings of the 20th century. Its roof looks like white sails on Sydney Harbour.",
+       "The Danish architect Jørn Utzon won an international design competition in 1957. However, construction was difficult and expensive, and it took until 1973 to finish.",
+       "Today, the building hosts more than 1,500 performances a year, from opera and ballet to rock concerts. In 2007, it became a UNESCO World Heritage Site."
+      ]
+     },
+     "questions": [
+      {
+       "q": "What does the roof look like?",
+       "choices": [
+        "Mountains",
+        "White sails",
+        "Waves of water",
+        "Flowers"
+       ],
+       "answer": 1,
+       "hint": "“looks like …” は「〜のように見える」。",
+       "explain": "屋根は港に浮かぶ白い帆のように見えます。"
+      },
+      {
+       "q": "Where was the architect from?",
+       "choices": [
+        "Australia",
+        "Denmark",
+        "Britain",
+        "America"
+       ],
+       "answer": 1,
+       "hint": "“Danish” はどこの国の形容詞？",
+       "explain": "“Danish” = デンマークの。建築家ウッツォンはデンマーク出身です。"
+      },
+      {
+       "q": "When did it become a World Heritage Site?",
+       "choices": [
+        "1957",
+        "1973",
+        "2007",
+        "2017"
+       ],
+       "answer": 2,
+       "hint": "最後の文の年号。",
+       "explain": "2007年にユネスコ世界遺産に登録されました。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "sail",
+        "帆"
+       ],
+       [
+        "Utzon",
+        "ウッツォン",
+        "ウツソン"
+       ],
+       [
+        "1973"
+       ],
+       [
+        "performance",
+        "公演"
+       ],
+       [
+        "World Heritage",
+        "世界遺産"
+       ]
+      ],
+      "model": "The Sydney Opera House has a roof like white sails. It was finished in 1973, hosts many performances, and is a World Heritage Site."
+     }
+    },
+    {
+     "id": "reef",
+     "name": "グレート・バリア・リーフ",
+     "nameEn": "Great Barrier Reef",
+     "wiki": "Great_Barrier_Reef",
+     "category": "sight",
+     "city": "クイーンズランド州",
+     "tip": "ケアンズなどからボートツアーで行ける。サンゴを傷つけないよう、触らない・サンゴに優しい日焼け止めを使うのがマナー。",
+     "desc": "宇宙からも見える世界最大のサンゴ礁。",
+     "level": "B1",
+     "minutes": 5,
+     "article": {
+      "title": "The Great Barrier Reef in Danger",
+      "paragraphs": [
+       "The Great Barrier Reef, off the coast of Queensland, is the largest coral reef system in the world. It is so big that it can be seen from space.",
+       "The reef is home to thousands of kinds of fish, as well as turtles, dolphins, and sharks. Coral is actually made of tiny living animals.",
+       "However, the reef is in danger. When the ocean becomes too warm, coral turns white and can die. This is called coral bleaching. Scientists and tourists are working together to protect it."
+      ]
+     },
+     "questions": [
+      {
+       "q": "What is special about the size of the reef?",
+       "choices": [
+        "It is the smallest reef",
+        "It can be seen from space",
+        "It fits in one bay",
+        "It is underground"
+       ],
+       "answer": 1,
+       "hint": "“so big that …” は「とても大きいので…」。",
+       "explain": "宇宙からも見えるほど大きいサンゴ礁です。"
+      },
+      {
+       "q": "What is coral made of?",
+       "choices": [
+        "Rocks",
+        "Tiny living animals",
+        "Only plants",
+        "Sand"
+       ],
+       "answer": 1,
+       "hint": "“actually made of …”",
+       "explain": "サンゴは実は小さな生き物（動物）でできています。"
+      },
+      {
+       "q": "What causes coral bleaching?",
+       "choices": [
+        "Ocean water that is too warm",
+        "Too many fish",
+        "Cold winters",
+        "Heavy rain"
+       ],
+       "answer": 0,
+       "hint": "“When the ocean becomes …”",
+       "explain": "海水温が高くなりすぎるとサンゴが白くなる（白化）。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "coral",
+        "サンゴ",
+        "珊瑚"
+       ],
+       [
+        "largest",
+        "最大"
+       ],
+       [
+        "warm",
+        "温暖",
+        "水温",
+        "暖"
+       ],
+       [
+        "bleach",
+        "白化"
+       ],
+       [
+        "protect",
+        "守",
+        "保護"
+       ]
+      ],
+      "model": "The Great Barrier Reef is the world's largest coral reef. Warm oceans cause coral bleaching, so people are working to protect it."
+     }
+    },
+    {
+     "category": "sight",
+     "city": "ノーザンテリトリー（オーストラリア中央部）",
+     "tip": "日の出と日没のころ、岩の色が赤く変わって見えます。現地では、先住民アナング族の文化を尊重するルールを守りましょう。",
+     "desc": "オーストラリア大陸の中央にそびえる、巨大な一枚岩。",
+     "level": "B1",
+     "minutes": 4,
+     "article": {
+      "title": "Uluru: The Red Heart of Australia",
+      "paragraphs": [
+       "Uluru is a huge sandstone rock in the middle of Australia. It rises about 348 meters above the flat desert, and its base is more than nine kilometers around. Many visitors travel a long way to see it with their own eyes.",
+       "The rock is sacred to the Anangu, the traditional owners of the land. For them, Uluru is not just a rock. It is connected to old stories and laws that have been passed down for thousands of years. Since 2019, climbing the rock has been banned out of respect for their culture.",
+       "Uluru is famous for changing color during the day. At sunrise and sunset, it glows deep red and orange. Visitors often gather at special viewing areas to watch this beautiful change. The area is protected as a national park and a World Heritage Site."
+      ]
+     },
+     "questions": [
+      {
+       "q": "Where is Uluru?",
+       "choices": [
+        "On the coast of Sydney",
+        "In the middle of Australia",
+        "On a small island",
+        "Beside a big city"
+       ],
+       "answer": 1,
+       "hint": "第1段落の最初の文です。",
+       "explain": "ウルルは、オーストラリアの中央（in the middle of Australia）にある巨大な岩です。"
+      },
+      {
+       "q": "Why has climbing the rock been banned since 2019?",
+       "choices": [
+        "It was too crowded",
+        "The rock was too dangerous in winter",
+        "To show respect for Anangu culture",
+        "A new road was built"
+       ],
+       "answer": 2,
+       "hint": "第2段落の最後の文です。",
+       "explain": "先住民アナング族の文化への敬意から、2019 年に登ることが禁止されました。"
+      },
+      {
+       "q": "What happens to Uluru at sunrise and sunset?",
+       "choices": [
+        "It disappears in the fog",
+        "It glows deep red and orange",
+        "It turns white",
+        "It becomes warm to touch"
+       ],
+       "answer": 1,
+       "hint": "第3段落の2文目です。",
+       "explain": "日の出と日没のころに、深い赤やオレンジ色に輝きます。"
+      }
+     ],
+     "summary": {
+      "keywords": [
+       [
+        "sandstone",
+        "砂岩"
+       ],
+       [
+        "Anangu",
+        "アナング"
+       ],
+       [
+        "2019"
+       ],
+       [
+        "red",
+        "赤"
+       ],
+       [
+        "World Heritage",
+        "世界遺産"
+       ]
+      ],
+      "model": "Uluru is a huge sandstone rock in central Australia. It is sacred to the Anangu, climbing it has been banned since 2019, and it glows red at sunrise and sunset."
+     },
+     "id": "uluru",
+     "name": "ウルル",
+     "nameEn": "Uluru",
+     "wiki": "Uluru"
+    }
+   ],
+   "news": {
+    "headline": "Young Coral Recovering Faster Than Expected",
+    "script": "Scientists in Queensland have shared some good news about the Great Barrier Reef. In several areas, young coral is growing faster than expected after last year's bleaching. Researchers say cooler water this season helped the coral recover. However, they warn that the reef is still at risk, and that reducing greenhouse gases is the only long-term solution.",
+    "summaryJa": "グレート・バリア・リーフで、昨年の白化の後、若いサンゴが予想以上の速さで成長している。今季の海水温が低かったことが回復を助けた。ただし研究者は、サンゴ礁は依然危機にあり、温室効果ガスの削減が唯一の長期的解決策だと警告している。",
+    "summaryEn": "Young coral on the Great Barrier Reef is recovering faster than expected thanks to cooler water, but scientists say cutting greenhouse gases is still necessary.",
+    "questions": [
+     {
+      "q": "What is growing faster than expected?",
+      "choices": [
+       "Seaweed",
+       "Young coral",
+       "Fish",
+       "Tourism"
+      ],
+      "answer": 1,
+      "hint": "“… is growing faster than expected”",
+      "explain": "若いサンゴ（young coral）が予想より速く成長しています。"
+     },
+     {
+      "q": "What helped the coral recover?",
+      "choices": [
+       "Cooler water",
+       "More tourists",
+       "New boats",
+       "Heavy rain"
+      ],
+      "answer": 0,
+      "hint": "“Researchers say … helped”",
+      "explain": "今季の海水温が低かったことが回復を助けました。"
+     },
+     {
+      "q": "What is the only long-term solution?",
+      "choices": [
+       "Building walls",
+       "Reducing greenhouse gases",
+       "Moving the coral",
+       "Closing beaches"
+      ],
+      "answer": 1,
+      "hint": "最後の “the only long-term solution”",
+      "explain": "温室効果ガスを減らすことが唯一の長期的解決策です。"
+     }
+    ]
+   },
+   "tour_order": 4
+  }
+ ],
+ "glossary": {
+  "symbol": {
+   "pos": "名",
+   "meaning": "象徴、シンボル"
+  },
+  "built": {
+   "pos": "動",
+   "meaning": "build（建てる）の過去分詞"
+  },
+  "designed": {
+   "pos": "動",
+   "meaning": "設計された"
+  },
+  "engineer": {
+   "pos": "名",
+   "meaning": "技術者、エンジニア"
+  },
+  "criticized": {
+   "pos": "動",
+   "meaning": "批判した"
+  },
+  "iron": {
+   "pos": "名",
+   "meaning": "鉄"
+  },
+  "ugly": {
+   "pos": "形",
+   "meaning": "醜い"
+  },
+  "sparkles": {
+   "pos": "動",
+   "meaning": "きらめく"
+  },
+  "abbey": {
+   "pos": "名",
+   "meaning": "修道院"
+  },
+  "surrounds": {
+   "pos": "動",
+   "meaning": "囲む"
+  },
+  "tide": {
+   "pos": "名",
+   "meaning": "潮（の満ち引き）"
+  },
+  "tides": {
+   "pos": "名",
+   "meaning": "潮（tideの複数形）"
+  },
+  "pilgrims": {
+   "pos": "名",
+   "meaning": "巡礼者"
+  },
+  "mainland": {
+   "pos": "名",
+   "meaning": "本土"
+  },
+  "nickname": {
+   "pos": "名",
+   "meaning": "愛称、あだ名"
+  },
+  "official": {
+   "pos": "形",
+   "meaning": "公式の"
+  },
+  "completed": {
+   "pos": "動",
+   "meaning": "完成した"
+  },
+  "accurate": {
+   "pos": "形",
+   "meaning": "正確な"
+  },
+  "repair": {
+   "pos": "名",
+   "meaning": "修理、修復"
+  },
+  "original": {
+   "pos": "形",
+   "meaning": "元の、本来の"
+  },
+  "plain": {
+   "pos": "名",
+   "meaning": "平原"
+  },
+  "stages": {
+   "pos": "名",
+   "meaning": "段階"
+  },
+  "exactly": {
+   "pos": "副",
+   "meaning": "正確に"
+  },
+  "ceremonies": {
+   "pos": "名",
+   "meaning": "儀式"
+  },
+  "calendar": {
+   "pos": "名",
+   "meaning": "暦、カレンダー"
+  },
+  "amphitheater": {
+   "pos": "名",
+   "meaning": "円形闘技場"
+  },
+  "empire": {
+   "pos": "名",
+   "meaning": "帝国"
+  },
+  "ancient": {
+   "pos": "形",
+   "meaning": "古代の"
+  },
+  "gladiators": {
+   "pos": "名",
+   "meaning": "剣闘士"
+  },
+  "tunnels": {
+   "pos": "名",
+   "meaning": "トンネル"
+  },
+  "earthquakes": {
+   "pos": "名",
+   "meaning": "地震"
+  },
+  "robbers": {
+   "pos": "名",
+   "meaning": "泥棒"
+  },
+  "centuries": {
+   "pos": "名",
+   "meaning": "世紀（複数）、何百年"
+  },
+  "lagoon": {
+   "pos": "名",
+   "meaning": "潟（かた）、ラグーン"
+  },
+  "canals": {
+   "pos": "名",
+   "meaning": "運河"
+  },
+  "oar": {
+   "pos": "名",
+   "meaning": "オール、櫂"
+  },
+  "flooding": {
+   "pos": "名",
+   "meaning": "洪水、浸水"
+  },
+  "barriers": {
+   "pos": "名",
+   "meaning": "防壁、障壁"
+  },
+  "tomb": {
+   "pos": "名",
+   "meaning": "墓"
+  },
+  "pharaoh": {
+   "pos": "名",
+   "meaning": "ファラオ（古代エジプトの王）"
+  },
+  "structure": {
+   "pos": "名",
+   "meaning": "建造物、構造"
+  },
+  "statue": {
+   "pos": "名",
+   "meaning": "像"
+  },
+  "statues": {
+   "pos": "名",
+   "meaning": "像（複数）"
+  },
+  "temples": {
+   "pos": "名",
+   "meaning": "神殿、寺院"
+  },
+  "carved": {
+   "pos": "動",
+   "meaning": "彫った、削った"
+  },
+  "entrance": {
+   "pos": "名",
+   "meaning": "入口"
+  },
+  "dam": {
+   "pos": "名",
+   "meaning": "ダム"
+  },
+  "rescue": {
+   "pos": "名",
+   "meaning": "救出、救助"
+  },
+  "harbor": {
+   "pos": "名",
+   "meaning": "港"
+  },
+  "harbour": {
+   "pos": "名",
+   "meaning": "港（イギリス綴り）"
+  },
+  "dedicated": {
+   "pos": "動",
+   "meaning": "（記念碑などを）奉納した、除幕した"
+  },
+  "torch": {
+   "pos": "名",
+   "meaning": "たいまつ"
+  },
+  "tablet": {
+   "pos": "名",
+   "meaning": "銘板、石板"
+  },
+  "independence": {
+   "pos": "名",
+   "meaning": "独立"
+  },
+  "immigrants": {
+   "pos": "名",
+   "meaning": "移民"
+  },
+  "freedom": {
+   "pos": "名",
+   "meaning": "自由"
+  },
+  "canyon": {
+   "pos": "名",
+   "meaning": "峡谷"
+  },
+  "layers": {
+   "pos": "名",
+   "meaning": "層、地層"
+  },
+  "period": {
+   "pos": "名",
+   "meaning": "時代、期間"
+  },
+  "architect": {
+   "pos": "名",
+   "meaning": "建築家"
+  },
+  "competition": {
+   "pos": "名",
+   "meaning": "競技会、コンペ"
+  },
+  "construction": {
+   "pos": "名",
+   "meaning": "建設"
+  },
+  "performances": {
+   "pos": "名",
+   "meaning": "公演"
+  },
+  "heritage": {
+   "pos": "名",
+   "meaning": "遺産"
+  },
+  "coral": {
+   "pos": "名",
+   "meaning": "サンゴ"
+  },
+  "reef": {
+   "pos": "名",
+   "meaning": "礁（しょう）、リーフ"
+  },
+  "bleaching": {
+   "pos": "名",
+   "meaning": "白化"
+  },
+  "protect": {
+   "pos": "動",
+   "meaning": "守る、保護する"
+  },
+  "visitors": {
+   "pos": "名",
+   "meaning": "訪問者、観光客"
+  },
+  "famous": {
+   "pos": "形",
+   "meaning": "有名な"
+  },
+  "record": {
+   "pos": "名",
+   "meaning": "記録"
+  },
+  "doubled": {
+   "pos": "動",
+   "meaning": "2倍になった"
+  },
+  "officials": {
+   "pos": "名",
+   "meaning": "当局者、役人"
+  },
+  "complain": {
+   "pos": "動",
+   "meaning": "不満を言う"
+  },
+  "narrow": {
+   "pos": "形",
+   "meaning": "狭い"
+  },
+  "risen": {
+   "pos": "動",
+   "meaning": "rise（上がる）の過去分詞"
+  },
+  "reporters": {
+   "pos": "名",
+   "meaning": "記者"
+  },
+  "advised": {
+   "pos": "動",
+   "meaning": "勧められた、助言された"
+  },
+  "advance": {
+   "pos": "名",
+   "meaning": "in advance で「前もって」"
+  },
+  "treasures": {
+   "pos": "名",
+   "meaning": "財宝"
+  },
+  "recover": {
+   "pos": "動",
+   "meaning": "回復する"
+  },
+  "greenhouse": {
+   "pos": "名",
+   "meaning": "温室（greenhouse gases＝温室効果ガス）"
+  },
+  "reservations": {
+   "pos": "名",
+   "meaning": "予約"
+  },
+  "reviewed": {
+   "pos": "動",
+   "meaning": "見直された"
+  },
+  "crowds": {
+   "pos": "名",
+   "meaning": "人混み、群衆"
+  },
+  "sharply": {
+   "pos": "副",
+   "meaning": "急激に"
+  },
+  "attracting": {
+   "pos": "動",
+   "meaning": "引きつけている"
+  },
+  "struggle": {
+   "pos": "動",
+   "meaning": "苦労する"
+  },
+  "expected": {
+   "pos": "動",
+   "meaning": "予想された"
+  },
+  "solution": {
+   "pos": "名",
+   "meaning": "解決策"
+  },
+  "reservation": {
+   "pos": "名",
+   "meaning": "予約"
+  },
+  "elevators": {
+   "pos": "名",
+   "meaning": "エレベーター"
+  },
+  "coast": {
+   "pos": "名",
+   "meaning": "海岸"
+  },
+  "danger": {
+   "pos": "名",
+   "meaning": "危険"
+  },
+  "wonders": {
+   "pos": "名",
+   "meaning": "驚異、不思議"
+  },
+  "commuting": {
+   "pos": "名",
+   "meaning": "通勤"
+  },
+  "lanes": {
+   "pos": "名",
+   "meaning": "車線、レーン"
+  },
+  "traffic": {
+   "pos": "名",
+   "meaning": "交通（量）"
+  },
+  "limited": {
+   "pos": "形",
+   "meaning": "限られた"
+  },
+  "displayed": {
+   "pos": "動",
+   "meaning": "展示された"
+  },
+  "staircase": {
+   "pos": "名",
+   "meaning": "階段"
+  },
+  "warn": {
+   "pos": "動",
+   "meaning": "警告する"
+  },
+  "risk": {
+   "pos": "名",
+   "meaning": "危険、リスク"
+  },
+  "mystery": {
+   "pos": "名",
+   "meaning": "謎"
+  },
+  "icon": {
+   "pos": "名",
+   "meaning": "象徴的存在、アイコン"
+  },
+  "voice": {
+   "pos": "名",
+   "meaning": "声"
+  },
+  "gondolas": {
+   "pos": "名",
+   "meaning": "ゴンドラ（ヴェネツィアの舟）"
+  },
+  "tourists": {
+   "pos": "名",
+   "meaning": "観光客"
+  },
+  "serious": {
+   "pos": "形",
+   "meaning": "深刻な"
+  },
+  "arriving": {
+   "pos": "動",
+   "meaning": "到着する"
+  },
+  "hope": {
+   "pos": "名",
+   "meaning": "希望"
+  },
+  "scientists": {
+   "pos": "名",
+   "meaning": "科学者"
+  },
+  "sunrise": {
+   "pos": "名",
+   "meaning": "日の出"
+  },
+  "sunset": {
+   "pos": "名",
+   "meaning": "日の入り"
+  },
+  "international": {
+   "pos": "形",
+   "meaning": "国際的な"
+  },
+  "expensive": {
+   "pos": "形",
+   "meaning": "高価な"
+  },
+  "difficult": {
+   "pos": "形",
+   "meaning": "難しい"
+  },
+  "huge": {
+   "pos": "形",
+   "meaning": "巨大な"
+  },
+  "giant": {
+   "pos": "形",
+   "meaning": "巨大な"
+  },
+  "tiny": {
+   "pos": "形",
+   "meaning": "とても小さい"
+  },
+  "tradition": {
+   "pos": "名",
+   "meaning": "伝統、しきたり"
+  },
+  "duchess": {
+   "pos": "名",
+   "meaning": "公爵夫人"
+  },
+  "hungry": {
+   "pos": "形",
+   "meaning": "空腹の"
+  },
+  "served": {
+   "pos": "動",
+   "meaning": "（料理が）出される"
+  },
+  "scone": {
+   "pos": "名",
+   "meaning": "スコーン"
+  },
+  "argue": {
+   "pos": "動",
+   "meaning": "言い争う、議論する"
+  },
+  "snacks": {
+   "pos": "名",
+   "meaning": "軽食、おやつ"
+  },
+  "levels": {
+   "pos": "名",
+   "meaning": "段、階層"
+  },
+  "sidewalk": {
+   "pos": "名",
+   "meaning": "歩道"
+  },
+  "terrace": {
+   "pos": "名",
+   "meaning": "テラス席"
+  },
+  "facing": {
+   "pos": "動",
+   "meaning": "〜の方を向いている"
+  },
+  "writers": {
+   "pos": "名",
+   "meaning": "作家"
+  },
+  "espresso": {
+   "pos": "名",
+   "meaning": "エスプレッソ（濃いコーヒー）"
+  },
+  "share": {
+   "pos": "動",
+   "meaning": "共有する、分かち合う"
+  },
+  "puffy": {
+   "pos": "形",
+   "meaning": "ふっくらした"
+  },
+  "baked": {
+   "pos": "動",
+   "meaning": "（オーブンで）焼かれた"
+  },
+  "oven": {
+   "pos": "名",
+   "meaning": "オーブン、窯"
+  },
+  "toppings": {
+   "pos": "名",
+   "meaning": "（料理の上にのせる）具材"
+  },
+  "intangible": {
+   "pos": "形",
+   "meaning": "無形の、触れられない"
+  },
+  "cultural": {
+   "pos": "形",
+   "meaning": "文化の"
+  },
+  "basil": {
+   "pos": "名",
+   "meaning": "バジル"
+  },
+  "mozzarella": {
+   "pos": "名",
+   "meaning": "モッツァレラチーズ"
+  },
+  "lentil": {
+   "pos": "名",
+   "meaning": "レンズ豆"
+  },
+  "chickpeas": {
+   "pos": "名",
+   "meaning": "ひよこ豆"
+  },
+  "crispy": {
+   "pos": "形",
+   "meaning": "カリカリの"
+  },
+  "filling": {
+   "pos": "形",
+   "meaning": "お腹がいっぱいになる"
+  },
+  "contain": {
+   "pos": "動",
+   "meaning": "含む"
+  },
+  "backgrounds": {
+   "pos": "名",
+   "meaning": "背景、生い立ち"
+  },
+  "garlic": {
+   "pos": "名",
+   "meaning": "にんにく"
+  },
+  "vinegar": {
+   "pos": "名",
+   "meaning": "酢"
+  },
+  "spicy": {
+   "pos": "形",
+   "meaning": "辛い"
+  },
+  "currents": {
+   "pos": "名",
+   "meaning": "（水の）流れ、潮流"
+  },
+  "rips": {
+   "pos": "名",
+   "meaning": "離岸流（岸から沖へ向かう強い流れ）"
+  },
+  "volunteer": {
+   "pos": "形",
+   "meaning": "ボランティアの"
+  },
+  "lifesavers": {
+   "pos": "名",
+   "meaning": "ライフセーバー、監視員"
+  },
+  "lifesaving": {
+   "pos": "名",
+   "meaning": "人命救助"
+  },
+  "dangerous": {
+   "pos": "形",
+   "meaning": "危険な"
+  },
+  "everyday": {
+   "pos": "形",
+   "meaning": "日常の"
+  },
+  "holiday": {
+   "pos": "名",
+   "meaning": "祝日、休日"
+  },
+  "holidays": {
+   "pos": "名",
+   "meaning": "祝日（複数）"
+  },
+  "celebrated": {
+   "pos": "動",
+   "meaning": "祝われる"
+  },
+  "distances": {
+   "pos": "名",
+   "meaning": "距離"
+  },
+  "roast": {
+   "pos": "形",
+   "meaning": "ローストした、焼いた"
+  },
+  "stuffing": {
+   "pos": "名",
+   "meaning": "（七面鳥などの）詰め物"
+  },
+  "cranberry": {
+   "pos": "名",
+   "meaning": "クランベリー"
+  },
+  "dessert": {
+   "pos": "名",
+   "meaning": "デザート"
+  },
+  "balloons": {
+   "pos": "名",
+   "meaning": "風船、バルーン"
+  },
+  "popular": {
+   "pos": "形",
+   "meaning": "人気のある"
+  }
+ }
+}

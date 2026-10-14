@@ -18,6 +18,8 @@ export class CatalogActions {
   #api;
   #store;
   #events;
+  /** 画像の URL のキャッシュ。同じ画像を何度も問い合わせない。キー → Promise<string|null> */
+  #photos = new Map();
 
   /**
    * 必要な道具を外から受け取る（依存性の注入）。自分で new しないので、テストや差し替えが楽になる。
@@ -53,10 +55,24 @@ export class CatalogActions {
    * 国の詳細（説明文 info を含む）を取得する。
    * 詳細は画面ごとに1回見るだけなので、Store には保存せず、そのまま返す。
    * @param {string} countryId 例: "uk"
-   * @returns {Promise<object>} 国の詳細
+   * @returns {Promise<import("../../domain/models.js").CountryDetail>}
    * @throws {import("../../infrastructure/api/ApiClient.js").ApiError} 存在しない id や通信失敗のとき
    */
   getCountry(countryId) {
     return this.#api.getCountry(countryId);
+  }
+
+  /**
+   * 観光地の写真の URL を取る。同じものは1回しか問い合わせない。見つからなくても例外は投げず null を返す。
+   * @param {string} key Trip.imageKey
+   * @param {boolean} [large] true なら大きい画像
+   * @returns {Promise<string|null>}
+   */
+  photoUrl(key, large = false) {
+    const cacheKey = `${key}|${large}`;
+    if (!this.#photos.has(cacheKey)) {
+      this.#photos.set(cacheKey, this.#api.imageUrl(key, large).catch(() => null));
+    }
+    return this.#photos.get(cacheKey);
   }
 }
