@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# 自分用の開発ツール（素材の生成・画面の自動確認など）。他の人は使わないので、共有しない
+/tools/

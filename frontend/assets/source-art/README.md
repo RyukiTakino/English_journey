@@ -1,6 +1,6 @@
 # source-art（素材の元データ）
 
-アプリには入らない、素材の「元」のデータです。絵を直したいときや、別のツール（Photoshop・Clip Studio・Krita・Live2D Cubism）で開くときに使います。
+アプリでは読み込まない、素材の「元」のデータです（アセットの置き場所 `frontend/assets/` の中にまとめてあります。サーバーが配信はしますが、画面からは使いません）。絵を直したいときや、別のツール（Photoshop・Clip Studio・Krita・Live2D Cubism）で開くときに使います。
 
 ## characters/ … 案内キャラクターの PSD（層ごと）
 
@@ -38,4 +38,4 @@ hair_back (back hair fill)               後ろ髪の下敷き（顔や髪の下
 
 ## git について
 
-PSD は 1 つ約 25MB あります。リポジトリに入れたくないときは、`.gitignore` に `source-art/*.psd` / `source-art/**/*.psd` を足してください（コミットは、あなたが決めます）。
+PSD は 1 つ約 25MB あります。リポジトリに入れたくないときは、`.gitignore` に `frontend/assets/source-art/*.psd` / `frontend/assets/source-art/**/*.psd` を足してください（コミットは、あなたが決めます）。

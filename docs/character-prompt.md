@@ -1,7 +1,7 @@
 # English journey ガイドキャラクター（Live2D 風）の生成依頼
 
 > **状態（2026-10-14）**：C1・C2・C3 は作成済みで、Live2D 風に動くモデルまで完成しています（アプリに組み込み済み）。
-> 動かし方・作り直し方は `source-art/README.md`、層の分け方は `tools/live2d/build_parts.py` を見てください。
+> 動かし方・作り直し方は `frontend/assets/source-art/README.md`、層の分け方は `tools/live2d/build_parts.py` を見てください。
 > このファイルは、絵を作り直したい・別のキャラクターを作りたいときの依頼文として残してあります。
 
 > このファイルは、ChatGPT（画像生成）に貼り付けて使います。
