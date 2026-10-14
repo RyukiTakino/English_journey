@@ -25,6 +25,27 @@ import { ApiError } from "./ApiClient.js";
 import { HttpApi } from "./HttpApi.js";
 import { LocalApi } from "./LocalApi.js";
 
+/**
+ * 確認モード（mark）で、文字のままにしておくキー。
+ * ID・区分・URL・日付など、画面の動きに必要で、「文章」ではないもの。これ以外の文字列が、モック由来なら "Test" になる。
+ */
+const KEEP_KEYS = new Set([
+  "id", "tripId", "countryId", "refId", "code", "region", "color", "level", "category", "source", "imageKey", "wikiTitle",
+  "createdAt", "earnedAt", "kind", "lang", "gradedBy", "sourceUrl", "url", "highlightWords", "pos"
+]);
+
+/**
+ * モックが返した JSON の「文章」を、すべて "Test" に置き換えたコピーを返す。
+ * 「どこまでが本物のサーバーから取れていて、どこからがモックか」を、画面で見分けるための開発用。
+ * KEEP_KEYS のキーの値は、そのまま残す。数値・真偽値・null も、そのまま。
+ */
+function testify(value, key = "") {
+  if (typeof value === "string") return KEEP_KEYS.has(key) ? value : "Test";
+  if (Array.isArray(value)) return value.map((v) => testify(v, key));
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, testify(v, k)]));
+  return value;
+}
+
 /** 説明文の最大の長さ（Wikipedia の本文は長いので、最初の数文だけを使う） */
 const EXTRACT_MAX = 420;
 
@@ -49,10 +70,19 @@ export class HybridApi {
   /** サーバーの国（id が数字）→ モックの国（id が "uk" など）の対応。国の一覧を読んだときに作る */
   #idMap = new Map();
 
-  /** @param {string} [baseUrl] サーバーの URL。同じオリジンから配信するときは "" */
-  constructor(baseUrl = "") {
+  /** 確認モード：モック由来の文章を "Test" にする */
+  #mark;
+  /** サーバーが返した国（id は数字）。国の詳細で、本物の名前を使うために覚えておく。モックの id（"uk"）→ サーバーの国 */
+  #serverCountry = new Map();
+
+  /**
+   * @param {string} [baseUrl] サーバーの URL。同じオリジンから配信するときは ""
+   * @param {{mark?: boolean}} [options] mark: モック由来の文章を "Test" にする（どこが本物か見分けるための確認モード）
+   */
+  constructor(baseUrl = "", { mark = false } = {}) {
     this.#http = new HttpApi(baseUrl);
     this.#local = new LocalApi();
+    this.#mark = mark;
   }
 
   /** 今、本物のサーバーを使っているか（開発用の表示に使える） */
@@ -75,7 +105,8 @@ export class HybridApi {
         }
       }
     }
-    return this.#local.request(method, path, body);
+    const mock = await this.#local.request(method, path, body);
+    return this.#mark ? testify(mock) : mock;
   }
 
   imageUrl(key, large) {
@@ -95,8 +126,10 @@ export class HybridApi {
     const [server, mock] = await Promise.all([this.#http.request("GET", "/api/countries"), this.#local.request("GET", "/api/countries")]);
     const byEn = new Map(mock.map((c) => [c.nameEn, c]));
     const list = server.map((s, i) => {
-      const base = byEn.get(s.country_name_en) ?? {};
+      // モックで補う部分（文章）は、確認モードでは "Test" にする。サーバーから取った値（id・name・nameEn）は、そのまま
+      const base = this.#mark ? testify(byEn.get(s.country_name_en) ?? {}) : byEn.get(s.country_name_en) ?? {};
       this.#idMap.set(String(s.id), base.id);
+      this.#serverCountry.set(base.id, s);
       return {
         // サーバーの値を優先し、無い項目（コード・座標など）はモックで補う
         ...base,
@@ -117,12 +150,21 @@ export class HybridApi {
 
   /** 国の詳細：モックの詳細に、サーバー（Wikipedia）の説明文を重ねる */
   async #country(countryId) {
-    const detail = await this.#local.request("GET", `/api/countries/${encodeURIComponent(countryId)}`);
+    let detail = await this.#local.request("GET", `/api/countries/${encodeURIComponent(countryId)}`);
+    const real = this.#serverCountry.get(countryId);   // 国の一覧で、サーバーから取った名前
+    if (this.#mark) {
+      detail = testify(detail);
+      if (real) {   // 名前は、サーバーから取れている（国の一覧の API）
+        detail.name = real.country_name_ja;
+        detail.nameEn = real.country_name_en;
+      }
+    }
     try {
-      const article = await this.#http.request("GET", `/api/article?title=${encodeURIComponent(detail.nameEn)}`);
+      const article = await this.#http.request("GET", `/api/article?title=${encodeURIComponent(real?.country_name_en ?? detail.nameEn)}`);
       if (article?.content) {
         detail.info = { extract: firstParagraph(article.content), sourceUrl: article.url ?? null };
       }
+      // 注意：確認モードで、国の詳細の title には、本物の名前（国の一覧の API）を使う。説明文は Wikipedia（/api/article）
     } catch (e) {
       // 説明文が取れなくても、国の詳細は出せる（モックの説明文のまま）。サーバーが落ちているときだけ、上に伝える
       if (e instanceof ApiError && (e.code === "NETWORK" || e.status >= 500)) throw e;
