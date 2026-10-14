@@ -6,12 +6,14 @@
  *
  * ここでだけ「どの実装を使うか」を決める。ほかのファイルは実装の違いを知らない。
  */
-import { EventBus, EVENTS } from "./application/events.js";
+import { EventBus } from "./application/events.js";
 import { Store } from "./application/store.js";
 import { CatalogActions } from "./application/actions/CatalogActions.js";
 import { ApiClient } from "./infrastructure/api/ApiClient.js";
 import { LocalApi } from "./infrastructure/api/LocalApi.js";
 // import { HttpApi } from "./infrastructure/api/HttpApi.js";
+import { Router } from "./ui/router.js";
+import { HomeScene } from "./ui/scenes/HomeScene.js";
 
 // ----- 部品を作る（C# でいう DI コンテナの手動版） -----
 
@@ -31,14 +33,14 @@ const actions = {
   catalog: new CatalogActions(api, store, events)
 };
 
-// ----- 動作確認用。画面（Scene）を作ったら、ここは消す -----
+// 画面に渡す道具一式。api は渡さない（画面は actions 経由で通信する）
+const ctx = { store, events, actions };
 
-// 「国の一覧を読み込んだ」という出来事を受け取って、画面に表示する
-events.on(EVENTS.COUNTRIES_LOADED, (countries) => {
-  document.getElementById("app").textContent = countries.map((c) => c.name).join(", ");
-});
+// ----- URL と画面の対応表。画面を増やすときは、ここに1行足す -----
+// pattern は URL の # 以降に対する正規表現。() で囲んだ部分が、画面の params として渡される
+//   例: { pattern: /^\/country\/([^/]+)$/, scene: CountryScene }  → #/country/uk で params = ["uk"]
+const ROUTES = [
+  { pattern: /^\/$/, scene: HomeScene }
+];
 
-// 操作を呼ぶ。通信に失敗したときは、エラーメッセージを表示する
-actions.catalog.loadCountries().catch((e) => {
-  document.getElementById("app").textContent = e.message;
-});
+new Router(ctx, ROUTES, document.getElementById("app")).start();
