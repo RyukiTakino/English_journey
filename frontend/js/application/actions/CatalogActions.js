@@ -48,4 +48,15 @@ export class CatalogActions {
     this.#events.emit(EVENTS.COUNTRIES_LOADED, countries);
     return countries;
   }
+
+  /**
+   * 国の詳細（説明文 info を含む）を取得する。
+   * 詳細は画面ごとに1回見るだけなので、Store には保存せず、そのまま返す。
+   * @param {string} countryId 例: "uk"
+   * @returns {Promise<object>} 国の詳細
+   * @throws {import("../../infrastructure/api/ApiClient.js").ApiError} 存在しない id や通信失敗のとき
+   */
+  getCountry(countryId) {
+    return this.#api.getCountry(countryId);
+  }
 }

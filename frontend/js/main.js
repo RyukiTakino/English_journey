@@ -14,6 +14,7 @@ import { LocalApi } from "./infrastructure/api/LocalApi.js";
 // import { HttpApi } from "./infrastructure/api/HttpApi.js";
 import { Router } from "./ui/router.js";
 import { HomeScene } from "./ui/scenes/HomeScene.js";
+import { CountryScene } from "./ui/scenes/CountryScene.js";
 
 // ----- 部品を作る（C# でいう DI コンテナの手動版） -----
 
@@ -38,9 +39,10 @@ const ctx = { store, events, actions };
 
 // ----- URL と画面の対応表。画面を増やすときは、ここに1行足す -----
 // pattern は URL の # 以降に対する正規表現。() で囲んだ部分が、画面の params として渡される
-//   例: { pattern: /^\/country\/([^/]+)$/, scene: CountryScene }  → #/country/uk で params = ["uk"]
+//   例: #/country/uk なら、下の2つ目に一致して params = ["uk"]
 const ROUTES = [
-  { pattern: /^\/$/, scene: HomeScene }
+  { pattern: /^\/$/, scene: HomeScene },
+  { pattern: /^\/country\/([^/]+)$/, scene: CountryScene }
 ];
 
 new Router(ctx, ROUTES, document.getElementById("app")).start();

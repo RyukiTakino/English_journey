@@ -73,4 +73,19 @@ export class ApiClient {
   getCountries() {
     return this.#transport.request("GET", "/api/countries");
   }
+
+  /**
+   * GET /api/countries/{countryId} … 国の詳細（一覧の内容 + 説明文 info）
+   * @param {string} countryId 例: "uk"
+   * @returns {Promise<{id: string, name: string, nameEn: string, trips: object[],
+   *                    info: {extract: string, sourceUrl: string}}>}
+   * @throws {ApiError} 存在しない id のとき（code: "NOT_FOUND", status: 404）
+   *
+   * TODO(Backend): このURLでエンドポイントを用意する。存在しない id は 404 を返す。
+   * TODO(API): info（Wikipedia の説明文 extract と、出典の sourceUrl）を取得して返す。
+   */
+  getCountry(countryId) {
+    // id に / や ? が含まれても URL が壊れないよう、encodeURIComponent で変換する
+    return this.#transport.request("GET", `/api/countries/${encodeURIComponent(countryId)}`);
+  }
 }

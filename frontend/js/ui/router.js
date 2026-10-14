@@ -12,6 +12,8 @@
  *
  * （Unity の SceneManager.LoadScene に近い役割です。シーン名の代わりに URL で指定します）
  */
+import { esc } from "./components/html.js";
+
 export class Router {
   /** 画面切り替えの通し番号。読み込み中に別の画面へ移ったかを判定するのに使う */
   #token = 0;
@@ -80,7 +82,7 @@ export class Router {
    * TODO(フロント): 見た目は、共通の部品（ui/components）を作ったときに差し替える。
    */
   #paintError(message) {
-    this.appEl.innerHTML = `<p>${message}</p><button type="button" data-reload>再読み込み</button>`;
+    this.appEl.innerHTML = `<p>${esc(message)}</p><button type="button" data-reload>再読み込み</button>`;
     this.appEl.querySelector("[data-reload]").addEventListener("click", () => this.go());
   }
 }
