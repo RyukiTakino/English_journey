@@ -1,0 +1,57 @@
+/* =========================================================
+   tokens.css … 色・文字・余白・角丸などの変数
+   担当：フロント
+   見た目を変えたいときは、まずここの値を変えます。全体に反映されます。
+   他のCSSでは色や余白を直接書かず、必ず var(--名前) で使います。
+   ========================================================= */
+:root {
+  /* ----- 色：背景と文字 ----- */
+  --bg: #f5f1e8;          /* ページ全体の背景（クリーム） */
+  --surface: #fffdf8;     /* カードなどの面 */
+  --surface-2: #efe8da;   /* 一段濃い面 */
+  --ink: #1c2230;         /* 文字（基本） */
+  --ink-2: #464e60;       /* 文字（やや薄い） */
+  --muted: #7a8191;       /* 補足の文字 */
+  --line: #e2d9c7;        /* 区切り線・枠線 */
+
+  /* ----- 色：ブランド ----- */
+  --navy: #14233a;
+  --navy-2: #1f3a5c;
+  --primary: #1e4d7b;
+  --primary-dark: #143a5f;
+  --primary-soft: #e2ebf5;
+  --accent: #e2703a;      /* オレンジ（目立たせたいボタンなど） */
+  --accent-dark: #b9541f;
+  --accent-soft: #fbe6da;
+  --teal: #2f7d7b;
+  --mustard: #d9a441;
+
+  /* ----- 色：状態 ----- */
+  --ok: #2b8a57;
+  --ok-soft: #dff1e6;
+  --ng: #c4453b;
+  --ng-soft: #f8e0dd;
+
+  /* ----- 形・影 ----- */
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 2px 0 rgba(20, 35, 58, .08), 0 6px 18px rgba(20, 35, 58, .06);
+  --shadow-lg: 0 14px 40px rgba(20, 35, 58, .2);
+
+  /* ----- 文字 ----- */
+  --font: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
+  --display: "Fredoka", "M PLUS Rounded 1c", sans-serif; /* ロゴなどの見出し用 */
+  --serif: "Newsreader", Georgia, serif;                  /* 英文の記事用 */
+
+  /* ----- 余白（8px 刻みを基本にする） ----- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+
+  /* ----- レイアウト ----- */
+  --header-h: 60px;
+  --content-w: 960px;     /* 中身の最大幅 */
+}

@@ -4,10 +4,33 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>English journey</title>
+  <meta name="theme-color" content="#14233a">
+
+  <!-- フォント：画面の文字は M PLUS Rounded 1c（丸ゴシック）、ロゴは Fredoka -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS は役割ごとに分けてある。後ろのものが前のものを上書きできる順番に並べる -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/scenes.css">
 </head>
 <body>
-  <!-- 画面（Scene）はこの中に描画する -->
-  <div id="app"></div>
+  <!-- 全画面共通のヘッダー。画面が切り替わっても、ここは変わらない -->
+  <header class="app-header">
+    <div class="app-header__inner">
+      <a class="logo" href="#/">English <em>journey</em></a>
+      <nav class="app-nav" aria-label="メイン">
+        <a href="#/">ホーム</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 画面（Scene）の中身はこの中に描画する -->
+  <main id="app" class="app-main"></main>
 
   <!-- type="module" にすると import / export が使える（C# の using に近い） -->
   <script type="module" src="js/main.js"></script>

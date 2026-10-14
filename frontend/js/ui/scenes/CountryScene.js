@@ -26,9 +26,11 @@ export class CountryScene extends BaseScene {
   render() {
     const c = this.#country;
     return `
-      <a href="#/">← ホームに戻る</a>
-      <h1>${esc(c.name)}（${esc(c.nameEn)}）</h1>
-      <p>${esc(c.info.extract)}</p>
+      <a class="back-link" href="#/">← ホームに戻る</a>
+      <div class="card">
+        <h1 class="country-title">${esc(c.name)} <span class="country-title__en">${esc(c.nameEn)}</span></h1>
+        <p class="country-extract">${esc(c.info.extract)}</p>
+      </div>
     `;
   }
 }

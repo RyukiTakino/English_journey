@@ -1,0 +1,84 @@
+/* =========================================================
+   components.css … 画面をまたいで使う共通の部品（ボタン、カード、グリッド、状態表示）
+   担当：フロント
+   ========================================================= */
+
+/* ----- ボタン ----- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--accent-dark);
+  transition: transform .1s, box-shadow .1s;
+}
+.btn:hover { text-decoration: none; transform: translateY(1px); box-shadow: 0 2px 0 var(--accent-dark); }
+.btn:active { transform: translateY(3px); box-shadow: none; }
+
+/* ----- カード ----- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-4);
+}
+
+/* ----- 一覧用のグリッド（画面幅に合わせて列数が変わる） ----- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-3);
+}
+
+/* ----- 国のカード（リンク全体を押せる） ----- */
+.country-card {
+  display: block;
+  color: var(--ink);
+  transition: transform .15s, box-shadow .15s;
+}
+.country-card:hover {
+  text-decoration: none;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+.country-card__name { font-size: 1.2rem; font-weight: 800; color: var(--navy); }
+.country-card__name-en { color: var(--muted); font-size: .9rem; }
+
+/* ----- 戻るリンク ----- */
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  font-weight: 700;
+}
+
+/* ----- 状態の表示（エラー、読み込み中） ----- */
+.state {
+  text-align: center;
+  padding: var(--space-6) var(--space-3);
+}
+.state--error p { color: var(--ng); font-weight: 700; }
+
+.spinner {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border: 4px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .country-card { transition: none; }
+  .spinner { animation-duration: 2s; }
+}

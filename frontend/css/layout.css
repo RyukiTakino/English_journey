@@ -1,0 +1,72 @@
+/* =========================================================
+   layout.css … 画面の外枠（ヘッダー、中身の幅と余白）
+   担当：フロント
+   構造は index.html の <header class="app-header"> と <main id="app" class="app-main"> です。
+   ========================================================= */
+
+/* ----- ヘッダー ----- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--header-h);
+  background: var(--navy);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+.app-header__inner {
+  max-width: var(--content-w);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ロゴ（今は文字だけ。ロゴ画像ができたら中身を差し替える） */
+.logo {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: .02em;
+}
+.logo:hover { text-decoration: none; }
+.logo em { font-style: normal; color: var(--accent); }
+
+/* ナビ（リンクが増えたらここに並ぶ） */
+.app-nav { display: flex; gap: var(--space-2); }
+.app-nav a {
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  color: #dbe5f2;
+  font-weight: 700;
+  font-size: .95rem;
+}
+.app-nav a:hover { background: var(--navy-2); text-decoration: none; }
+
+/* ----- 画面の中身 ----- */
+.app-main {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-3) var(--space-6);
+}
+
+/* 画面が切り替わったときに、ふわっと出す */
+.app-main > * { animation: scene-enter .25s ease-out; }
+@keyframes scene-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* スマホ */
+@media (max-width: 600px) {
+  h1 { font-size: 1.5rem; }
+  .app-main { padding-top: var(--space-3); }
+}
+
+/* 「動きを減らす」設定のときは、動きを止める */
+@media (prefers-reduced-motion: reduce) {
+  .app-main > * { animation: none; }
+}

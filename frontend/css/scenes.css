@@ -1,0 +1,16 @@
+/* =========================================================
+   scenes.css … 画面ごとの個別の見た目
+   担当：フロント
+   クラス名は画面名で始めます（例：.country-…）。他の画面と名前がぶつからないようにするためです。
+   ========================================================= */
+
+/* ----- ホーム ----- */
+.home-lead {
+  color: var(--ink-2);
+  margin-bottom: var(--space-4);
+}
+
+/* ----- 国の詳細 ----- */
+.country-title { margin-bottom: var(--space-1); }
+.country-title__en { color: var(--muted); font-size: 1rem; font-weight: 500; }
+.country-extract { margin-top: var(--space-3); }

@@ -82,7 +82,11 @@ export class Router {
    * TODO(フロント): 見た目は、共通の部品（ui/components）を作ったときに差し替える。
    */
   #paintError(message) {
-    this.appEl.innerHTML = `<p>${esc(message)}</p><button type="button" data-reload>再読み込み</button>`;
+    this.appEl.innerHTML = `
+      <div class="state state--error">
+        <p>${esc(message)}</p>
+        <button type="button" class="btn" data-reload>再読み込み</button>
+      </div>`;
     this.appEl.querySelector("[data-reload]").addEventListener("click", () => this.go());
   }
 }
