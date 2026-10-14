@@ -1,0 +1,1002 @@
+[
+ {
+  "path": "mascot/bird-wave.png",
+  "w": 128,
+  "h": 126,
+  "desc": "立ち姿で手を振る鳥",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "mascot/bird-cheer.png",
+  "w": 146,
+  "h": 124,
+  "desc": "羽を広げて飛び跳ねる鳥(喜び)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "mascot/bird-think.png",
+  "w": 124,
+  "h": 137,
+  "desc": "頭に手を当て電球を思いつく鳥",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "mascot/bird-chin.png",
+  "w": 119,
+  "h": 133,
+  "desc": "羽をあごに当てて考える鳥",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "mascot/bird-happy.png",
+  "w": 138,
+  "h": 115,
+  "desc": "目を閉じて笑う鳥",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "mascot/bird-read.png",
+  "w": 132,
+  "h": 125,
+  "desc": "本を読む鳥",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "mascot/bird-listen.png",
+  "w": 164,
+  "h": 127,
+  "desc": "ヘッドホンで飛ぶ鳥(足は隣のアイコンに接触していたため端を一部補正)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "mascot/bird-sleep.png",
+  "w": 114,
+  "h": 118,
+  "desc": "座って眠る鳥",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "effects/lightbulb.png",
+  "w": 61,
+  "h": 72,
+  "desc": "光る電球(鳥と一緒に使う装飾)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "banners/banner-sky-plane.png",
+  "w": 497,
+  "h": 98,
+  "desc": "空と飛行機のバナー",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "banners/banner-world-map.png",
+  "w": 499,
+  "h": 197,
+  "desc": "ルート付き世界地図バナー",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "banners/banner-skyline-1.png",
+  "w": 465,
+  "h": 115,
+  "desc": "街並みスカイラインのバナー(1)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "banners/banner-skyline-2.png",
+  "w": 464,
+  "h": 106,
+  "desc": "街並みスカイラインのバナー(2・ドーム)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-home.png",
+  "w": 90,
+  "h": 86,
+  "desc": "ホーム(紺プレート)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-globe.png",
+  "w": 90,
+  "h": 86,
+  "desc": "地球(クリームプレート)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-map.png",
+  "w": 89,
+  "h": 86,
+  "desc": "地図ピン",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-book.png",
+  "w": 90,
+  "h": 87,
+  "desc": "開いた本(紺プレート)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-headphones.png",
+  "w": 91,
+  "h": 86,
+  "desc": "ヘッドホン",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-passport.png",
+  "w": 90,
+  "h": 86,
+  "desc": "パスポート(紺プレート)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-suitcase.png",
+  "w": 91,
+  "h": 86,
+  "desc": "スーツケース",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-award.png",
+  "w": 88,
+  "h": 86,
+  "desc": "受賞リボン(紺プレート)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-chart.png",
+  "w": 87,
+  "h": 86,
+  "desc": "棒グラフ",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-settings.png",
+  "w": 88,
+  "h": 86,
+  "desc": "歯車",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-play.png",
+  "w": 71,
+  "h": 71,
+  "desc": "再生(オレンジ丸)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-pause.png",
+  "w": 71,
+  "h": 71,
+  "desc": "一時停止(紺丸)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-stop.png",
+  "w": 71,
+  "h": 71,
+  "desc": "停止(紺丸)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-volume.png",
+  "w": 71,
+  "h": 70,
+  "desc": "音量(紺丸)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-mute.png",
+  "w": 69,
+  "h": 70,
+  "desc": "ミュート(紺丸・×)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-mute-alt.png",
+  "w": 69,
+  "h": 70,
+  "desc": "ミュート(オレンジ・別デザイン)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-music.png",
+  "w": 72,
+  "h": 70,
+  "desc": "音符(紺丸)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/switcher-arrows.png",
+  "w": 165,
+  "h": 70,
+  "desc": "左右矢印のスイッチャー",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/toggle-orange.png",
+  "w": 105,
+  "h": 60,
+  "desc": "オレンジのトグルスイッチ(ON)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-hint.png",
+  "w": 74,
+  "h": 75,
+  "desc": "ヒント(電球の吹き出し)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-alert.png",
+  "w": 72,
+  "h": 75,
+  "desc": "注意(!の吹き出し)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-correct.png",
+  "w": 72,
+  "h": 75,
+  "desc": "正解(チェックの吹き出し)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-wrong.png",
+  "w": 71,
+  "h": 76,
+  "desc": "不正解(×の吹き出し)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/progress-blue.png",
+  "w": 283,
+  "h": 43,
+  "desc": "青いプログレスバー(約40%)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/progress-orange-knob.png",
+  "w": 256,
+  "h": 47,
+  "desc": "ノブ付きオレンジのプログレスバー",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/progress-orange-full.png",
+  "w": 285,
+  "h": 44,
+  "desc": "オレンジの満タンバー",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/progress-route.png",
+  "w": 364,
+  "h": 51,
+  "desc": "飛行機のルート型ステップ進捗",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/spinner.png",
+  "w": 66,
+  "h": 63,
+  "desc": "ローディングスピナー(ドット)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/pill-stars-4.png",
+  "w": 141,
+  "h": 48,
+  "desc": "星4つのレーティングピル(3つ点灯)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/pill-stars-3.png",
+  "w": 131,
+  "h": 46,
+  "desc": "星3つのレーティングピル(2つ点灯)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/pill-heart.png",
+  "w": 92,
+  "h": 49,
+  "desc": "ハートのピル",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/pill-bookmark.png",
+  "w": 92,
+  "h": 49,
+  "desc": "ブックマークのピル",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/pill-menu.png",
+  "w": 91,
+  "h": 48,
+  "desc": "メニュー(三本線)のピル",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/pill-dots.png",
+  "w": 116,
+  "h": 46,
+  "desc": "三点リーダーのピル",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/bubble-chat.png",
+  "w": 91,
+  "h": 53,
+  "desc": "オレンジのチャットアイコン付き吹き出しピル",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/panel-label-wide.png",
+  "w": 465,
+  "h": 104,
+  "desc": "紺枠の横長ラベル2枚(写真つき・星つき)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "passport/passport-cover.png",
+  "w": 154,
+  "h": 198,
+  "desc": "閉じた紺のパスポート",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "effects/star-small.png",
+  "w": 41,
+  "h": 44,
+  "desc": "小さなオレンジの星",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "passport/world-map-old.png",
+  "w": 294,
+  "h": 209,
+  "desc": "古い宝の地図風の世界地図",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "passport/passport-book-open.png",
+  "w": 338,
+  "h": 201,
+  "desc": "スタンプ帳(見開き・スタンプ6個)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "passport/stamp-tool.png",
+  "w": 101,
+  "h": 111,
+  "desc": "赤いゴム印ツール",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "badges/badge-globe.png",
+  "w": 119,
+  "h": 116,
+  "desc": "実績バッジ: 地球",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "badges/badge-suitcase.png",
+  "w": 119,
+  "h": 122,
+  "desc": "実績バッジ: スーツケース",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "badges/badge-camera.png",
+  "w": 117,
+  "h": 116,
+  "desc": "実績バッジ: カメラ",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "badges/badge-mountain.png",
+  "w": 116,
+  "h": 114,
+  "desc": "実績バッジ: 山と太陽",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "badges/badge-map-pin.png",
+  "w": 121,
+  "h": 116,
+  "desc": "実績バッジ: 地図ピン",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "badges/badge-crown.png",
+  "w": 123,
+  "h": 118,
+  "desc": "実績バッジ: 王冠と月桂樹",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "badges/badge-books.png",
+  "w": 118,
+  "h": 118,
+  "desc": "実績バッジ: 本と月桂樹",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "badges/badge-wheel.png",
+  "w": 120,
+  "h": 118,
+  "desc": "実績バッジ: 船の舵輪",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "effects/star-big.png",
+  "w": 70,
+  "h": 74,
+  "desc": "大きなオレンジの星",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "effects/confetti.png",
+  "w": 276,
+  "h": 115,
+  "desc": "紙吹雪(大きな星を除く)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/ticket-blank.png",
+  "w": 206,
+  "h": 89,
+  "desc": "搭乗券(空白+飛行機スタブ)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/pinboard.png",
+  "w": 180,
+  "h": 134,
+  "desc": "コルクボード(飛行機のピン付き)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "cards/card-photo-landscape.png",
+  "w": 173,
+  "h": 128,
+  "desc": "山の風景写真+地図ピン(フォトプレースホルダ)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/bubble-rect.png",
+  "w": 166,
+  "h": 124,
+  "desc": "四角い吹き出し(空白)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/bubble-cloud.png",
+  "w": 141,
+  "h": 122,
+  "desc": "雲形の吹き出し(空白)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/ribbon-orange.png",
+  "w": 174,
+  "h": 64,
+  "desc": "オレンジのリボンバナー",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/ribbon-blue.png",
+  "w": 174,
+  "h": 69,
+  "desc": "青いリボンバナー",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/tag-luggage-1.png",
+  "w": 175,
+  "h": 71,
+  "desc": "荷札(上)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/tag-luggage-2.png",
+  "w": 185,
+  "h": 72,
+  "desc": "荷札(下)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/envelope-airmail.png",
+  "w": 150,
+  "h": 109,
+  "desc": "航空便の封筒",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/washi-orange.png",
+  "w": 86,
+  "h": 41,
+  "desc": "マスキングテープ(オレンジ)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/washi-blue.png",
+  "w": 77,
+  "h": 35,
+  "desc": "マスキングテープ(青)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/washi-yellow.png",
+  "w": 82,
+  "h": 40,
+  "desc": "マスキングテープ(黄)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "cards/card-uk.png",
+  "w": 122,
+  "h": 171,
+  "desc": "国カード(ピクチャのみ・星ストリップなし): イギリス(ビッグベン)",
+  "sheet": 1,
+  "note": "下端は直線(角丸は上側のみ)"
+ },
+ {
+  "path": "cards/card-uk-rating.png",
+  "w": 122,
+  "h": 205,
+  "desc": "国カード(星ストリップ付き): イギリス(ビッグベン)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "cards/card-france.png",
+  "w": 133,
+  "h": 171,
+  "desc": "国カード(ピクチャのみ・星ストリップなし): フランス(エッフェル塔)",
+  "sheet": 1,
+  "note": "下端は直線(角丸は上側のみ)"
+ },
+ {
+  "path": "cards/card-france-rating.png",
+  "w": 133,
+  "h": 205,
+  "desc": "国カード(星ストリップ付き): フランス(エッフェル塔)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "cards/card-italy.png",
+  "w": 135,
+  "h": 171,
+  "desc": "国カード(ピクチャのみ・星ストリップなし): イタリア(コロッセオ)",
+  "sheet": 1,
+  "note": "下端は直線(角丸は上側のみ)"
+ },
+ {
+  "path": "cards/card-italy-rating.png",
+  "w": 135,
+  "h": 205,
+  "desc": "国カード(星ストリップ付き): イタリア(コロッセオ)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "cards/card-egypt.png",
+  "w": 133,
+  "h": 171,
+  "desc": "国カード(ピクチャのみ・星ストリップなし): エジプト(ピラミッドとスフィンクス)",
+  "sheet": 1,
+  "note": "下端は直線(角丸は上側のみ)"
+ },
+ {
+  "path": "cards/card-egypt-rating.png",
+  "w": 133,
+  "h": 205,
+  "desc": "国カード(星ストリップ付き): エジプト(ピラミッドとスフィンクス)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "cards/card-australia.png",
+  "w": 128,
+  "h": 171,
+  "desc": "国カード(ピクチャのみ・星ストリップなし): オーストラリア(オペラハウス)",
+  "sheet": 1,
+  "note": "下端は直線(角丸は上側のみ)"
+ },
+ {
+  "path": "cards/card-australia-rating.png",
+  "w": 128,
+  "h": 205,
+  "desc": "国カード(星ストリップ付き): オーストラリア(オペラハウス)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "cards/card-usa.png",
+  "w": 124,
+  "h": 170,
+  "desc": "国カード(ピクチャのみ・星ストリップなし): アメリカ(自由の女神)",
+  "sheet": 1,
+  "note": "下端は直線(角丸は上側のみ)"
+ },
+ {
+  "path": "cards/card-usa-rating.png",
+  "w": 124,
+  "h": 205,
+  "desc": "国カード(星ストリップ付き): アメリカ(自由の女神)",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "stamps/stamp-plane.png",
+  "w": 80,
+  "h": 80,
+  "desc": "スタンプ(円形): 青い飛行機",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "stamps/stamp-france.png",
+  "w": 84,
+  "h": 84,
+  "desc": "スタンプ(円形): 赤いエッフェル塔",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "stamps/stamp-italy.png",
+  "w": 82,
+  "h": 82,
+  "desc": "スタンプ(円形): 青いコロッセオ",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "stamps/stamp-pyramids.png",
+  "w": 76,
+  "h": 76,
+  "desc": "スタンプ(円形): 黄色いピラミッド",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "stamps/stamp-australia.png",
+  "w": 80,
+  "h": 80,
+  "desc": "スタンプ(円形): 青いオペラハウス",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "stamps/stamp-usa.png",
+  "w": 80,
+  "h": 80,
+  "desc": "スタンプ(円形): 赤い自由の女神",
+  "sheet": 1,
+  "note": ""
+ },
+ {
+  "path": "ui/btn-play-orange.png",
+  "w": 220,
+  "h": 108,
+  "desc": "オレンジの再生ボタン(角丸四角)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/btn-next-teal.png",
+  "w": 187,
+  "h": 107,
+  "desc": "ティールの右矢印ボタン(角丸四角)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/btn-back.png",
+  "w": 152,
+  "h": 107,
+  "desc": "クリーム色の戻る(左矢印)ボタン",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/btn-star.png",
+  "w": 161,
+  "h": 107,
+  "desc": "星のボタン(クリーム)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/btn-heart.png",
+  "w": 161,
+  "h": 107,
+  "desc": "ハートのボタン(クリーム)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/btn-bookmark.png",
+  "w": 154,
+  "h": 107,
+  "desc": "ブックマークのボタン(クリーム)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/btn-check.png",
+  "w": 172,
+  "h": 111,
+  "desc": "緑のチェックボタン",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/btn-close.png",
+  "w": 175,
+  "h": 107,
+  "desc": "赤い×ボタン",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/dropdown-globe-orange.png",
+  "w": 219,
+  "h": 77,
+  "desc": "地球アイコン付きオレンジのドロップダウン",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/dropdown-bars-navy.png",
+  "w": 218,
+  "h": 77,
+  "desc": "棒グラフ付き紺のドロップダウン",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/dropdown-calendar.png",
+  "w": 221,
+  "h": 75,
+  "desc": "カレンダー付きクリームのドロップダウン",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/dropdown-list.png",
+  "w": 212,
+  "h": 75,
+  "desc": "リスト付きクリームのドロップダウン",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/search-field.png",
+  "w": 340,
+  "h": 75,
+  "desc": "虫眼鏡付き検索フィールド(空)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/btn-refresh.png",
+  "w": 198,
+  "h": 80,
+  "desc": "更新(リフレッシュ)ボタン(紺)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/level-sprout.png",
+  "w": 204,
+  "h": 76,
+  "desc": "レベルピル: 芽+星1",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/level-two-stars.png",
+  "w": 206,
+  "h": 72,
+  "desc": "レベルピル: 星2(ティール)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/level-three-stars.png",
+  "w": 204,
+  "h": 76,
+  "desc": "レベルピル: 星3",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-notes.png",
+  "w": 126,
+  "h": 128,
+  "desc": "ノート(付箋とブックマーク)アイコン(クリームのプレート)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "passport/postage-stamp-globe.png",
+  "w": 134,
+  "h": 204,
+  "desc": "地球の切手(絵柄部分のみ・ギザギザの白縁なし)",
+  "sheet": 2,
+  "note": "ギザギザ縁は背景との分離が難しく省略"
+ },
+ {
+  "path": "icons/icon-sound-on-round.png",
+  "w": 88,
+  "h": 88,
+  "desc": "丸ボタン: スピーカーON(紺)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-music-on-round.png",
+  "w": 88,
+  "h": 88,
+  "desc": "丸ボタン: 音符ON(クリーム)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-sound-off-round.png",
+  "w": 88,
+  "h": 88,
+  "desc": "丸ボタン: スピーカーOFF(ティール)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-music-off.png",
+  "w": 88,
+  "h": 88,
+  "desc": "丸ボタン: 音符OFF(クリーム・×)",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "icons/icon-star.png",
+  "w": 127,
+  "h": 124,
+  "desc": "オレンジの星(単体グリフ)",
+  "sheet": 2,
+  "note": "元が小さいためLanczos 2x拡大済み"
+ },
+ {
+  "path": "icons/icon-heart.png",
+  "w": 125,
+  "h": 112,
+  "desc": "オレンジのハート(単体グリフ)",
+  "sheet": 2,
+  "note": "元が小さいためLanczos 2x拡大済み"
+ },
+ {
+  "path": "icons/icon-bookmark.png",
+  "w": 92,
+  "h": 119,
+  "desc": "黄色のブックマーク(単体グリフ)",
+  "sheet": 2,
+  "note": "元が小さいためLanczos 2x拡大済み"
+ },
+ {
+  "path": "ui/bubble-hint.png",
+  "w": 151,
+  "h": 110,
+  "desc": "ヒント(電球)入り吹き出し",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/bubble-alert.png",
+  "w": 175,
+  "h": 110,
+  "desc": "注意(!)入り吹き出し",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/bubble-correct.png",
+  "w": 173,
+  "h": 110,
+  "desc": "正解(チェック)入り吹き出し",
+  "sheet": 2,
+  "note": ""
+ },
+ {
+  "path": "ui/bubble-wrong.png",
+  "w": 170,
+  "h": 111,
+  "desc": "不正解(×)入り吹き出し",
+  "sheet": 2,
+  "note": ""
+ }
+]
