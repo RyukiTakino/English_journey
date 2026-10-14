@@ -9,6 +9,7 @@
  */
 import { BaseScene } from "./BaseScene.js";
 import { esc } from "../components/html.js";
+import { APP_NAME } from "../../domain/constants.js";
 
 export class HomeScene extends BaseScene {
   /** 画面に必要なデータを取る。ここで投げた例外は Router がエラー表示にする */
@@ -23,6 +24,6 @@ export class HomeScene extends BaseScene {
       // href="#/country/uk" のリンクを押すと URL が変わり、Router が国の詳細画面に切り替える
       .map((c) => `<li><a href="#/country/${esc(c.id)}">${esc(c.name)}（${esc(c.nameEn)}）</a></li>`)
       .join("");
-    return `<h1>English journey</h1><ul>${items}</ul>`;
+    return `<h1>${esc(APP_NAME)}</h1><ul>${items}</ul>`;
   }
 }

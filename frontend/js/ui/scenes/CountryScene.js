@@ -11,7 +11,10 @@ import { BaseScene } from "./BaseScene.js";
 import { esc } from "../components/html.js";
 
 export class CountryScene extends BaseScene {
-  /** 取得した国の詳細。load で入れて、render で使う */
+  /**
+   * 取得した国の詳細。load で入れて、render で使う
+   * @type {import("../../domain/models.js").CountryDetail | null}
+   */
   #country = null;
 
   async load() {

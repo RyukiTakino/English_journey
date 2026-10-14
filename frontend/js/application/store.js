@@ -14,7 +14,7 @@
  * （ゲーム開発でいう、GameState のようなデータだけを持つクラスに近いものです）
  */
 
-/** @typedef {{id: string, name: string, nameEn: string, trips: object[]}} Country */
+/** @typedef {import("../domain/models.js").Country} Country */
 
 export class Store {
   /**
