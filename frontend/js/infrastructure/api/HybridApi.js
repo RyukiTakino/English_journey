@@ -97,7 +97,10 @@ export class HybridApi {
         return await route();
       } catch (e) {
         // サーバーが落ちている・繋がらない → モックにまかせる。サーバーが「NOT_FOUND」などを返したときは、そのまま伝える
-        if (!(e instanceof ApiError) || e.code === "NETWORK" || e.status === 502 || e.status === 0 || e.status >= 500) {
+        // 「HTTP_404」などは、サーバーが「その URL は知らない」と返した場合（API がまだ無い・静的な配信だけのサーバーなど）。
+        // サーバーが JSON で返した本物のエラー（code: "NOT_FOUND" など）とは区別して、モックに切り替える
+        const noApi = e instanceof ApiError && /^HTTP_(404|405)$/.test(e.code);
+        if (!(e instanceof ApiError) || noApi || e.code === "NETWORK" || e.status === 502 || e.status === 0 || e.status >= 500) {
           console.warn("[api] サーバーを使えないので、モックを使います:", e.message);
           this.#downUntil = Date.now() + 15000;
         } else {

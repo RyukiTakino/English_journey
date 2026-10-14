@@ -5,7 +5,7 @@
     {
       "label": "serve-frontend",
       "type": "shell",
-      "command": "python tools/dev/serve.py 8800",
+      "command": "python frontend/serve.py 8800",
       "isBackground": true,
       "presentation": { "reveal": "silent", "panel": "dedicated" },
       "problemMatcher": {
