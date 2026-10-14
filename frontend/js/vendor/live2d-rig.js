@@ -96,7 +96,7 @@ export function createAnimator() {
 }
 
 // ---------------------------------------------------------------- deformation
-function makeDeformer(R, phys, wind) {
+function makeDeformer(R, phys, wind, rigid = false) {
   const ea = (R.eyeAxis * Math.PI) / 180, ec = Math.cos(ea), es = Math.sin(ea);
   const B = R.body, HD = R.head, HR = R.hair, AH = R.ahoge;
 
@@ -117,6 +117,9 @@ function makeDeformer(R, phys, wind) {
   const sphere = HD.r * (HD.sphere ?? 1.25);
   function head(x, y, d, P) {
     const ax = P.angleX / 30, ay = P.angleY / 30;
+    // rigid（アプリで使う）: 顔を球面に貼り付けて回すと、輪郭・分け目・あごの線が少し曲がって見える。
+    // そこで、変形はせず、頭全体を「そのまま平行に」少しだけずらす（顔・目・前髪・横髪が、同じだけ動く）
+    if (rigid) return [x + ax * HD.ampX * d, y - ay * HD.ampY * d];
     const nx = clamp((x - HD.x) / HD.r, -1.3, 1.3), ny = clamp((y - HD.y) / HD.r, -1.3, 1.3);
     // on the sphere
     const sx = (x - HD.x) / sphere, sy = (y - HD.y) / sphere;
@@ -211,7 +214,7 @@ function makeDeformer(R, phys, wind) {
     }
     const fromFace = Math.hypot(x - HD.x, y - HD.y);
     const bangs = smooth((HD.y - y) / (HD.r * 0.35)) * (1 - smooth((fromFace - HD.r * 0.85) / (HD.r * 0.4)));
-    return head(x, y, 1 + (HD.bangs ?? 0.22) * bangs, P);
+    return head(x, y, rigid ? 1 : 1 + (HD.bangs ?? 0.22) * bangs, P);
   }
 
   // the mouth: the line is the upper lip (it smiles: the corners rise), the inside hangs from it and opens down.
@@ -427,7 +430,7 @@ export async function startItukiRig(canvas, options) {
   };
   // each cloth part: a pendulum (angle a, degrees) and its tip that follows a little later
   phys.parts = Object.fromEntries(Object.entries(R.parts ?? {}).map(([n, c], i) => [n, { c, i, a: 0, v: 0, tip: 0, tv: 0 }]));
-  const deform = makeDeformer(R, phys, options.wind ?? 1);
+  const deform = makeDeformer(R, phys, options.wind ?? 1, options.motion?.rigid === true);
   const animator = createAnimator();
   const layout = options.layout ?? ((w, h, v) => fitLayout(w, h, { view: v }));
 
@@ -484,6 +487,7 @@ export async function startItukiRig(canvas, options) {
       const m = options.motion;
       P.angleX *= m.head ?? 1; P.angleY *= m.head ?? 1; P.angleZ *= m.tilt ?? 1;
       P.bodyX *= m.body ?? 1; P.bodyZ *= m.body ?? 1; P.breath *= m.body ?? 1;
+      P.mouthOpen *= m.mouth ?? 1; // 0 なら、口を動かさない（鼻歌のような口の動きを止める）
     }
     if (options.params) Object.assign(P, options.params);
 

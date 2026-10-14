@@ -193,8 +193,8 @@ export class Guide {
           const w = (rig.view[2] - rig.view[0]) * 0.1;
           return { left: w, right: w };
         },
-        // 首・体は動かさず、目（視線・まばたき）と、ごく小さな顔の向きだけにする。髪は、ほんの少し揺らす
-        motion: { head: 0.28, tilt: 0, body: 0 },
+        // 首・体は動かさず、目（視線・まばたき）と、ごく小さな顔のずれだけにする。顔は変形させず、平行に動かす（曲がって見えないように）。髪は、ほんの少し揺らす
+        motion: { rigid: true, head: 0.7, tilt: 0, body: 0, mouth: 0 },
         wind: 0.5,
         maxDpr: 1.5
       });

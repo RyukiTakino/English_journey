@@ -52,7 +52,7 @@
         return { s, ox: (w - vw * s) / 2 - view[0] * s, oy: (h - vh * s) * fy - view[1] * s };
       },
       edges: (rig) => { const w = (rig.view[2] - rig.view[0]) * 0.1; return { left: w, right: w }; },
-      motion: q.has("calm") ? { head: 0.28, tilt: 0, body: 0 } : undefined,
+      motion: q.has("calm") ? { rigid: true, head: 0.7, tilt: 0, body: 0, mouth: 0 } : undefined,
       look: () => null
     }).then(() => { window.__ready = true; }).catch((e) => { document.title = "ERR " + e.message; console.error(e); });
   </script>

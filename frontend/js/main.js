@@ -14,7 +14,8 @@ import { StudyActions } from "./application/actions/StudyActions.js";
 import { WordActions } from "./application/actions/WordActions.js";
 import { ApiClient } from "./infrastructure/api/ApiClient.js";
 import { LocalApi } from "./infrastructure/api/LocalApi.js";
-// import { HttpApi } from "./infrastructure/api/HttpApi.js";
+import { HttpApi } from "./infrastructure/api/HttpApi.js";
+import { HybridApi } from "./infrastructure/api/HybridApi.js";
 import { Settings } from "./infrastructure/storage.js";
 import { Sound } from "./infrastructure/sound.js";
 import { Guide } from "./ui/components/Guide.js";
@@ -42,10 +43,15 @@ const events = new EventBus();
 // 今の状態の入れ物
 const store = new Store();
 
-// 通信の窓口。ここの1行を差し替えるだけで、モックと本物のサーバーを切り替えられる
-// TODO(Backend): サーバーが動くようになったら、HttpApi に切り替えて動作確認する。
-const api = new ApiClient(new LocalApi());
-// const api = new ApiClient(new HttpApi("http://localhost:5000"));
+// 通信の窓口。使う transport（運び役）を、URL の ?api= で切り替えられる（既定は hybrid）。
+//   ?api=local   … モックだけ（サーバー無しで全画面が動く）
+//   ?api=hybrid  … できた API だけ本物のサーバー、残りはモック。サーバーが落ちていたら、自動でモックに切り替わる（既定）
+//   ?api=http    … 本物のサーバーだけ（バックエンドが全部出来たらこれ）
+// 本物のサーバーは、同じオリジンの /api/ を使う（開発サーバー tools/dev/serve.py が、Flask へ中継する）。
+// TODO(Backend): 全 API が出来たら、既定を http にして、HybridApi と LocalApi の使用をやめる。
+const apiMode = new URLSearchParams(location.search).get("api") ?? "hybrid";
+const transport = { local: () => new LocalApi(), http: () => new HttpApi(""), hybrid: () => new HybridApi("") }[apiMode]?.() ?? new HybridApi("");
+const api = new ApiClient(transport);
 
 // 操作の処理。必要な道具をここで渡す
 const profile = new ProfileActions(api, store, events);

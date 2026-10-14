@@ -129,3 +129,29 @@ DB に無い項目（`code`・`region`・`lat`・`lng`・`color`・`tourOrder`�
 今は `frontend/data/seed.json` の手書きの値です（`tools/data/make_seed.py` で作っています）。
 **TODO(Backend)**: これらの列を DB に足すか、別の取得元（Wikipedia など）を決める。
 **TODO(API)**: 記事・問題・ニュースを、Wikipedia と Gemini から作る（作れないときは seed の手書き教材）。
+
+
+## 結合の状況（2026-10-14）
+
+フロントは、`frontend/js/infrastructure/api/HybridApi.js` で「できた API だけ本物、残りはモック」の混在版にしています
+（`main.js`、URL の `?api=local|hybrid|http` で切り替え。既定は `hybrid`）。サーバーが落ちているときは、自動でモックに戻ります。
+
+| 機能 | 本物のサーバー | 状態 |
+|---|---|---|
+| `GET /api/countries`（国の一覧） | `app.py`（DB） | **結合済み**。ただし返す形がフロントと違うので、フロント側で変換して、足りない項目（国コード・座標など）はモックで補っている |
+| `GET /api/countries/{id}`（国の詳細の説明文） | `GET /api/article?title=`（Wikipedia の本文）を使用 | **結合済み**。本文の最初の数文を説明文にしている（英語） |
+| `GET /api/articles`（Wikipedia の記事検索） | `app.py` | まだ使っていない（使う画面が無い） |
+| 国ごとの観光地の一覧 | `database/queries.py` に関数はあるが URL が無い | **未結合**（`TODO(Backend)`） |
+| 記事・問題・採点、ニュース、単語、行きたい、学習記録、スタンプ・バッジ | まだ無い | **未結合**（モックが代わりに動作） |
+
+### バックエンド担当へのお願い（`TODO(Backend)`）
+
+1. `GET /api/countries` の返す形を、上の「Country」の形にしてほしい（`name` / `nameEn` / `code` / `region` / `lat` / `lng` / `color` / `tourOrder` / `capital` / `language` / `currency` / `phrase` / `description` / `trips`）。DB の列を足すか、別の取得元にする。
+2. `GET /api/countries/{countryId}` を作る（国の詳細。`info: { extract, sourceUrl }` つき）。
+3. 国ごとの観光地の一覧を、`trips` として返す（`Trip` の形）。
+4. 記事（`/api/trips/{tripId}/lesson`）と採点（`/api/lessons/{lessonId}/grade`）を作る。
+
+### 開発のやり方
+
+- 開発サーバー（`tools/dev/serve.py`）が、`/api/` をバックエンド（既定は `http://127.0.0.1:5000`）へ中継します。CORS の設定は要りません。
+- バックエンドの起動: `pip install flask requests` のあと、リポジトリの直下で `python app.py`。
