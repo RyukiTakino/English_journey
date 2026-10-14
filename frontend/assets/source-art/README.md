@@ -1,8 +1,11 @@
 # source-art（素材の元データ）
 
+> **PSD 本体は、git に入れていません**（各 約 25MB で、履歴が重くなるため。`.gitignore` で除外）。
+> 元のファイルは、制作者の PC の `D:\WineEngine\Scratch\source-art\characters\` にあります。必要な人は、制作者に渡してもらうか、下の「作り直し方」で作れます。
+
 アプリでは読み込まない、素材の「元」のデータです（アセットの置き場所 `frontend/assets/` の中にまとめてあります。サーバーが配信はしますが、画面からは使いません）。絵を直したいときや、別のツール（Photoshop・Clip Studio・Krita・Live2D Cubism）で開くときに使います。
 
-## characters/ … 案内キャラクターの PSD（層ごと）
+## characters/ … 案内キャラクターの PSD（層ごと。git には入っていない）
 
 | ファイル | 表情 |
 |---|---|
@@ -38,4 +41,4 @@ hair_back (back hair fill)               後ろ髪の下敷き（顔や髪の下
 
 ## git について
 
-PSD は 1 つ約 25MB あります。リポジトリに入れたくないときは、`.gitignore` に `frontend/assets/source-art/*.psd` / `frontend/assets/source-art/**/*.psd` を足してください（コミットは、あなたが決めます）。
+PSD（`characters/*.psd`）は、`.gitignore` で除外してあります。層の画像そのもの（アプリで動かす WebP）は、`frontend/assets/characters/` に入っています。

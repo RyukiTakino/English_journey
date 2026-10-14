@@ -221,3 +221,7 @@ __marimo__/
 
 # 自分用の開発ツール（素材の生成・画面の自動確認など）。他の人は使わないので、共有しない
 /tools/
+
+# 層ごとの PSD（各 約25MB）。履歴を重くしないよう、共有しない。元は D:\WineEngine\Scratch\source-art\ にある
+/frontend/assets/source-art/**/*.psd
+/frontend/assets/source-art/characters/
