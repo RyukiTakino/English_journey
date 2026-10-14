@@ -1,0 +1,243 @@
+{
+ "canvas": [
+  1731,
+  2596
+ ],
+ "rig": {
+  "view": [
+   0,
+   0,
+   1731,
+   2596
+  ],
+  "cut": [
+   "left",
+   "right"
+  ],
+  "head": {
+   "x": 886.5,
+   "y": 900.5,
+   "r": 427.2,
+   "ampX": 14,
+   "ampY": 10,
+   "tilt": 0.5
+  },
+  "neck": {
+   "x": 906.5,
+   "y": 1335
+  },
+  "hair": {
+   "x": 886.5,
+   "y": 900.5,
+   "follow": [
+    470,
+    513
+   ],
+   "flow": [
+    555,
+    1111
+   ],
+   "amp": 9,
+   "crownY": 649,
+   "crownDist": 726
+  },
+  "ahoge": {
+   "x": 815,
+   "y": 300,
+   "top": 190,
+   "half": 80
+  },
+  "eyeAxis": -8,
+  "eyes": {
+   "L": {
+    "cx": 711.1,
+    "cy": 937.1,
+    "top": -59.9,
+    "bottom": 60.9
+   },
+   "R": {
+    "cx": 1033.2,
+    "cy": 891.2,
+    "top": -58.3,
+    "bottom": 60.1
+   }
+  },
+  "body": {
+   "pivot": [
+    865.5,
+    4153.6
+   ],
+   "breathFrom": 2596,
+   "breathRange": 1298.0,
+   "breath": 4,
+   "sway": 5,
+   "swayRange": 1817.1999999999998
+  },
+  "cells": {
+   "hair_front": 22,
+   "hair_side_L": 26,
+   "hair_side_R": 26,
+   "hair_back": 40,
+   "face": 16,
+   "body": 44,
+   "part_scarf_tail": 18,
+   "mouth": 6
+  },
+  "parts": {
+   "scarf_tail": {
+    "amp": 5,
+    "freq": 0.8,
+    "pivot": [
+     1130,
+     1570
+    ],
+    "len": 605
+   }
+  },
+  "mouth": {
+   "cx": 896.7,
+   "half": 70.5,
+   "top": 1099.6,
+   "curve": 0,
+   "smile": 6
+  }
+ },
+ "layers": [
+  {
+   "name": "hair_back",
+   "file": "hair_back.webp",
+   "x": 426,
+   "y": 233,
+   "w": 964,
+   "h": 1046
+  },
+  {
+   "name": "body",
+   "file": "body.webp",
+   "x": 31,
+   "y": 1113,
+   "w": 1652,
+   "h": 1483
+  },
+  {
+   "name": "part_scarf_tail",
+   "file": "part_scarf_tail.webp",
+   "x": 966,
+   "y": 1547,
+   "w": 491,
+   "h": 583
+  },
+  {
+   "name": "face",
+   "file": "face.webp",
+   "x": 593,
+   "y": 553,
+   "w": 650,
+   "h": 696
+  },
+  {
+   "name": "mouth",
+   "file": "mouth.webp",
+   "x": 828,
+   "y": 1078,
+   "w": 136,
+   "h": 36
+  },
+  {
+   "name": "eye_white_L",
+   "file": "eye_white_L.webp",
+   "x": 637,
+   "y": 881,
+   "w": 147,
+   "h": 121
+  },
+  {
+   "name": "iris_L",
+   "file": "iris_L.webp",
+   "x": 674,
+   "y": 881,
+   "w": 104,
+   "h": 119
+  },
+  {
+   "name": "eyeline_L",
+   "file": "eyeline_L.webp",
+   "x": 634,
+   "y": 878,
+   "w": 147,
+   "h": 123
+  },
+  {
+   "name": "lash_L",
+   "file": "lash_L.webp",
+   "x": 594,
+   "y": 843,
+   "w": 178,
+   "h": 132
+  },
+  {
+   "name": "eye_white_R",
+   "file": "eye_white_R.webp",
+   "x": 955,
+   "y": 834,
+   "w": 152,
+   "h": 121
+  },
+  {
+   "name": "iris_R",
+   "file": "iris_R.webp",
+   "x": 971,
+   "y": 842,
+   "w": 100,
+   "h": 114
+  },
+  {
+   "name": "eyeline_R",
+   "file": "eyeline_R.webp",
+   "x": 965,
+   "y": 831,
+   "w": 146,
+   "h": 126
+  },
+  {
+   "name": "lash_R",
+   "file": "lash_R.webp",
+   "x": 948,
+   "y": 795,
+   "w": 208,
+   "h": 117
+  },
+  {
+   "name": "strands_R",
+   "file": "strands_R.webp",
+   "x": 1094,
+   "y": 828,
+   "w": 34,
+   "h": 36
+  },
+  {
+   "name": "hair_side_L",
+   "file": "hair_side_L.webp",
+   "x": 173,
+   "y": 611,
+   "w": 719,
+   "h": 1221
+  },
+  {
+   "name": "hair_side_R",
+   "file": "hair_side_R.webp",
+   "x": 882,
+   "y": 773,
+   "w": 790,
+   "h": 1169
+  },
+  {
+   "name": "hair_front",
+   "file": "hair_front.webp",
+   "x": 426,
+   "y": 233,
+   "w": 912,
+   "h": 1017
+  }
+ ]
+}

@@ -1,0 +1,246 @@
+/* =========================================================
+   components.css … 画面をまたいで使う共通の部品
+   （ボタン、札、カード、写真、状態の表示、ウィンドウ、バッジ、スタンプ）
+   担当：フロント
+   画面ごとの個別の見た目は scenes.css・scene-*.css に書きます。
+   ========================================================= */
+
+/* ----- 小さな補助クラス ----- */
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+.grow { flex: 1; }
+.meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ----- ボタン ----- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 10px var(--space-4);
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--accent-dark);
+  transition: transform .1s, box-shadow .1s, background .15s;
+}
+.btn:hover { text-decoration: none; transform: translateY(1px); box-shadow: 0 2px 0 var(--accent-dark); }
+.btn:active { transform: translateY(3px); box-shadow: none; }
+.btn[disabled], .btn.is-disabled { opacity: .5; pointer-events: none; }
+.btn--lg { padding: 14px var(--space-5); font-size: 1.05rem; }
+.btn--sm { padding: 6px var(--space-3); font-size: .85rem; }
+.btn--ghost { background: var(--surface); color: var(--navy); box-shadow: inset 0 0 0 2px var(--line), 0 2px 0 var(--line); }
+.btn--ghost:hover { box-shadow: inset 0 0 0 2px var(--primary), 0 1px 0 var(--line); }
+.btn--teal { background: var(--teal); box-shadow: 0 3px 0 #1f5a58; }
+.btn--danger { background: var(--ng); box-shadow: 0 3px 0 #8e2f27; }
+
+/* ----- カード ----- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-4);
+}
+
+/* ----- 札（カテゴリ・レベル）とピル（学習済みなどの状態） ----- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: .78rem;
+  font-weight: 800;
+}
+.chip--sight { background: var(--primary-soft); color: var(--primary-dark); }
+.chip--culture { background: var(--accent-soft); color: var(--accent-dark); }
+.chip--news { background: var(--teal-soft); color: #1f5a58; }
+
+.pill {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 800;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.pill--ok { color: var(--ok); }
+.pill--want { color: var(--accent-dark); }
+.pill--next { background: var(--accent); color: #fff; }
+
+/* ----- 一覧用のグリッド（画面幅に合わせて列数が変わる） ----- */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-3); }
+.grid--cards { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+@media (max-width: 760px) { .grid--cards { grid-template-columns: repeat(2, 1fr); } }
+
+/* ----- 国のカード（カードの絵を大きく見せる。リンク全体を押せる） ----- */
+.country-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  color: var(--ink);
+  transition: transform .15s, box-shadow .15s;
+}
+.country-card:hover { text-decoration: none; transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.country-card.is-current { box-shadow: 0 0 0 3px var(--accent), var(--shadow); }
+.country-card__visual {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(160deg, var(--c, var(--primary)), var(--navy-2));
+  display: grid;
+  place-items: center;
+}
+.country-card__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.country-card__code { color: #fff; font-family: var(--display); font-size: 3rem; font-weight: 700; opacity: .9; letter-spacing: .05em; }
+.country-card__body { padding: var(--space-2) var(--space-3) var(--space-3); }
+.country-card__name { font-size: 1.1rem; font-weight: 800; color: var(--navy); }
+.country-card__name-en { color: var(--muted); font-size: .85rem; }
+.country-card.is-stamped .country-card__visual::after {
+  content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 3px var(--ok); border-radius: inherit; pointer-events: none;
+}
+
+/* ----- 記事・ニュースのカード ----- */
+.trip-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  color: var(--ink);
+  transition: transform .15s, box-shadow .15s;
+}
+.trip-card:hover { text-decoration: none; transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.trip-card__thumb {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(150deg, var(--c, var(--primary)), var(--navy-2));
+  overflow: hidden;
+}
+.trip-card__label {
+  position: absolute; left: 12px; bottom: 10px; z-index: 1;
+  color: #fff; font-family: var(--display); font-weight: 600; font-size: 1.1rem; text-shadow: 0 1px 6px rgba(0, 0, 0, .5);
+}
+.trip-card__thumb::after {   /* 写真の上に、文字を読みやすくする暗いグラデーション */
+  content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 20, 36, .55), transparent 55%); pointer-events: none;
+}
+.trip-card__play {
+  position: absolute; z-index: 1; inset: 0; margin: auto; width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center; background: rgba(255, 255, 255, .92); color: var(--accent-dark);
+}
+.trip-card__tag { position: absolute; z-index: 1; left: 12px; top: 10px; padding: 2px 8px; border-radius: 6px; background: var(--accent); color: #fff; font-size: .7rem; font-weight: 800; letter-spacing: .08em; }
+.trip-card .pill { z-index: 2; }
+.trip-card__body { padding: var(--space-3); }
+.trip-card__body h3 { margin: 0 0 var(--space-1); }
+.trip-card__body p { margin: 0; }
+.trip-card__city { display: inline-flex; align-items: center; gap: 2px; }
+
+/* 観光地の写真（hydratePhotos が重ねる）。読み込めたらふわっと出す */
+.photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .5s; z-index: 0; }
+.photo-img.in { opacity: 1; }
+
+/* ----- 状態の表示（読み込み中、エラー、何もない） ----- */
+.state { text-align: center; padding: var(--space-5) var(--space-3); }
+.state.card { padding: var(--space-5) var(--space-4); }
+.state__illust { display: block; margin: 0 auto var(--space-3); height: auto; }
+.state--error p { color: var(--ink-2); }
+.spinner {
+  display: inline-block; vertical-align: -4px; width: 22px; height: 22px;
+  border: 3px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ----- 画面下のメッセージ ----- */
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--tabbar-h) + 16px); z-index: 60; transform: translate(-50%, 20px);
+  max-width: 90vw; padding: 10px var(--space-4); border-radius: 999px; background: var(--navy); color: #fff; font-weight: 700; font-size: .9rem;
+  opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+@media (min-width: 761px) { .toast { bottom: 24px; } }
+
+/* ----- 重ねて出すウィンドウ ----- */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: var(--space-3);
+  background: rgba(10, 20, 36, .55); opacity: 0; transition: opacity .2s;
+}
+.modal-backdrop.show { opacity: 1; }
+.modal {
+  width: min(100%, 460px); max-height: 90vh; overflow: auto; padding: var(--space-5) var(--space-4);
+  background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-lg); transform: translateY(12px) scale(.97); transition: transform .25s;
+}
+.modal-backdrop.show .modal { transform: none; }
+
+/* スタンプ・バッジ獲得のウィンドウ */
+.reward { text-align: center; }
+.reward__kicker { margin: 0 0 var(--space-3); color: var(--accent-dark); font-weight: 800; letter-spacing: .06em; }
+.reward__stamp, .reward__badge { display: grid; place-items: center; margin-bottom: var(--space-3); }
+.reward__actions { display: flex; justify-content: center; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-4); }
+.reward__stamp .stamp { animation: stamp-in .6s cubic-bezier(.2, 1.4, .4, 1) both; }
+.reward__badge .badge__medal { animation: badge-in .7s cubic-bezier(.2, 1.4, .4, 1) both; }
+@keyframes stamp-in { from { opacity: 0; transform: translateY(-80px) scale(1.8) rotate(var(--r, 0deg)); } to { opacity: 1; transform: rotate(var(--r, 0deg)); } }
+@keyframes badge-in { from { opacity: 0; transform: scale(.3) rotate(-30deg); } to { opacity: 1; transform: none; } }
+
+/* ----- バッジ ----- */
+.badge { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.badge__medal { position: relative; display: grid; place-items: center; }
+.badge--sm .badge__medal { width: 64px; height: 64px; }
+.badge--md .badge__medal { width: 96px; height: 96px; }
+.badge--lg .badge__medal { width: 150px; height: 150px; }
+.badge__img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(20, 35, 58, .25)); }
+.badge__fallback { color: var(--mustard); }
+.badge__lock { position: absolute; right: 2px; bottom: 2px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: #fff; }
+.badge.is-locked .badge__img { filter: grayscale(1) opacity(.45); }
+.badge__name { margin: var(--space-2) 0 0; font-weight: 800; font-size: .9rem; }
+.badge__desc { margin: 0; color: var(--muted); font-size: .78rem; }
+
+/* ----- スタンプ ----- */
+.stamp { position: relative; display: grid; place-items: center; text-align: center; }
+.stamp--sm { width: 84px; height: 84px; }
+.stamp--md { width: 130px; height: 130px; }
+.stamp--lg { width: 190px; height: 190px; }
+.stamp__img { width: 100%; height: 100%; object-fit: contain; transform: rotate(var(--r, -8deg)); filter: drop-shadow(0 2px 3px rgba(20, 35, 58, .2)); }
+.stamp__ring { position: absolute; inset: 6%; border-radius: 50%; border: 3px dashed var(--line); }
+.stamp__ring--solid { border: 4px double var(--c, var(--primary)); transform: rotate(var(--r, -8deg)); }
+.stamp__name { position: absolute; bottom: -22px; left: 0; right: 0; font-weight: 800; font-size: .8rem; color: var(--ink-2); }
+.stamp__date { position: absolute; bottom: -38px; left: 0; right: 0; font-size: .7rem; color: var(--muted); }
+.stamp--lg .stamp__name { bottom: -28px; font-size: .95rem; }
+.stamp--lg .stamp__date { bottom: -46px; }
+.stamp.is-empty .stamp__name { color: var(--muted); }
+
+/* ----- 演出用の層（紙吹雪が重なる。操作を邪魔しない） ----- */
+.fx-layer { position: fixed; inset: 0; z-index: 70; pointer-events: none; overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .country-card, .trip-card, .toast, .modal, .modal-backdrop, .photo-img { transition: none; }
+  .spinner { animation-duration: 2s; }
+  .reward__stamp .stamp, .reward__badge .badge__medal { animation: none; }
+}
+
+/* ----- API確認モードの印（開発用。main.js の mark が true のときだけ出る） ----- */
+.api-mark {
+  position: fixed; left: 8px; bottom: calc(var(--tabbar-h) + 8px); z-index: 80; max-width: calc(100vw - 16px);
+  padding: 6px 12px; border-radius: 10px; background: #b00020; color: #fff; font-size: .75rem; line-height: 1.4;
+}
+.api-mark a { color: #fff; text-decoration: underline; }
+@media (min-width: 761px) { .api-mark { bottom: 8px; } }

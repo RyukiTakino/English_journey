@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- 開発用：Live2D 風モデルを、パラメータを固定して 1 枚だけ表示する（動きの確認用。アプリ本体からはリンクしない）
+     http://localhost:8800/dev/rig-pose.html?model=guide2&p=angleX:30,eyeOpen:0&t=3&w=900&h=1100
+       model : assets/characters/<model>/<model>.json
+       p     : 固定するパラメータ（angleX, angleY, angleZ, eyeOpen, eyeBallX, eyeBallY, mouthForm, mouthOpen, breath, bodyX, bodyZ）
+       t     : 時間（秒）。髪の風の位相を決める
+       wind  : 髪の風の強さ（既定 1）
+       zoom  : 拡大（既定 1）。顔のアップは zoom=2.2&fy=0.3 など
+       fy    : 表示の縦位置（0=上寄せ〜1=下寄せ）
+       cx,cy : 画面の中央に置きたい点（絵の座標。例: 目の中心なら cx=870&cy=915）。指定すると fy は使わない
+       hide  : 隠す層の名前（カンマ区切り。例: hide=hair_front,strands_L）。不具合の原因の層を探すときに使う
+       bg    : 背景色（既定 #f5f1e8） -->
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Rig pose</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #f5f1e8; }
+    canvas { position: fixed; }
+  </style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <script type="module">
+    import { startItukiRig } from "../js/vendor/live2d-rig.js";
+    const q = new URLSearchParams(location.search);
+    document.body.style.background = q.get("bg") ?? "#f5f1e8";
+    const model = q.get("model") ?? "guide";
+    const params = q.get("p") ? Object.fromEntries(q.get("p").split(",").map((kv) => { const [k, v] = kv.split(":"); return [k, +v]; })) : undefined;
+    const zoom = +(q.get("zoom") ?? 1), fy = +(q.get("fy") ?? 1);
+    // hide: モデルの JSON を読むときに、指定された層を取り除く（fetch を一時的に差し替える）
+    const hide = (q.get("hide") ?? "").split(",").filter(Boolean);
+    if (hide.length) {
+      const realFetch = window.fetch;
+      window.fetch = async (url, ...rest) => {
+        const res = await realFetch(url, ...rest);
+        if (!String(url).endsWith(".json")) return res;
+        const json = await res.json();
+        json.layers = json.layers.filter((l) => !hide.includes(l.name));
+        return new Response(JSON.stringify(json));
+      };
+    }
+    window.__ready = false;
+    startItukiRig(document.getElementById("c"), {
+      modelUrl: `../assets/characters/${model}/${model}.json`,
+      params, time: q.has("t") ? +q.get("t") : undefined, wind: q.has("wind") ? +q.get("wind") : undefined,
+      // 絵全体を、画面に収める（zoom で拡大。fy で縦の位置）
+      layout: (w, h, view) => {
+        const vw = view[2] - view[0], vh = view[3] - view[1];
+        const s = Math.min(w / vw, h / vh) * zoom;
+        if (q.has("cx")) return { s, ox: w / 2 - +q.get("cx") * s, oy: h / 2 - +q.get("cy") * s };
+        return { s, ox: (w - vw * s) / 2 - view[0] * s, oy: (h - vh * s) * fy - view[1] * s };
+      },
+      edges: (rig) => { const w = (rig.view[2] - rig.view[0]) * 0.1; return { left: w, right: w }; },
+      motion: q.has("calm") ? { rigid: true, head: 0.7, tilt: 0, body: 0, mouth: 0 } : undefined,
+      look: () => null
+    }).then(() => { window.__ready = true; }).catch((e) => { document.title = "ERR " + e.message; console.error(e); });
+  </script>
+</body>
+</html>

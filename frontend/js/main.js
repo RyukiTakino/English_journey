@@ -1,0 +1,120 @@
+/**
+ * 起動・組み立て
+ *
+ * 層：（最外周。各層の部品を作ってつなぐ）
+ * 担当：フロント
+ *
+ * ここでだけ「どの実装を使うか」を決める。ほかのファイルは実装の違いを知らない。
+ */
+import { EventBus } from "./application/events.js";
+import { Store } from "./application/store.js";
+import { CatalogActions } from "./application/actions/CatalogActions.js";
+import { ProfileActions } from "./application/actions/ProfileActions.js";
+import { StudyActions } from "./application/actions/StudyActions.js";
+import { WordActions } from "./application/actions/WordActions.js";
+import { ApiClient } from "./infrastructure/api/ApiClient.js";
+import { LocalApi } from "./infrastructure/api/LocalApi.js";
+import { HttpApi } from "./infrastructure/api/HttpApi.js";
+import { HybridApi } from "./infrastructure/api/HybridApi.js";
+import { Settings } from "./infrastructure/storage.js";
+import { Sound } from "./infrastructure/sound.js";
+import { Guide } from "./ui/components/Guide.js";
+import { AppShell } from "./ui/components/AppShell.js";
+import { Toast } from "./ui/components/Toast.js";
+import { Modal } from "./ui/components/Modal.js";
+import { Confetti } from "./ui/effects/Confetti.js";
+import { EffectsDirector } from "./ui/effects/EffectsDirector.js";
+import { RewardPresenter } from "./ui/effects/RewardPresenter.js";
+import { Router } from "./ui/router.js";
+import { HomeScene } from "./ui/scenes/HomeScene.js";
+import { CountryScene } from "./ui/scenes/CountryScene.js";
+import { ReadingScene } from "./ui/scenes/ReadingScene.js";
+import { ListeningScene } from "./ui/scenes/ListeningScene.js";
+import { MapScene } from "./ui/scenes/MapScene.js";
+import { TourScene } from "./ui/scenes/TourScene.js";
+import { WordsScene } from "./ui/scenes/WordsScene.js";
+import { MyPageScene } from "./ui/scenes/MyPageScene.js";
+
+// ----- 部品を作る（C# でいう DI コンテナの手動版） -----
+
+// 出来事の通知係
+const events = new EventBus();
+
+// 今の状態の入れ物
+const store = new Store();
+
+// 通信の窓口。使う transport（運び役）を、URL の ?api= で切り替えられる（既定は hybrid）。
+//   ?api=local   … モックだけ（サーバー無しで全画面が動く）
+//   ?api=hybrid  … できた API だけ本物のサーバー、残りはモック。サーバーが落ちていたら、自動でモックに切り替わる（既定）
+//   ?api=http    … 本物のサーバーだけ（バックエンドが全部出来たらこれ）
+// 本物のサーバーは、同じオリジンの /api/ を使う（開発サーバー tools/dev/serve.py が、Flask へ中継する）。
+// TODO(Backend): 全 API が出来たら、既定を http にして、HybridApi と LocalApi の使用をやめる。
+const params = new URLSearchParams(location.search);
+const apiMode = params.get("api") ?? "hybrid";
+// ?mark=1 … 確認モード：モック由来の文章を "Test" にする（どこが本物のサーバーから取れているかを見分けるため。今は既定でオン）
+//   ?mark=0 で、ふだんの表示（モックの文章）に戻る。
+// TODO(フロント): バックエンドが出来上がったら、既定をオフにする。
+const mark = params.get("mark") !== "0" && apiMode === "hybrid";
+const transport = { local: () => new LocalApi(), http: () => new HttpApi(""), hybrid: () => new HybridApi("", { mark }) }[apiMode]?.() ?? new HybridApi("", { mark });
+const api = new ApiClient(transport);
+
+// 確認モードのとき、画面の左下に印を出す
+if (mark) {
+  const badge = document.createElement("div");
+  badge.className = "api-mark";
+  badge.innerHTML = 'API確認モード：<b>Test</b> = モック／それ以外の文章 = サーバーから取得　<a href="?mark=0">オフ</a>';
+  document.body.append(badge);
+}
+
+// 操作の処理。必要な道具をここで渡す
+const profile = new ProfileActions(api, store, events);
+const actions = {
+  catalog: new CatalogActions(api, store, events),
+  profile,
+  study: new StudyActions(api, events, profile),
+  words: new WordActions(api, events, profile)
+};
+
+// 端末に保存する設定、音、案内キャラクター（どれもアプリ全体で1つだけ作る）
+const settings = new Settings();
+const sound = new Sound(settings);
+const guide = new Guide(document.getElementById("guide"));
+const toast = new Toast(document.getElementById("toast"));
+const modal = new Modal();
+
+// 画面に渡す道具一式。api は渡さない（画面は actions 経由で通信する）
+const ctx = { store, events, actions, settings, sound, guide, toast, modal };
+
+// ----- URL と画面の対応表。画面を増やすときは、ここに1行足す -----
+// pattern は URL の # 以降に対する正規表現。() で囲んだ部分が、画面の params として渡される
+//   例: #/country/uk なら、下の2つ目に一致して params = ["uk"]
+// name は演出の切り替えに使う画面の種類（ui/effects/EffectsDirector.js の SCENES と対応）
+const ROUTES = [
+  { name: "home", pattern: /^\/$/, scene: HomeScene },
+  { name: "country", pattern: /^\/country\/([^/]+)$/, scene: CountryScene },
+  { name: "read", pattern: /^\/read\/([^/]+)$/, scene: ReadingScene },
+  { name: "listen", pattern: /^\/listen\/([^/]+)$/, scene: ListeningScene },
+  { name: "map", pattern: /^\/map$/, scene: MapScene },
+  { name: "tour", pattern: /^\/tour$/, scene: TourScene },
+  { name: "words", pattern: /^\/words$/, scene: WordsScene },
+  { name: "me", pattern: /^\/me$/, scene: MyPageScene }
+];
+
+// 外枠（ナビ・学習の記録・音のボタン）
+new AppShell(ctx, {
+  nav: document.getElementById("nav"),
+  tabbar: document.getElementById("tabbar"),
+  hud: document.getElementById("hud"),
+  sound: document.getElementById("sound-toggles")
+}).start();
+
+// 出来事を聞いて、音とキャラクターを動かす係
+new EffectsDirector(events, sound, guide).start();
+
+// スタンプ・バッジを獲得したときの、ウィンドウと紙吹雪
+new RewardPresenter(ctx, modal, new Confetti(document.getElementById("fx-layer"))).start();
+
+// キャラクターの描画を始める（読み込みを待たずに、画面の表示を先に進める）
+guide.start();
+
+new Router(ctx, ROUTES, document.getElementById("app")).start();
