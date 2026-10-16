@@ -1,10 +1,16 @@
 import sqlite3
 
-#データベースに接続
-conn = sqlite3.connect("database/english.db")
+from pathlib import Path
+
+# このPythonファイルと同じフォルダのenglish.dbを指定
+DB_PATH = Path(__file__).resolve().parent / "english.db"
+
+# データベースに接続
+conn = sqlite3.connect(DB_PATH)
+
 
 #englsish.dbはsqliteで作成するデータベースのファイル名
-#国、観光地のデータを入れる
+# 国・地域・カテゴリのテーブルを作成する
 conn.execute("PRAGMA foreign_keys = ON")
 cursor = conn.cursor()
 
@@ -19,18 +25,30 @@ country_name_en TEXT NOT NULL UNIQUE)
 """)
 
 
+
+
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS trips(
+CREATE TABLE IF NOT EXISTS regions(
 id INTEGER PRIMARY KEY,
-trip_name_ja TEXT NOT NULL,
-trip_name_en TEXT NOT NULL,
+region_name_ja TEXT NOT NULL,
+region_name_en TEXT NOT NULL,
 country_id INTEGER NOT NULL,
-wiki_page_title TEXt,
 FOREIGN KEY (country_id) REFERENCES countries(id),
-UNIQUE(country_id,trip_name_ja),
-UNIQUE(country_id,trip_name_en)
+UNIQUE(country_id, region_name_ja),
+UNIQUE(country_id, region_name_en)
 )
 """)
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS categories(
+id INTEGER PRIMARY KEY,
+category_name_ja TEXT NOT NULL UNIQUE,
+category_name_en TEXT NOT NULL UNIQUE
+)
+""")
+
+
+
 
 #変更の確定
 conn.commit()
@@ -41,7 +59,7 @@ FROM sqlite_master
 WHERE type = 'table'
 """)
 
-# print("テーブル一覧:", cursor.fetchall())
+print("テーブル一覧:", cursor.fetchall())
 
 # cursor.execute("PRAGMA foreign_keys")
 # print(cursor.fetchall())
@@ -49,11 +67,7 @@ WHERE type = 'table'
 # cursor.execute("PRAGMA table_info(countries)")
 # print("countries:", cursor.fetchall())
 
-# cursor.execute("PRAGMA table_info(trips)")
-# print("trips:", cursor.fetchall())
 
-# cursor.execute("PRAGMA index_list(trips)")
-# print("UNIQUE情報:", cursor.fetchall())
 #接続を終了
 conn.close()
 

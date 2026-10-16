@@ -1,7 +1,10 @@
 import sqlite3
 
-# データベースに接続
-conn = sqlite3.connect("database/english.db")
+from pathlib import Path
+
+DB_PATH = Path(__file__).resolve().parent / "english.db"
+
+conn = sqlite3.connect(DB_PATH)
 
 # 外部キー制約を有効化
 conn.execute("PRAGMA foreign_keys = ON")

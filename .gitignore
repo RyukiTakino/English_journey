@@ -225,3 +225,7 @@ __marimo__/
 # 層ごとの PSD（各 約25MB）。履歴を重くしないよう、共有しない。元は D:\WineEngine\Scratch\source-art\ にある
 /frontend/assets/source-art/**/*.psd
 /frontend/assets/source-art/characters/
+
+
+# SQLiteデータベース（各自のローカル環境で作成）
+/database/english.db

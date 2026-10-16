@@ -1,39 +1,16 @@
 
-#データベースの中身の確認
-# import sqlite3
+# 地域検索の動作確認
+from queries import get_regions_by_country
 
-#  # データベースに接続
-# conn = sqlite3.connect("database/english.db")
-# cursor = conn.cursor()
+# 日本語の国名を入力
+country_name = input("国名を日本語で入力してください：").strip()
 
-#データベースの中身の確認
-# cursor.execute("""
-# SELECT
-#     countries.country_name_ja,
-#     trips.trip_name_ja,
-#     trips.trip_name_en
-# FROM countries
-# INNER JOIN trips
-# ON countries.id = trips.country_id
-# ORDER BY countries.id, trips.id
-# """)
+# 入力された国の地域を取得
+regions = get_regions_by_country(country_name)
 
-# rows = cursor.fetchall()
-
-# for row in rows:
-#     print(row)
-
-# print("合計:", len(rows), "件")
-
-from queries import get_trips_by_country
-
-country_name = input("国名を日本語で入力してください： ").strip()
-
-
-trips = get_trips_by_country(country_name)
-
-if trips:
-    for trip in trips:
-        print(trip)
+# 検索結果を表示
+if regions:
+    for region in regions:
+        print(region)
 else:
     print("存在しません")
