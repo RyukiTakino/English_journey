@@ -23,8 +23,8 @@ def get_countries():
     return countries
 
 
-def get_trips_by_country(country_name):
-    """指定した国の観光地一覧を取得する"""
+def get_regions_by_country(country_name):
+    """指定した国の地域一覧を取得する"""
 
     with sqlite3.connect(DB_PATH) as conn:
         conn.row_factory = sqlite3.Row
@@ -32,16 +32,33 @@ def get_trips_by_country(country_name):
 
         cursor.execute("""
             SELECT
-                countries.country_name_ja,
-                trips.trip_name_ja,
-                trips.trip_name_en,
-                trips.wiki_page_title
+             countries.country_name_ja,
+                regions.region_name_ja,
+                regions.region_name_en
             FROM countries
-            INNER JOIN trips
-                ON countries.id = trips.country_id
+            INNER JOIN regions
+                ON countries.id = regions.country_id
             WHERE countries.country_name_ja = ?
+            ORDER BY regions.id
         """, (country_name,))
 
-        trips = [dict(row) for row in cursor.fetchall()]
+        regions = [dict(row) for row in cursor.fetchall()]
 
-    return trips
+    return regions
+
+def get_categories():
+    """登録されているカテゴリ一覧を取得する"""  
+
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        SELECT id, category_name_ja,category_name_en
+        FROM categories
+        ORDER BY id
+        """)
+
+        categories = [dict(row) for row in cursor.fetchall()]
+
+    return categories
