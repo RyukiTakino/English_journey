@@ -11,12 +11,12 @@
  */
 import { BaseScene } from "./BaseScene.js";
 import { esc } from "../components/html.js";
-import { tripCard, newsCard } from "../components/cards.js";
+import { tripCard, newsCard, wikipediaArticleCard } from "../components/cards.js";
 import { stampView } from "../components/StampView.js";
 import { icon } from "../components/icons.js";
 import { hydratePhotos } from "../assets.js";
 import { stampsById } from "../../domain/progress.js";
-import { CATEGORY, STAMP_RULE_TEXT } from "../../domain/constants.js";
+import { STAMP_RULE_TEXT } from "../../domain/constants.js";
 
 export class CountryScene extends BaseScene {
   /**
@@ -28,15 +28,19 @@ export class CountryScene extends BaseScene {
   #selectedCategory = "";
   #showArticles = false;
   #categories = [];
+  #articles = [];
+  #articleLoading = false;
+  #articleError = "";
+  #openedArticle = null;
+  #articleContentLoading = false;
 
   async load() {
   const [countryId] = this.params;
   const { catalog, profile } = this.ctx.actions;
 
-  const [country, , , categories] = await Promise.all([
+  await Promise.all([catalog.loadCountries(), profile.loadMe()]);
+  const [country, categories] = await Promise.all([
     catalog.getCountry(countryId),
-    catalog.loadCountries(),
-    profile.loadMe(),
     catalog.getCategories()
   ]);
 
@@ -97,13 +101,16 @@ export class CountryScene extends BaseScene {
   mount(root) {
     hydratePhotos(root, this.ctx);
 
-    const onSelect = (e) => {
+    const onSelect = async(e) => {
       const cityButton = e.target.closest("[data-city]");
       const categoryButton = e.target.closest("[data-category]");
       const backButton = e.target.closest("[data-selection-back]");
       if (backButton) {
         this.#showArticles = false;
         this.#selectedCategory = "";
+        this.#articles = [];
+        this.#openedArticle = null;
+        this.#articleError = "";
         if (backButton.dataset.selectionBack === "city") this.#selectedCity = "";
         this.#refreshArticleSelector(root);
         return;
@@ -111,18 +118,45 @@ export class CountryScene extends BaseScene {
       const showButton = e.target.closest("[data-show-articles]");
       if (showButton && !showButton.disabled && this.#selectedCity && this.#selectedCategory) {
         this.#showArticles = true;
+        this.#articleLoading = true;
+        this.#articleError = "";
+        this.#articles = [];
+        this.#openedArticle = null;
         this.#refreshArticleSelector(root);
-        root.querySelector("#country-about-title")?.focus();
+        try {
+          const region = (this.#country.regions ?? []).find((r) => r.name === this.#selectedCity);
+          const cityEn = region?.nameEn ?? this.#selectedCity;
+          const keyword = `${cityEn} ${this.#selectedCategory}`;
+          this.#articles = await this.ctx.actions.catalog.searchArticles(this.#country.nameEn, keyword);
+        } catch (err) {
+          console.error(err);
+          this.#articleError = err.message || "記事の検索に失敗しました。";
+        } finally {
+          this.#articleLoading = false;
+          this.#refreshArticleSelector(root);
+        }
+        return;
+      }
+
+      const readButton = e.target.closest("[data-wiki-title]");
+      if (readButton && !readButton.disabled) {
+        const title = readButton.dataset.wikiTitle;
+        // 本文は専用画面で表示する
+        location.hash = `#/article/${encodeURIComponent(this.#country.id)}/${encodeURIComponent(title)}`;
         return;
       }
       if (cityButton) {
         this.#selectedCity = cityButton.dataset.city;
         this.#selectedCategory = "";
         this.#showArticles = false;
+        this.#articles = [];
+        this.#openedArticle = null;
         this.#refreshArticleSelector(root);
       } else if (categoryButton) {
         this.#selectedCategory = categoryButton.dataset.category;
         this.#showArticles = false;
+        this.#articles = [];
+        this.#openedArticle = null;
         this.#refreshArticleSelector(root);
       }
     };
@@ -168,7 +202,7 @@ export class CountryScene extends BaseScene {
       (region) => region.name
     );
     const categories = this.#categories;
-    const categoryLabel = CATEGORY[this.#selectedCategory]?.label ?? this.#selectedCategory;
+    const categoryLabel = this.#categories.find((c) => c.nameEn === this.#selectedCategory)?.name ?? this.#selectedCategory;
     const title = !this.#selectedCity ? "都市を選んでください" : !this.#selectedCategory ? "カテゴリを選んでください" : "選択した内容で記事を表示";
     return `
       ${!this.#selectedCity ? `<a class="back-link" href="#/">${icon("back", 16)} 国の選択に戻る</a>` : `<button type="button" class="back-link" data-selection-back="${this.#selectedCategory ? "category" : "city"}">${icon("back", 16)} ${this.#selectedCategory ? "カテゴリ" : "都市"}の選択に戻る</button>`}
@@ -200,12 +234,13 @@ export class CountryScene extends BaseScene {
   }
 
   #articleSelector(country, me) {
-    const filtered = (country.trips ?? []).filter((trip) => trip.city === this.#selectedCity && trip.category === this.#selectedCategory);
-    const categoryLabel = CATEGORY[this.#selectedCategory]?.label ?? this.#selectedCategory;
+    const selectedCategory = this.#categories.find((c) => c.nameEn === this.#selectedCategory);
+    const categoryLabel = selectedCategory?.name ?? this.#selectedCategory;
     return `
       <section class="country-section country-selector card" aria-labelledby="country-trips-title">
-        <h2 id="country-trips-title" class="world-heading">${esc(this.#selectedCity)} · ${esc(categoryLabel)}の記事（${filtered.length}件）</h2>
-        ${filtered.length ? `<ul class="country-trips">${filtered.map((trip) => this.#tripItem(trip, country, me)).join("")}</ul>` : `<p class="muted">選択した条件の記事はありません。</p>`}
+        <h2 id="country-trips-title" class="world-heading">${esc(this.#selectedCity)} · ${esc(categoryLabel)}の記事${this.#articleLoading ? "（検索中）" : `（${this.#articles.length}件）`}</h2>
+        ${this.#articleError ? `<p class="muted" role="alert">${esc(this.#articleError)}</p>` : ""}
+        ${this.#articleLoading ? `<p class="muted">Wikipediaの記事を検索しています...</p>` : this.#articles.length ? `<ul class="country-trips">${this.#articles.map((article, index) => wikipediaArticleCard(article, index)).join("")}</ul>` : !this.#articleError ? `<p class="muted">記事が見つかりませんでした。別のカテゴリをお試しください。</p>` : ""}
       </section>`;
   }
 

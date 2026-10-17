@@ -116,16 +116,6 @@ export class ApiClient {
   }
 
   /**
-   * GET /api/categories … 記事のカテゴリの一覧（食事・建築・文化）
-   * @returns {Promise<import("../../domain/models.js").Category[]>}
-   *
-   * TODO(Backend): GET /api/categories は用意済み（app.py）。返すキーを camelCase（name / nameEn）にしてほしい。
-   */
-  getCategories() {
-    return this.#get("/api/categories");
-  }
-
-  /**
    * GET /api/countries/{countryId} … 国の詳細（一覧の内容 + 説明文 info）
    * @param {string} countryId 例: "uk"
    * @returns {Promise<import("../../domain/models.js").CountryDetail>}
@@ -137,6 +127,21 @@ export class ApiClient {
   getCountry(countryId) {
     // id に / や ? が含まれても URL が壊れないよう、encodeURIComponent で変換する
     return this.#get(`/api/countries/${encodeURIComponent(countryId)}`);
+  }
+
+  /** GET /api/categories … カテゴリ一覧 */
+  getCategories() {
+    return this.#get("/api/categories");
+  }
+
+  /** GET /api/articles … Wikipediaの記事検索 */
+  getArticles(country, keyword = "") {
+    return this.#get(`/api/articles?country=${encodeURIComponent(country)}&keyword=${encodeURIComponent(keyword)}`);
+  }
+
+  /** GET /api/article … Wikipediaの記事本文 */
+  getArticle(title) {
+    return this.#get(`/api/article?title=${encodeURIComponent(title)}`);
   }
 
   /**

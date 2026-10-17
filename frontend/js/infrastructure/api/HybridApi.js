@@ -10,9 +10,7 @@
  *
  * ■ いま本物にしているもの（バックエンド担当が作った API。app.py）
  *   GET /api/countries          … 国の一覧（DB）。足りない項目（国コード・座標など）は、モックの値で補う
- *   GET /api/countries/{id}     … 国の詳細。説明文（info.extract）を GET /api/article（Wikipedia の本文）から、
- *                                 地域（regions）を GET /api/regions（DB）から作る
- *   GET /api/categories         … 記事のカテゴリ（食事・建築・文化。DB）
+ *   GET /api/countries/{id}     … 国の詳細。説明文（info.extract）を、GET /api/article（Wikipedia の本文）から作る
  *
  * ■ 本物にする予定のもの（まだ無い API）は、REAL_ROUTES に足していく。
  *   足し方: 「メソッド 正規表現」と、結果をフロントの形に直す関数を書く。
@@ -98,9 +96,9 @@ export class HybridApi {
       try {
         return await route();
       } catch (e) {
-        // サーバーが落ちている・繋がらない → モックにまかせる。サーバーが「NOT_FOUND」などを返したときは、そのまま伝える
-        // 「HTTP_404」などは、サーバーが「その URL は知らない」と返した場合（API がまだ無い・静的な配信だけのサーバーなど）。
-        // サーバーが JSON で返した本物のエラー（code: "NOT_FOUND" など）とは区別して、モックに切り替える
+        // Wikipedia検索・本文取得には同等のモックがないため、通信エラーは画面側へ返す。
+        const pathname = new URL(path, "http://local").pathname;
+        if (pathname === "/api/articles" || pathname === "/api/article") throw e;
         const noApi = e instanceof ApiError && /^HTTP_(404|405)$/.test(e.code);
         if (!(e instanceof ApiError) || noApi || e.code === "NETWORK" || e.status === 502 || e.status === 0 || e.status >= 500) {
           console.warn("[api] サーバーを使えないので、モックを使います:", e.message);
@@ -120,11 +118,27 @@ export class HybridApi {
 
   /** パスに対応する「本物の取得処理」を返す。本物にしていない API は null */
   #route(path) {
-    if (path === "/api/countries") return () => this.#countries();
-    if (path === "/api/categories") return () => this.#categories();
-    const m = path.match(/^\/api\/countries\/([^/]+)$/);
+    const url = new URL(path, "http://local");
+    const pathname = url.pathname;
+    if (pathname === "/api/countries") return () => this.#countries();
+    if (pathname === "/api/categories") return () => this.#categories();
+    if (pathname === "/api/articles") {
+      return () => this.#http.request("GET", path);
+    }
+    if (pathname === "/api/article") {
+      return () => this.#http.request("GET", path);
+    }
+    if (pathname === "/api/regions") {
+      return () => this.#http.request("GET", path);
+    }
+    const m = pathname.match(/^\/api\/countries\/([^/]+)$/);
     if (m) return () => this.#country(decodeURIComponent(m[1]));
     return null;
+  }
+
+  async #categories() {
+    const server = await this.#http.request("GET", "/api/categories");
+    return server.map((c) => ({ id: c.id, name: c.category_name_ja, nameEn: c.category_name_en }));
   }
 
   /** 国の一覧：サーバー（DB）の国を、モックの詳しいデータと合わせる */
@@ -154,12 +168,6 @@ export class HybridApi {
     return list.sort((a, b) => a.tourOrder - b.tourOrder);
   }
 
-  /** カテゴリ：サーバー（DB）のキーを、フロントの形（name / nameEn）に直す */
-  async #categories() {
-    const server = await this.#http.request("GET", "/api/categories");
-    return server.map((c) => ({ id: c.id, name: c.category_name_ja, nameEn: c.category_name_en }));
-  }
-
   /** 国の詳細：モックの詳細に、サーバー（Wikipedia）の説明文を重ねる */
   async #country(countryId) {
     let detail = await this.#local.request("GET", `/api/countries/${encodeURIComponent(countryId)}`);
@@ -171,7 +179,6 @@ export class HybridApi {
         detail.nameEn = real.country_name_en;
       }
     }
-    // 国の地域（都市）：サーバー（DB）から。国名（日本語）で問い合わせる
     if (real) {
       try {
         const regions = await this.#http.request("GET", `/api/regions?country=${encodeURIComponent(real.country_name_ja)}`);

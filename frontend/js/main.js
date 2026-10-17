@@ -29,6 +29,7 @@ import { Router } from "./ui/router.js";
 import { HomeScene } from "./ui/scenes/HomeScene.js";
 import { CountryScene } from "./ui/scenes/CountryScene.js";
 import { ReadingScene } from "./ui/scenes/ReadingScene.js";
+import { WikipediaArticleScene } from "./ui/scenes/WikipediaArticleScene.js";
 import { ListeningScene } from "./ui/scenes/ListeningScene.js";
 import { MapScene } from "./ui/scenes/MapScene.js";
 import { TourScene } from "./ui/scenes/TourScene.js";
@@ -100,6 +101,7 @@ const ctx = { store, events, actions, settings, sound, guide, toast, modal };
 const ROUTES = [
   { name: "home", pattern: /^\/$/, scene: HomeScene },
   { name: "country", pattern: /^\/country\/([^/]+)$/, scene: CountryScene },
+  { name: "wikipedia-article", pattern: /^\/article\/([^/]+)\/(.+)$/, scene: WikipediaArticleScene },
   { name: "read", pattern: /^\/read\/([^/]+)$/, scene: ReadingScene },
   { name: "listen", pattern: /^\/listen\/([^/]+)$/, scene: ListeningScene },
   { name: "map", pattern: /^\/map$/, scene: MapScene },

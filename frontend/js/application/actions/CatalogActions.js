@@ -20,8 +20,6 @@ export class CatalogActions {
   #events;
   /** 画像の URL のキャッシュ。同じ画像を何度も問い合わせない。キー → Promise<string|null> */
   #photos = new Map();
-  /** カテゴリの一覧のキャッシュ。Promise<Category[]> */
-  #categories = null;
 
   /**
    * 必要な道具を外から受け取る（依存性の注入）。自分で new しないので、テストや差し替えが楽になる。
@@ -64,13 +62,19 @@ export class CatalogActions {
     return this.#api.getCountry(countryId);
   }
 
-  /**
-   * 記事のカテゴリの一覧（食事・建築・文化）。1 回だけ取得して、使い回す。失敗したときは空の配列を返す（画面は止めない）。
-   * @returns {Promise<import("../../domain/models.js").Category[]>}
-   */
-  getCategories() {
-    this.#categories ||= this.#api.getCategories().catch(() => []);
-    return this.#categories;
+    /** Wikipedia記事のカテゴリ一覧を取得する */
+  async getCategories() {
+    return await this.#api.getCategories();
+  }
+
+  /** Wikipediaの記事一覧を検索する。countryは英語の国名、keywordは英語の検索語。 */
+  searchArticles(country, keyword) {
+    return this.#api.getArticles(country, keyword);
+  }
+
+  /** Wikipediaの記事本文を取得する。 */
+  getArticle(title) {
+    return this.#api.getArticle(title);
   }
 
   /**

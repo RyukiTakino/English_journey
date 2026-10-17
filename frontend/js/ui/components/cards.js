@@ -92,3 +92,24 @@ export function newsCard(country, me) {
       </div>
     </a>`;
 }
+
+
+/** Wikipedia検索結果用カード。既存の trip-card の見た目を流用する。 */
+export function wikipediaArticleCard(article, index = 0) {
+  return `
+    <li class="country-trip wikipedia-trip">
+      <article class="trip-card">
+        <div class="trip-card__thumb" style="--c:#2f5d8a">
+          <span class="trip-card__label">WIKIPEDIA</span>
+          <span class="trip-card__tag">ARTICLE ${index + 1}</span>
+        </div>
+        <div class="trip-card__body">
+          <div class="meta-row"><span class="chip chip--news">Wikipedia</span></div>
+          <h3>${esc(article.title)}</h3>
+          <p class="muted small">${esc((article.description || "").replace(/<[^>]*>/g, " ").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">"))}</p>
+          <button type="button" class="btn btn--teal" data-wiki-title="${esc(article.title)}">本文を読む ${icon("next", 16)}</button>
+          <p class="small"><a href="${esc(article.url)}" target="_blank" rel="noopener noreferrer">Wikipediaで開く ↗</a></p>
+        </div>
+      </article>
+    </li>`;
+}
