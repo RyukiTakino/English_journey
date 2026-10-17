@@ -1,6 +1,6 @@
 import requests
-
 from flask import Flask, jsonify, request
+from services.gemini_services import generate_quiz, grade_summary
 from database.queries import (
     get_categories,
     get_countries,
@@ -110,6 +110,56 @@ def article():
 
         return jsonify({
             "error": "Wikipedia APIとの通信に失敗しました"
+        }), 502
+
+@app.route("/api/quiz", methods=["POST"])
+def create_quiz():
+    data = request.get_json(silent=True) or {}
+
+    title = data.get("title", "").strip()
+    content = data.get("content", "").strip()
+
+    if not title or not content:
+        return jsonify({
+            "error": "記事タイトルと本文を指定してください"
+        }), 400
+
+    try:
+        quiz = generate_quiz(title, content)
+        return jsonify(quiz)
+
+    except Exception:
+        app.logger.exception("Quiz generation failed")
+        return jsonify({
+            "error": "問題の生成に失敗しました"
+        }), 502
+
+@app.route("/api/summary/grade", methods=["POST"])
+def grade_article_summary():
+    data = request.get_json(silent=True) or {}
+
+    title = data.get("title", "").strip()
+    content = data.get("content", "").strip()
+    summary = data.get("summary", "").strip()
+
+    if not title or not content or not summary:
+        return jsonify({
+            "error": "記事タイトル・記事本文・英語の要約を入力してください"
+        }), 400
+
+    if len(summary) > 5000:
+        return jsonify({
+            "error": "要約は5000文字以内で入力してください"
+        }), 400
+
+    try:
+        result = grade_summary(title, content, summary)
+        return jsonify(result)
+
+    except Exception:
+        app.logger.exception("Summary grading failed")
+        return jsonify({
+            "error": "要約の採点に失敗しました。もう一度お試しください。"
         }), 502
 
 if __name__ == "__main__":
