@@ -243,4 +243,6 @@
   padding: 6px 12px; border-radius: 10px; background: #b00020; color: #fff; font-size: .75rem; line-height: 1.4;
 }
 .api-mark a { color: #fff; text-decoration: underline; }
+.api-mark.is-down { background: #8a4b00; }   /* サーバーに繋がっていないときは、色を変える */
+.api-mark code { background: rgba(255, 255, 255, .2); padding: 0 4px; border-radius: 4px; }
 @media (min-width: 761px) { .api-mark { bottom: 8px; } }

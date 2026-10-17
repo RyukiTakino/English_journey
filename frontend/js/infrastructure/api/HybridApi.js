@@ -10,7 +10,9 @@
  *
  * ■ いま本物にしているもの（バックエンド担当が作った API。app.py）
  *   GET /api/countries          … 国の一覧（DB）。足りない項目（国コード・座標など）は、モックの値で補う
- *   GET /api/countries/{id}     … 国の詳細。説明文（info.extract）を、GET /api/article（Wikipedia の本文）から作る
+ *   GET /api/countries/{id}     … 国の詳細。説明文（info.extract）を GET /api/article（Wikipedia の本文）から、
+ *                                 地域（regions）を GET /api/regions（DB）から作る
+ *   GET /api/categories         … 記事のカテゴリ（食事・建築・文化。DB）
  *
  * ■ 本物にする予定のもの（まだ無い API）は、REAL_ROUTES に足していく。
  *   足し方: 「メソッド 正規表現」と、結果をフロントの形に直す関数を書く。
@@ -119,6 +121,7 @@ export class HybridApi {
   /** パスに対応する「本物の取得処理」を返す。本物にしていない API は null */
   #route(path) {
     if (path === "/api/countries") return () => this.#countries();
+    if (path === "/api/categories") return () => this.#categories();
     const m = path.match(/^\/api\/countries\/([^/]+)$/);
     if (m) return () => this.#country(decodeURIComponent(m[1]));
     return null;
@@ -151,6 +154,12 @@ export class HybridApi {
     return list.sort((a, b) => a.tourOrder - b.tourOrder);
   }
 
+  /** カテゴリ：サーバー（DB）のキーを、フロントの形（name / nameEn）に直す */
+  async #categories() {
+    const server = await this.#http.request("GET", "/api/categories");
+    return server.map((c) => ({ id: c.id, name: c.category_name_ja, nameEn: c.category_name_en }));
+  }
+
   /** 国の詳細：モックの詳細に、サーバー（Wikipedia）の説明文を重ねる */
   async #country(countryId) {
     let detail = await this.#local.request("GET", `/api/countries/${encodeURIComponent(countryId)}`);
@@ -160,6 +169,15 @@ export class HybridApi {
       if (real) {   // 名前は、サーバーから取れている（国の一覧の API）
         detail.name = real.country_name_ja;
         detail.nameEn = real.country_name_en;
+      }
+    }
+    // 国の地域（都市）：サーバー（DB）から。国名（日本語）で問い合わせる
+    if (real) {
+      try {
+        const regions = await this.#http.request("GET", `/api/regions?country=${encodeURIComponent(real.country_name_ja)}`);
+        detail.regions = regions.map((r) => ({ name: r.region_name_ja, nameEn: r.region_name_en }));
+      } catch (e) {
+        if (e instanceof ApiError && (e.code === "NETWORK" || e.status >= 500)) throw e;
       }
     }
     try {

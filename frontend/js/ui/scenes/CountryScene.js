@@ -16,7 +16,7 @@ import { stampView } from "../components/StampView.js";
 import { icon } from "../components/icons.js";
 import { hydratePhotos } from "../assets.js";
 import { stampsById } from "../../domain/progress.js";
-import { STAMP_RULE_TEXT } from "../../domain/constants.js";
+import { CATEGORY, STAMP_RULE_TEXT } from "../../domain/constants.js";
 
 export class CountryScene extends BaseScene {
   /**
@@ -24,6 +24,9 @@ export class CountryScene extends BaseScene {
    * @type {import("../../domain/models.js").CountryDetail | null}
    */
   #country = null;
+  #selectedCity = "";
+  #selectedCategory = "";
+  #showArticles = false;
 
   async load() {
     // params は URL の () で囲んだ部分。#/country/uk なら ["uk"]
@@ -36,11 +39,12 @@ export class CountryScene extends BaseScene {
 
   render() {
     const c = this.#country;
+    if (!this.#showArticles) return this.#selectionScreen(c);
     const { me } = this.ctx.store;
     const earnedAt = stampsById(me)[c.id] ?? null;
     const info = c.info ?? {};
     return `
-      <a class="back-link" href="#/">${icon("back", 16)} ホームに戻る</a>
+      <button type="button" class="back-link" data-selection-back="category">${icon("back", 16)} カテゴリ選択に戻る</button>
 
       <header class="country-hero" style="--c:${esc(c.color)}">
         <div class="country-hero__main">
@@ -67,7 +71,7 @@ export class CountryScene extends BaseScene {
         </div>` : ""}
 
       <section class="country-about card" aria-labelledby="country-about-title">
-        <h2 id="country-about-title">${esc(c.name)}について</h2>
+        <h2 id="country-about-title" tabindex="-1">${esc(c.name)}について</h2>
         <p class="country-extract">${esc(info.extract || c.description)}</p>
         ${info.sourceUrl ? `<p class="small muted">出典：<a href="${esc(info.sourceUrl)}" target="_blank" rel="noopener noreferrer">Wikipedia</a></p>` : ""}
       </section>
@@ -75,12 +79,7 @@ export class CountryScene extends BaseScene {
       <p class="country-rule">${icon("stamp", 18)}
         <span>${earnedAt ? "この国のスタンプを獲得済みです。" : `記事かニュースの問題で ${esc(STAMP_RULE_TEXT)} 正解すると、この国のスタンプがもらえます。`}</span></p>
 
-      <section class="country-section" aria-labelledby="country-trips-title">
-        <h2 id="country-trips-title" class="world-heading">${icon("pin", 22)} 記事で旅する</h2>
-        <ul class="country-trips">
-          ${c.trips.map((t) => this.#tripItem(t, c, me)).join("")}
-        </ul>
-      </section>
+      ${this.#articleSelector(c, me)}
 
       <section class="country-section" aria-labelledby="country-news-title">
         <h2 id="country-news-title" class="world-heading">${icon("volume", 22)} ニュースを聴く</h2>
@@ -91,9 +90,41 @@ export class CountryScene extends BaseScene {
   mount(root) {
     hydratePhotos(root, this.ctx);
 
+    const onSelect = (e) => {
+      const cityButton = e.target.closest("[data-city]");
+      const categoryButton = e.target.closest("[data-category]");
+      const backButton = e.target.closest("[data-selection-back]");
+      if (backButton) {
+        this.#showArticles = false;
+        this.#selectedCategory = "";
+        if (backButton.dataset.selectionBack === "city") this.#selectedCity = "";
+        this.#refreshArticleSelector(root);
+        return;
+      }
+      const showButton = e.target.closest("[data-show-articles]");
+      if (showButton && !showButton.disabled && this.#selectedCity && this.#selectedCategory) {
+        this.#showArticles = true;
+        this.#refreshArticleSelector(root);
+        root.querySelector("#country-about-title")?.focus();
+        return;
+      }
+      if (cityButton) {
+        this.#selectedCity = cityButton.dataset.city;
+        this.#selectedCategory = "";
+        this.#showArticles = false;
+        this.#refreshArticleSelector(root);
+      } else if (categoryButton) {
+        this.#selectedCategory = categoryButton.dataset.category;
+        this.#showArticles = false;
+        this.#refreshArticleSelector(root);
+      }
+    };
+    root.addEventListener("click", onSelect);
+    this.onCleanup(() => root.removeEventListener("click", onSelect));
+
     // 「行きたい」ハート。li ごとにイベントを付けず、親（ul）で 1 回だけ受ける（イベント委譲）。
     // 子要素をクリックしても親まで伝わる（バブリング）ので、closest で押されたボタンを探す。
-    root.querySelector(".country-trips")?.addEventListener("click", async (e) => {
+    const onWant = async (e) => {
       const btn = e.target.closest("[data-want]");
       if (!btn || btn.disabled) return;
       const li = btn.closest(".country-trip");
@@ -108,10 +139,56 @@ export class CountryScene extends BaseScene {
         btn.disabled = false;
         this.ctx.toast.show("うまく保存できませんでした。もう一度お試しください");
       }
-    });
+    };
+    root.addEventListener("click", onWant);
+    this.onCleanup(() => root.removeEventListener("click", onWant));
   }
 
   // ---------- 部分ごとの HTML ----------
+
+  /** 条件の変更時には記事を隠し、表示ボタンを押したときだけ一覧を描画する。 */
+  #refreshArticleSelector(root) {
+    root.innerHTML = this.render();
+    hydratePhotos(root, this.ctx);
+    root.querySelector("[data-selection-title]")?.focus();
+    window.scrollTo(0, 0);
+  }
+
+  #selectionScreen(country) {
+    const trips = country.trips ?? [];
+    const cities = [...new Set(trips.map((trip) => trip.city).filter(Boolean))];
+    const categories = [...new Set(trips.filter((trip) => trip.city === this.#selectedCity).map((trip) => trip.category).filter(Boolean))];
+    const categoryLabel = CATEGORY[this.#selectedCategory]?.label ?? this.#selectedCategory;
+    const title = !this.#selectedCity ? "都市を選んでください" : !this.#selectedCategory ? "カテゴリを選んでください" : "選択した内容で記事を表示";
+    return `
+      ${!this.#selectedCity ? `<a class="back-link" href="#/">${icon("back", 16)} 国の選択に戻る</a>` : `<button type="button" class="back-link" data-selection-back="${this.#selectedCategory ? "category" : "city"}">${icon("back", 16)} ${this.#selectedCategory ? "カテゴリ" : "都市"}の選択に戻る</button>`}
+      <section class="country-section country-selector card" aria-labelledby="selection-title">
+        <p class="muted">${esc(country.name)}${this.#selectedCity ? ` → ${esc(this.#selectedCity)}` : ""}${this.#selectedCategory ? ` → ${esc(categoryLabel)}` : ""}</p>
+        <p class="country-selector__step">${!this.#selectedCity ? "1 / 3 · 都市" : !this.#selectedCategory ? "2 / 3 · カテゴリ" : "3 / 3 · 確認"}</p>
+        <h1 id="selection-title" class="world-heading" data-selection-title tabindex="-1">${esc(title)}</h1>
+        ${!this.#selectedCity ? `
+          <div class="map-filter country-selector__options" role="group" aria-label="都市">
+            ${cities.map((city) => `<button type="button" class="map-chip" data-city="${esc(city)}">${esc(city)} ${icon("next", 16)}</button>`).join("")}
+          </div>
+          ${!cities.length ? `<p class="muted">この国の記事は準備中です。</p>` : ""}` : !this.#selectedCategory ? `
+          <div class="map-filter country-selector__options" role="group" aria-label="カテゴリ">
+            ${categories.map((category) => `<button type="button" class="map-chip" data-category="${esc(category)}">${esc(CATEGORY[category]?.label ?? category)} ${icon("next", 16)}</button>`).join("")}
+          </div>
+          ${!categories.length ? `<p class="muted">この都市の記事は準備中です。</p>` : ""}` : `
+          <p>ボタンを押すと、Wikipediaの説明と選択した条件の記事を表示します。</p>
+          <button type="button" class="btn btn--teal" data-show-articles>記事を表示 ${icon("next", 16)}</button>`}
+      </section>`;
+  }
+
+  #articleSelector(country, me) {
+    const filtered = (country.trips ?? []).filter((trip) => trip.city === this.#selectedCity && trip.category === this.#selectedCategory);
+    const categoryLabel = CATEGORY[this.#selectedCategory]?.label ?? this.#selectedCategory;
+    return `
+      <section class="country-section country-selector card" aria-labelledby="country-trips-title">
+        <h2 id="country-trips-title" class="world-heading">${esc(this.#selectedCity)} · ${esc(categoryLabel)}の記事（${filtered.length}件）</h2>
+        ${filtered.length ? `<ul class="country-trips">${filtered.map((trip) => this.#tripItem(trip, country, me)).join("")}</ul>` : `<p class="muted">選択した条件の記事はありません。</p>`}
+      </section>`;
+  }
 
   /** 基本情報の 1 項目 */
   #fact(label, value, iconName) {

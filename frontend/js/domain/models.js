@@ -55,9 +55,25 @@
  */
 
 /**
+ * 国の地域（都市）。GET /api/regions?country=…（DB の regions）
+ * @typedef {Object} Region
+ * @property {string} name              日本語名（例: "トロント"）
+ * @property {string} nameEn            英語名（例: "Toronto"）
+ */
+
+/**
+ * 記事のカテゴリ。GET /api/categories（DB の categories）
+ * @typedef {Object} Category
+ * @property {number} id
+ * @property {string} name              日本語名（食事・建築・文化）
+ * @property {string} nameEn            英語名（Food・Architecture・Culture）
+ */
+
+/**
  * 国の詳細。GET /api/countries/{countryId}
  * 一覧の項目に加えて、説明文が付く。
- * @typedef {Country & {info: {extract: string, sourceUrl: string|null}}} CountryDetail
+ * @typedef {Country & {regions: Region[], info: {extract: string, sourceUrl: string|null}}} CountryDetail
+ *   regions         その国の地域（都市）の一覧（DB 由来。無ければ空）
  *   info.extract    説明文（Wikipedia 由来）
  *   info.sourceUrl  出典の URL
  */

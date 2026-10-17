@@ -344,6 +344,14 @@ a.route__link:hover .route__node { transform: translateY(-3px); }
 
 .country-trips { display: grid; grid-template-columns: 1fr; gap: var(--space-3); }
 @media (min-width: 761px) { .country-trips { grid-template-columns: repeat(3, 1fr); } }
+.country-selector { margin-bottom: var(--space-4); }
+.country-selector__step { margin: var(--space-3) 0 var(--space-2); color: var(--navy); font-weight: 800; }
+.country-selector__options { margin-bottom: var(--space-3); }
+.country-articles { display: grid; gap: var(--space-2); }
+.country-article { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3); border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); }
+.country-article h3 { margin: 0 0 4px; color: var(--navy); }
+.country-article p { margin: 0; }
+@media (max-width: 600px) { .country-article { align-items: flex-start; flex-direction: column; } }
 .country-trip { position: relative; display: flex; }
 .country-trip__card { display: flex; width: 100%; }
 .country-trip__card > .trip-card { width: 100%; }
@@ -591,3 +599,11 @@ a.route__link:hover .route__node { transform: translateY(-3px); }
   .boarding { grid-template-columns: 1fr 78px; }
   .home-hero__guide .guide--hero { width: min(100%, 210px); }
 }
+
+
+/* ----- 国の詳細：地域（都市）とカテゴリ（DB から取得） ----- */
+.country-db__label { margin: var(--space-3) 0 var(--space-2); color: var(--muted); font-size: .85rem; font-weight: 800; }
+.country-db__label:first-of-type { margin-top: 0; }
+.chip-list { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.chip--db { padding: 4px 12px; background: var(--teal-soft); color: #1f5a58; font-size: .9rem; }
+.chip--db small { margin-left: 6px; font-weight: 500; opacity: .75; }

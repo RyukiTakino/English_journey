@@ -116,6 +116,16 @@ export class ApiClient {
   }
 
   /**
+   * GET /api/categories … 記事のカテゴリの一覧（食事・建築・文化）
+   * @returns {Promise<import("../../domain/models.js").Category[]>}
+   *
+   * TODO(Backend): GET /api/categories は用意済み（app.py）。返すキーを camelCase（name / nameEn）にしてほしい。
+   */
+  getCategories() {
+    return this.#get("/api/categories");
+  }
+
+  /**
    * GET /api/countries/{countryId} … 国の詳細（一覧の内容 + 説明文 info）
    * @param {string} countryId 例: "uk"
    * @returns {Promise<import("../../domain/models.js").CountryDetail>}

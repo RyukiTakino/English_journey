@@ -131,27 +131,42 @@ DB に無い項目（`code`・`region`・`lat`・`lng`・`color`・`tourOrder`�
 **TODO(API)**: 記事・問題・ニュースを、Wikipedia と Gemini から作る（作れないときは seed の手書き教材）。
 
 
-## 結合の状況（2026-10-14）
+## 結合の状況（2026-10-17 更新）
 
 フロントは、`frontend/js/infrastructure/api/HybridApi.js` で「できた API だけ本物、残りはモック」の混在版にしています
-（`main.js`、URL の `?api=local|hybrid|http` で切り替え。既定は `hybrid`）。サーバーが落ちているときは、自動でモックに戻ります。
+（`?api=local|hybrid|http` で切り替え。既定は `hybrid`。サーバーが落ちているときは、自動でモックに戻る）。
+画面の左下の帯で、**「Test」と表示される所がモック、それ以外がサーバーから取れた内容**です。
 
 | 機能 | 本物のサーバー | 状態 |
 |---|---|---|
-| `GET /api/countries`（国の一覧） | `app.py`（DB） | **結合済み**。ただし返す形がフロントと違うので、フロント側で変換して、足りない項目（国コード・座標など）はモックで補っている |
-| `GET /api/countries/{id}`（国の詳細の説明文） | `GET /api/article?title=`（Wikipedia の本文）を使用 | **結合済み**。本文の最初の数文を説明文にしている（英語） |
-| `GET /api/articles`（Wikipedia の記事検索） | `app.py` | まだ使っていない（使う画面が無い） |
-| 国ごとの観光地の一覧 | `database/queries.py` に関数はあるが URL が無い | **未結合**（`TODO(Backend)`） |
-| 記事・問題・採点、ニュース、単語、行きたい、学習記録、スタンプ・バッジ | まだ無い | **未結合**（モックが代わりに動作） |
+| `GET /api/countries`（国の一覧） | `app.py`（DB の `countries`） | **結合済み**。返す形がフロントと違うので、フロントで変換し、足りない項目（国コード・座標など）はモックで補っている |
+| `GET /api/countries/{id}` の説明文 | `GET /api/article?title=`（Wikipedia） | **結合済み** |
+| 国の **地域（都市）** | `GET /api/regions?country=`（DB の `regions`） | **結合済み**（国の詳細の「主な地域」） |
+| **カテゴリ**（食事・建築・文化） | `GET /api/categories`（DB の `categories`） | **結合済み**（国の詳細の「記事のカテゴリ」） |
+| `GET /api/articles`（Wikipedia の記事検索） | `app.py` | まだ使っていない |
+| 国ごとの記事の一覧 | DB の `trips` は**廃止**された（地域×カテゴリに変更） | **未結合**。今の記事一覧は、モックの観光地 |
+| 記事の本文・問題・採点、ニュース、単語、行きたい、学習記録、スタンプ・バッジ | まだ無い | **未結合**（モックが代わりに動作） |
+
+### DB の更新（2026-10-17）に伴う変更点
+
+- `trips`（観光地）テーブルは廃止され、`regions`（国ごとの都市）と `categories`（食事・建築・文化）が追加された。
+- `database/english.db` は、git の管理から外れた。**各自、次の順で作る**（リポジトリの直下で）:
+  ```
+  py database/init_db.py
+  py database/insert_countries.py
+  py database/insert_regions.py
+  py database/insert_categories.py
+  ```
+- `app.py` に、`GET /api/regions?country=<国名（日本語）>` と `GET /api/categories` を追加した（`database/queries.py` の関数を呼ぶだけ）。
 
 ### バックエンド担当へのお願い（`TODO(Backend)`）
 
-1. `GET /api/countries` の返す形を、上の「Country」の形にしてほしい（`name` / `nameEn` / `code` / `region` / `lat` / `lng` / `color` / `tourOrder` / `capital` / `language` / `currency` / `phrase` / `description` / `trips`）。DB の列を足すか、別の取得元にする。
-2. `GET /api/countries/{countryId}` を作る（国の詳細。`info: { extract, sourceUrl }` つき）。
-3. 国ごとの観光地の一覧を、`trips` として返す（`Trip` の形）。
-4. 記事（`/api/trips/{tripId}/lesson`）と採点（`/api/lessons/{lessonId}/grade`）を作る。
+1. `GET /api/countries` の返す形を、上の「Country」の形にする（`name` / `nameEn` / `code` / `region` / `lat` / `lng` / `color` / `tourOrder` / `capital` / `language` / `currency` / `phrase` / `description`）。キーは camelCase に。
+2. `/api/regions` と `/api/categories` のキーも camelCase（`name` / `nameEn`）にしてほしい（今は `region_name_ja` など。フロントで変換している）。
+3. **記事の一覧**：廃止した `trips` の代わりに、「国 × 地域 × カテゴリ」で記事（`Trip` の形）を返す API。
+4. 記事（`/api/trips/{id}/lesson`）と採点（`/api/lessons/{id}/grade`）。
 
 ### 開発のやり方
 
-- 開発サーバー（`tools/dev/serve.py`）が、`/api/` をバックエンド（既定は `http://127.0.0.1:5000`）へ中継します。CORS の設定は要りません。
-- バックエンドの起動: `pip install flask requests` のあと、リポジトリの直下で `python app.py`。
+- 開発サーバー（`frontend/serve.py`）が、`/api/` をバックエンド（既定は `http://127.0.0.1:5000`）へ中継します。CORS の設定は要りません。
+- バックエンドの起動: `py -m pip install flask requests` のあと、リポジトリの直下で `py app.py`。

@@ -352,7 +352,17 @@ export class LocalApi {
     if ((m = p.match(/^\/api\/countries\/(\w+)$/))) {
       const c = seed.countries.find((x) => x.id === m[1]) || fail(404, "NOT_FOUND", "国が見つかりません。");
       const s = await wikiSummary("ja", c.wikiJa);
-      return { ...structuredClone(c), info: { extract: s?.extract || c.description, sourceUrl: s?.content_urls?.desktop?.page || null } };
+      // regions（国の地域・都市）は、本物のサーバーのデータ。モックには無いので、空にしておく
+      return { ...structuredClone(c), regions: [], info: { extract: s?.extract || c.description, sourceUrl: s?.content_urls?.desktop?.page || null } };
+    }
+
+    // --- カテゴリ（DB の categories に対応するモック） ---
+    if (p === "/api/categories") {
+      return [
+        { id: 1, name: "食事", nameEn: "Food" },
+        { id: 2, name: "建築", nameEn: "Architecture" },
+        { id: 3, name: "文化", nameEn: "Culture" }
+      ];
     }
 
     // --- 行きたいリスト ---

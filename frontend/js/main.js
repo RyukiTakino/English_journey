@@ -58,12 +58,20 @@ const mark = params.get("mark") !== "0" && apiMode === "hybrid";
 const transport = { local: () => new LocalApi(), http: () => new HttpApi(""), hybrid: () => new HybridApi("", { mark }) }[apiMode]?.() ?? new HybridApi("", { mark });
 const api = new ApiClient(transport);
 
-// 確認モードのとき、画面の左下に印を出す
+// 確認モードのとき、画面の左下に印を出す。サーバーに繋がっているか（繋がっていなければ、すべてモック = Test）も、ここに出す
 if (mark) {
   const badge = document.createElement("div");
   badge.className = "api-mark";
-  badge.innerHTML = 'API確認モード：<b>Test</b> = モック／それ以外の文章 = サーバーから取得　<a href="?mark=0">オフ</a>';
   document.body.append(badge);
+  const render = () => {
+    const connected = transport.usingServer;
+    badge.classList.toggle("is-down", !connected);
+    badge.innerHTML = connected
+      ? 'API確認モード：<b>Test</b> = モック／それ以外の文章 = サーバーから取得　<a href="?mark=0">オフ</a>'
+      : 'サーバーに繋がっていません：<b>すべてモック（Test）</b>になっています。<code>py app.py</code> を起動して、再読み込みしてください　<a href="?mark=0">オフ</a>';
+  };
+  render();
+  setInterval(render, 1500);
 }
 
 // 操作の処理。必要な道具をここで渡す

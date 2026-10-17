@@ -1,7 +1,11 @@
 import requests
 
 from flask import Flask, jsonify, request
-from database.queries import get_countries
+from database.queries import (
+    get_categories,
+    get_countries,
+    get_regions_by_country,
+)
 from services.wikipedia_service import (
     search_wikipedia,
     get_wikipedia_article,
@@ -16,6 +20,32 @@ def countries():
     country_list = get_countries()
 
     return jsonify(country_list)
+
+
+# 国ごとの地域（都市）一覧を取得するAPI
+# 例: /api/regions?country=カナダ
+@app.route("/api/regions", methods=["GET"])
+def regions():
+    # URLから国名（日本語）を取得
+    country = request.args.get("country", "").strip()
+
+    # 国名が指定されていない場合
+    if not country:
+        return jsonify({
+            "error": "国名を指定してください"
+        }), 400
+
+    region_list = get_regions_by_country(country)
+
+    return jsonify(region_list)
+
+
+# カテゴリ一覧を取得するAPI
+@app.route("/api/categories", methods=["GET"])
+def categories():
+    category_list = get_categories()
+
+    return jsonify(category_list)
 
 
 # Wikipedia記事を検索するAPI
