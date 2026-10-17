@@ -27,15 +27,22 @@ export class CountryScene extends BaseScene {
   #selectedCity = "";
   #selectedCategory = "";
   #showArticles = false;
+  #categories = [];
 
   async load() {
-    // params は URL の () で囲んだ部分。#/country/uk なら ["uk"]
-    const [countryId] = this.params;
-    const { catalog, profile } = this.ctx.actions;
-    // 国の詳細・一覧・学習記録を同時に取る（一覧と記録は、読み込み済みなら通信しない）
-    const [country] = await Promise.all([catalog.getCountry(countryId), catalog.loadCountries(), profile.loadMe()]);
-    this.#country = country;
-  }
+  const [countryId] = this.params;
+  const { catalog, profile } = this.ctx.actions;
+
+  const [country, , , categories] = await Promise.all([
+    catalog.getCountry(countryId),
+    catalog.loadCountries(),
+    profile.loadMe(),
+    catalog.getCategories()
+  ]);
+
+  this.#country = country;
+  this.#categories = categories;
+}
 
   render() {
     const c = this.#country;
@@ -156,8 +163,11 @@ export class CountryScene extends BaseScene {
 
   #selectionScreen(country) {
     const trips = country.trips ?? [];
-    const cities = [...new Set(trips.map((trip) => trip.city).filter(Boolean))];
-    const categories = [...new Set(trips.filter((trip) => trip.city === this.#selectedCity).map((trip) => trip.category).filter(Boolean))];
+
+    const cities = (country.regions ?? []).map(
+      (region) => region.name
+    );
+    const categories = this.#categories;
     const categoryLabel = CATEGORY[this.#selectedCategory]?.label ?? this.#selectedCategory;
     const title = !this.#selectedCity ? "都市を選んでください" : !this.#selectedCategory ? "カテゴリを選んでください" : "選択した内容で記事を表示";
     return `
@@ -172,7 +182,16 @@ export class CountryScene extends BaseScene {
           </div>
           ${!cities.length ? `<p class="muted">この国の記事は準備中です。</p>` : ""}` : !this.#selectedCategory ? `
           <div class="map-filter country-selector__options" role="group" aria-label="カテゴリ">
-            ${categories.map((category) => `<button type="button" class="map-chip" data-category="${esc(category)}">${esc(CATEGORY[category]?.label ?? category)} ${icon("next", 16)}</button>`).join("")}
+            ${categories.map((category) => `
+              <button
+                type="button"
+                class="map-chip"
+                data-category="${esc(category.nameEn)}"
+              >
+                ${esc(category.name)}
+                ${icon("next", 16)}
+              </button>
+            `).join("")}
           </div>
           ${!categories.length ? `<p class="muted">この都市の記事は準備中です。</p>` : ""}` : `
           <p>ボタンを押すと、Wikipediaの説明と選択した条件の記事を表示します。</p>
