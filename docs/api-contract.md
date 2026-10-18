@@ -169,4 +169,5 @@ DB に無い項目（`code`・`region`・`lat`・`lng`・`color`・`tourOrder`�
 ### 開発のやり方
 
 - 開発サーバー（`frontend/serve.py`）が、`/api/` をバックエンド（既定は `http://127.0.0.1:5000`）へ中継します。CORS の設定は要りません。
-- バックエンドの起動: `py -m pip install flask requests` のあと、リポジトリの直下で `py app.py`。
+- 初回セットアップ: `py -m venv .venv` のあと、`.venv\Scripts\python -m pip install flask requests openai python-dotenv google-genai`。
+- バックエンドの起動: リポジトリの直下で `.venv\Scripts\python app.py`。

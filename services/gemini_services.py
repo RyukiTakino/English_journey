@@ -1,9 +1,14 @@
 import os
 import json
+
 from dotenv import load_dotenv
 from google import genai
 
-# .env ファイルを読み込む
+
+# ========================================
+# Gemini API の初期設定
+# ========================================
+
 load_dotenv()
 
 API_KEY = os.getenv("GEMINI_API_KEY")
@@ -15,26 +20,120 @@ if not API_KEY:
 
 client = genai.Client(api_key=API_KEY)
 
+MODEL = "gemini-3.8-flash"
+
+
+# ========================================
+# 共通処理
+# ========================================
+
+def limit_words(text, max_words=500):
+    """
+    文章を先頭から指定した語数までに制限する。
+
+    Args:
+        text (str): 元の文章
+        max_words (int): 最大語数
+
+    Returns:
+        str: 指定語数までに制限した文章
+    """
+    words = (text or "").split()
+    return " ".join(words[:max_words])
+
+
+def parse_json_response(response, function_name):
+    """
+    Geminiの応答をJSONに変換する。
+
+    空の応答や不正なJSONの場合は、
+    原因を調査できるようにエラーを出す。
+    """
+
+    output_text = response.output_text
+
+    # 空の応答を確認
+    if not output_text or not output_text.strip():
+        raise ValueError(
+            f"{function_name}: Geminiから空の応答が返されました。"
+        )
+
+    output_text = output_text.strip()
+
+    # Markdownのコードブロックを除去
+    if output_text.startswith("```"):
+        lines = output_text.splitlines()
+
+        if lines and lines[0].startswith("```"):
+            lines = lines[1:]
+
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]
+
+        output_text = "\n".join(lines).strip()
+
+    # JSONに変換
+    try:
+        return json.loads(output_text)
+
+    except json.JSONDecodeError:
+        print(
+            f"{function_name}: "
+            "Geminiの応答をJSONとして解析できませんでした。"
+        )
+
+        print(
+            "実際の応答:",
+            repr(output_text[:1000])
+        )
+
+        raise
+
+
+# ========================================
+# クイズ生成
+# ========================================
 
 def generate_quiz(article_title, article_content):
-    """Wikipediaの記事本文から英語の読解問題を生成する。"""
+    """
+    Wikipediaの記事本文の冒頭500語から
+    英語の読解問題を3問生成する。
+    """
+
+    # 記事の冒頭500語だけを使用
+    article_content = limit_words(
+        article_content,
+        max_words=500
+    )
+
+    if not article_content.strip():
+        raise ValueError(
+            "クイズを生成するための記事本文がありません。"
+        )
 
     prompt = f"""
 You are an English reading comprehension teacher.
 
-Create 3 English reading comprehension questions
-based only on the article below.
+Create exactly 3 English reading comprehension questions
+based only on the article excerpt below.
 
 Requirements:
-- Each question must have 4 answer choices.
+- Create exactly 3 questions.
+- Each question must have exactly 4 answer choices.
 - Exactly one answer must be correct.
-- Provide the correct answer.
-- Explain why the answer is correct.
-- Questions and choices must be in English.
-- Explanations must be in Japanese.
-- Do not invent facts that are absent from the article.
+- The answer must be an integer from 0 to 3.
+- The answer indicates the index of the correct choice.
+- Questions and choices must be written in English.
+- Explanations must be written in Japanese.
+- Use only information explicitly stated in the excerpt.
+- Do not use outside knowledge.
+- Do not invent facts.
+- Do not create questions about information outside the excerpt.
+- Make the questions suitable for English learners.
+- Return only valid JSON.
+- Do not include Markdown code fences or additional text.
 
-Return only valid JSON in this format:
+Return JSON in this format:
 {{
   "questions": [
     {{
@@ -54,31 +153,159 @@ Return only valid JSON in this format:
 Article title:
 {article_title}
 
-Article content:
+Article excerpt (first 500 words):
 {article_content}
 """
 
     response = client.interactions.create(
-    model="gemini-3.8-flash",
-    input=prompt
+        model=MODEL,
+        input=prompt
     )
 
-    return json.loads(response.output_text)
+    result = parse_json_response(
+        response,
+        "クイズ生成"
+    )
+
+    # 応答の形式を検証
+    if not isinstance(result, dict):
+        raise ValueError(
+            "クイズ生成: 応答がJSONオブジェクトではありません。"
+        )
+
+    questions = result.get("questions")
+
+    if not isinstance(questions, list):
+        raise ValueError(
+            "クイズ生成: questions が配列ではありません。"
+        )
+
+    if len(questions) != 3:
+        raise ValueError(
+            f"クイズ生成: 3問必要ですが、"
+            f"{len(questions)}問が返されました。"
+        )
+
+    # 各問題の形式を検証
+    for index, question in enumerate(questions, start=1):
+
+        if not isinstance(question, dict):
+            raise ValueError(
+                f"クイズ生成: 第{index}問の形式が不正です。"
+            )
+
+        if not isinstance(question.get("question"), str):
+            raise ValueError(
+                f"クイズ生成: 第{index}問の問題文が不正です。"
+            )
+
+        choices = question.get("choices")
+
+        if not isinstance(choices, list) or len(choices) != 4:
+            raise ValueError(
+                f"クイズ生成: 第{index}問の選択肢が4つではありません。"
+            )
+
+        if not all(isinstance(choice, str) for choice in choices):
+            raise ValueError(
+                f"クイズ生成: 第{index}問の選択肢に不正な値があります。"
+            )
+
+        answer = question.get("answer")
+
+        if (
+            not isinstance(answer, int)
+            or isinstance(answer, bool)
+            or answer not in range(4)
+        ):
+            raise ValueError(
+                f"クイズ生成: 第{index}問の正解番号が不正です。"
+            )
+
+        if not isinstance(question.get("explanation"), str):
+            raise ValueError(
+                f"クイズ生成: 第{index}問の解説が不正です。"
+            )
+
+    return result
+
+
+# ========================================
+# 英語要約の採点
+# ========================================
+
+SUMMARY_RESPONSE_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "total_score": {
+            "type": "integer"
+        },
+        "scores": {
+            "type": "object",
+            "properties": {
+                "accuracy": {
+                    "type": "integer"
+                },
+                "coverage": {
+                    "type": "integer"
+                },
+                "grammar": {
+                    "type": "integer"
+                },
+                "naturalness": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "accuracy",
+                "coverage",
+                "grammar",
+                "naturalness"
+            ]
+        },
+        "feedback": {
+            "type": "string"
+        },
+        "improvements": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "corrected_summary": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "total_score",
+        "scores",
+        "feedback",
+        "improvements",
+        "corrected_summary"
+    ]
+}
 
 def grade_summary(article_title, article_content, user_summary):
-    """英語要約を100点満点で採点し、改善点を返す。"""
+    """
+    英語要約を100点満点で採点し、改善点を返す。
+    """
 
     prompt = f"""
 You are a professional English teacher.
+
 Evaluate a student's English summary of a Wikipedia article.
 
 Evaluate the summary using these criteria:
+
 1. accuracy: 0-40 points
    - Are the statements factually consistent with the article?
+
 2. coverage: 0-30 points
    - Does the summary include the article's important points?
+
 3. grammar: 0-20 points
    - Are grammar, spelling, and sentence structure correct?
+
 4. naturalness: 0-10 points
    - Is the English clear and natural?
 
@@ -122,31 +349,34 @@ Student's English summary:
 """
 
     response = client.interactions.create(
-        model="gemini-3.8-flash",
-        input=prompt
+        model=MODEL,
+        input=prompt,
+        response_format={
+            "type": "text",
+            "mime_type": "application/json",
+            "schema": SUMMARY_RESPONSE_SCHEMA
+        }
     )
 
-        # Geminiの応答を取得
-    output_text = response.output_text
+    result = parse_json_response(
+        response,
+        "要約採点"
+    )
 
-    # 応答が空の場合は、原因が分かるエラーを出す
-    if not output_text or not output_text.strip():
+    # 応答の形式を検証
+    if not isinstance(result, dict):
         raise ValueError(
-            f"Geminiから空の応答が返されました。"
-            f"レスポンス情報: {response!r}"
+            "要約採点: 応答がJSONオブジェクトではありません。"
         )
 
-    # JSON以外の文章が前後に含まれていても解析できるようにする
-    output_text = output_text.strip()
+    scores = result.get("scores")
 
-    if output_text.startswith("```"):
-        output_text = output_text.removeprefix("```json").removeprefix("```")
-        output_text = output_text.removesuffix("```").strip()
+    if not isinstance(scores, dict):
+        raise ValueError(
+            "要約採点: scores が正しい形式ではありません。"
+        )
 
-    result = json.loads(output_text)
-
-    # 採点結果の形式を検証する
-    scores = result["scores"]
+    # 各項目の最大点
     limits = {
         "accuracy": 40,
         "coverage": 30,
@@ -154,12 +384,24 @@ Student's English summary:
         "naturalness": 10,
     }
 
+    # 点数を検証
     for category, maximum in limits.items():
-        score = scores[category]
 
-        if not isinstance(score, int) or not 0 <= score <= maximum:
-            raise ValueError(f"Invalid score: {category}")
+        score = scores.get(category)
 
-    result["total_score"] = sum(scores.values())
+        if (
+            not isinstance(score, int)
+            or isinstance(score, bool)
+            or not 0 <= score <= maximum
+        ):
+            raise ValueError(
+                f"要約採点: {category} の点数が不正です。"
+            )
+
+    # 合計点を再計算
+    result["total_score"] = sum(
+        scores[category]
+        for category in limits
+    )
 
     return result

@@ -1,10 +1,14 @@
 import requests
 from flask import Flask, jsonify, request
-from services.gemini_services import generate_quiz, grade_summary
+from services.openai_services import generate_quiz, grade_summary
 from database.queries import (
     get_categories,
     get_countries,
     get_regions_by_country,
+)
+from services.youtube_services import (
+    analyze_youtube_video,
+    get_cached_video,
 )
 from services.wikipedia_service import (
     search_wikipedia,
@@ -160,6 +164,84 @@ def grade_article_summary():
         app.logger.exception("Summary grading failed")
         return jsonify({
             "error": "要約の採点に失敗しました。もう一度お試しください。"
+        }), 502
+
+@app.route("/api/youtube/analyze", methods=["POST"])
+def analyze_youtube():
+    data = request.get_json(silent=True) or {}
+
+    url = data.get("url", "").strip()
+    title = data.get("title", "YouTube Video").strip()
+
+    if not url:
+        return jsonify({
+            "error": "YouTube動画のURLを入力してください。"
+        }), 400
+
+    try:
+        result = analyze_youtube_video(url, title)
+
+        return jsonify(result)
+
+    except ValueError as e:
+        return jsonify({
+            "error": str(e)
+        }), 400
+
+    except Exception:
+        app.logger.exception("YouTube analysis failed")
+
+        return jsonify({
+            "error": (
+                "動画の分析に失敗しました。"
+                "公開動画のURLやGemini APIの利用状況を確認してください。"
+            )
+        }), 502
+
+@app.route("/api/youtube/summary/grade", methods=["POST"])
+def grade_youtube_summary():
+    data = request.get_json(silent=True) or {}
+
+    video_id = data.get("video_id", "").strip()
+    summary = data.get("summary", "").strip()
+
+    if not video_id or not summary:
+        return jsonify({
+            "error": "動画と英語の要約を入力してください。"
+        }), 400
+
+    if len(summary) > 5000:
+        return jsonify({
+            "error": "要約は5000文字以内で入力してください。"
+        }), 400
+
+    video = get_cached_video(video_id)
+
+    if not video:
+        return jsonify({
+            "error": "動画の分析結果がありません。先に動画を分析してください。"
+        }), 404
+
+    reference_content = (
+        video["summary"]
+        + "\n\n重要なポイント:\n"
+        + "\n".join(video["key_points"])
+    )
+
+    try:
+        result = grade_summary(
+            video["title"],
+            reference_content,
+            summary
+        )
+
+        return jsonify(result)
+
+    except Exception:
+        app.logger.exception("YouTube summary grading failed")
+
+        return jsonify({
+            "error": "動画の要約採点に失敗しました。"
         }), 502
 
 if __name__ == "__main__":

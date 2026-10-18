@@ -252,4 +252,44 @@ export class ApiClient {
   deleteWord(word) {
     return this.#transport.request("DELETE", `/api/words/${encodeURIComponent(word)}`);
   }
+    // ---------- YouTube学習 ----------
+
+  /**
+   * POST /api/youtube/analyze
+   * YouTube動画をGeminiで分析する
+   */
+  analyzeYoutubeVideo(url, title = "YouTube Video") {
+    return this.#transport.request(
+      "POST",
+      "/api/youtube/analyze",
+      { url, title }
+    );
+  }
+
+  /**
+   * POST /api/youtube/quiz
+   * 動画の分析結果からクイズを生成する
+   */
+  generateYoutubeQuiz(videoId) {
+    return this.#transport.request(
+      "POST",
+      "/api/youtube/quiz",
+      { video_id: videoId }
+    );
+  }
+
+  /**
+   * POST /api/youtube/summary/grade
+   * 動画を基準に英語の要約を採点する
+   */
+  gradeYoutubeSummary(videoId, summary) {
+    return this.#transport.request(
+      "POST",
+      "/api/youtube/summary/grade",
+      {
+        video_id: videoId,
+        summary,
+      }
+    );
+  }
 }
