@@ -55,7 +55,7 @@ const apiMode = params.get("api") ?? "hybrid";
 // ?mark=1 … 確認モード：モック由来の文章を "Test" にする（どこが本物のサーバーから取れているかを見分けるため。今は既定でオン）
 //   ?mark=0 で、ふだんの表示（モックの文章）に戻る。
 // TODO(フロント): バックエンドが出来上がったら、既定をオフにする。
-const mark = params.get("mark") !== "0" && apiMode === "hybrid";
+const mark = params.get("mark") === "1" && apiMode === "hybrid";
 const transport = { local: () => new LocalApi(), http: () => new HttpApi(""), hybrid: () => new HybridApi("", { mark }) }[apiMode]?.() ?? new HybridApi("", { mark });
 const api = new ApiClient(transport);
 
@@ -92,7 +92,7 @@ const toast = new Toast(document.getElementById("toast"));
 const modal = new Modal();
 
 // 画面に渡す道具一式。api は渡さない（画面は actions 経由で通信する）
-const ctx = { store, events, actions, settings, sound, guide, toast, modal };
+const ctx = { store, events, actions, settings, sound, guide, toast, modal, languageToggle: document.getElementById("language-toggle") };
 
 // ----- URL と画面の対応表。画面を増やすときは、ここに1行足す -----
 // pattern は URL の # 以降に対する正規表現。() で囲んだ部分が、画面の params として渡される

@@ -23,7 +23,7 @@
 .study-text { font-family: var(--serif); font-size: 1.2rem; line-height: 1.9; color: var(--ink); overflow-wrap: anywhere; }
 .study-text p { margin: 0 0 1.1em; }
 .study-text p:last-child { margin-bottom: 0; }
-.study-text .w { cursor: pointer; border-radius: 4px; transition: background .12s; -webkit-tap-highlight-color: transparent; }
+.study-text .w { cursor: pointer; border-radius: 4px; transition: background .12s; -webkit-tap-highlight-color: transparent; text-decoration: underline dotted rgb(47 125 123 / 35%); text-underline-offset: 3px; }
 .study-text .w:hover { background: var(--primary-soft); }
 /* 辞書にある単語は、点線の下線で目立たせる */
 .study-text .w.kw { text-decoration: underline dotted var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }

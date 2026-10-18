@@ -28,6 +28,16 @@ import { APP_NAME } from "../../domain/constants.js";
 /** 「続きから」に並べる記事の最大数 */
 const MAX_CONTINUE = 3;
 
+/** 配列を元の配列を壊さずにシャッフルする（Fisher-Yates） */
+function shuffled(items) {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 export class HomeScene extends BaseScene {
   /** 画面に必要なデータを取る。ここで投げた例外は Router がエラー表示にする */
   async load() {
@@ -107,12 +117,13 @@ export class HomeScene extends BaseScene {
    * 全部解いていれば、この行は出さない。
    */
   #continueRow(countries, me, next) {
-    // 次の目的地の国を先頭に（boolean を数値に変えて引き算＝true は 1、false は 0）
-    const ordered = [...tourStops(countries)].sort((a, b) => (b.id === next?.id) - (a.id === next?.id));
+    // 国・記事の固定順ではなく、未読記事の中から毎回ランダムに選ぶ。
     // flatMap：国ごとの記事の配列を、1本の配列につなげる（C# の SelectMany）
-    const todo = ordered.flatMap((c) => c.trips.map((t) => ({ t, c }))).filter(({ t }) => !isDone(me, "read", t.id));
+    const todo = tourStops(countries)
+      .flatMap((c) => c.trips.map((t) => ({ t, c })))
+      .filter(({ t }) => !isDone(me, "read", t.id));
     if (!todo.length) return "";
-    const picked = todo.slice(0, MAX_CONTINUE);
+    const picked = shuffled(todo).slice(0, MAX_CONTINUE);
     return `
       <section class="home-section" aria-labelledby="home-continue-title">
         <h2 id="home-continue-title" class="world-heading">${icon("play", 22)} 続きから・おすすめの記事</h2>

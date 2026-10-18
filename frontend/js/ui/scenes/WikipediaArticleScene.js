@@ -1,6 +1,9 @@
 import { BaseScene } from "./BaseScene.js";
-import { esc } from "../components/html.js";
+import { esc, tokenize } from "../components/html.js";
 import { icon } from "../components/icons.js";
+import { SpeechControls } from "../components/SpeechControls.js";
+import { WordPopover } from "../components/WordPopover.js";
+import { Speech } from "../../infrastructure/speech.js";
 
 export class WikipediaArticleScene extends BaseScene {
   #article = null;
@@ -18,6 +21,10 @@ export class WikipediaArticleScene extends BaseScene {
   #grading = false;
   #gradeResult = null;
   #gradeError = "";
+  #root = null;
+  #speech = null;
+  #controls = null;
+  #popover = null;
 
   async load() {
     const [countryId, encodedTitle] = this.params;
@@ -181,6 +188,7 @@ export class WikipediaArticleScene extends BaseScene {
 
     // rootに登録済みのイベントリスナーは維持する
     root.innerHTML = this.render();
+    this.#mountReadingTools(root);
 
     window.scrollTo(0, 0);
   }
@@ -204,6 +212,8 @@ export class WikipediaArticleScene extends BaseScene {
 
         <article class="reading-article card">
 
+          <div class="reading-article__tools" data-speech></div>
+
           <div class="meta-row">
             <span class="chip chip--news">Wikipedia</span>
           </div>
@@ -214,6 +224,12 @@ export class WikipediaArticleScene extends BaseScene {
           >
             ${esc(article?.title ?? "記事")}
           </h1>
+
+          ${article?.content ? `
+            <p class="reading-article__tip">
+              ${icon("bulb", 18)} 単語をクリックすると、意味と発音を確認できます。
+            </p>
+          ` : ""}
 
           ${this.#error ? `
             <p class="muted" role="alert">
@@ -226,11 +242,9 @@ export class WikipediaArticleScene extends BaseScene {
               class="reading-article__body study-text wikipedia-article-content"
               lang="en"
             >
-              ${esc(article.content)
+              ${article.content
                 .split(/\n\s*\n/)
-                .map(p => `
-                  <p>${p.replace(/\n/g, "<br>")}</p>
-                `)
+                .map((p) => `<p>${tokenize(p.replace(/\n/g, " "))}</p>`)
                 .join("")}
             </div>
 
@@ -580,6 +594,8 @@ export class WikipediaArticleScene extends BaseScene {
   // =========================
 
   mount(root) {
+    this.#root = root;
+    this.#mountReadingTools(root);
     const onClick = async (event) => {
 
       // クイズ生成
@@ -672,9 +688,37 @@ export class WikipediaArticleScene extends BaseScene {
     root.addEventListener("input", onInput);
 
     this.onCleanup(() => {
+      this.#controls?.destroy();
+      this.#speech?.stop();
+      this.#popover?.destroy();
+      this.#controls = null;
+      this.#speech = null;
+      this.#popover = null;
+      this.#root = null;
       root.removeEventListener("click", onClick);
       root.removeEventListener("change", onChange);
       root.removeEventListener("input", onInput);
     });
+  }
+
+  /** Wikipedia本文にも、通常記事と同じ読み上げ・単語クリックを接続する。 */
+  #mountReadingTools(root) {
+    this.#controls?.destroy();
+    this.#speech?.stop();
+    this.#popover?.destroy();
+    if (!this.#article?.content) return;
+
+    this.#speech = new Speech();
+    const title = /[.!?]$/.test(this.#article.title.trim()) ? this.#article.title : `${this.#article.title}.`;
+    const text = [title, this.#article.content].join("\n");
+    this.#controls = new SpeechControls(this.#speech, { getText: () => text, label: "記事を読み上げる" });
+    const tools = root.querySelector("[data-speech]");
+    if (tools) {
+      tools.innerHTML = this.#controls.render();
+      this.#controls.mount(tools);
+    }
+
+    this.#popover = new WordPopover(this.ctx, { speech: this.#speech, getSource: () => this.#article.title });
+    this.#popover.attach(root.querySelector(".wikipedia-reading"));
   }
 }

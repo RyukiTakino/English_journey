@@ -17,6 +17,8 @@ import { icon } from "../components/icons.js";
 import { hydratePhotos } from "../assets.js";
 import { stampsById } from "../../domain/progress.js";
 import { STAMP_RULE_TEXT } from "../../domain/constants.js";
+import { applyTranslations } from "../../application/i18n.js";
+import { getLanguage, t } from "../../application/i18n.js";
 
 export class CountryScene extends BaseScene {
   /**
@@ -190,12 +192,38 @@ export class CountryScene extends BaseScene {
   /** 条件の変更時には記事を隠し、表示ボタンを押したときだけ一覧を描画する。 */
   #refreshArticleSelector(root) {
     root.innerHTML = this.render();
+    applyTranslations(root);
     hydratePhotos(root, this.ctx);
     root.querySelector("[data-selection-title]")?.focus();
     window.scrollTo(0, 0);
   }
 
   #selectionScreen(country) {
+    const cityOptions = country.regions?.length
+      ? country.regions
+      : [...new Set((country.trips ?? []).map((trip) => trip.city).filter(Boolean))].map((name) => ({ name, nameEn: name }));
+    const categoryOptions = this.#categories;
+    const selectedCategory = categoryOptions.find((category) => category.nameEn === this.#selectedCategory);
+    const title = !this.#selectedCity ? t("chooseCity") : !this.#selectedCategory ? t("chooseCategory") : t("showArticles");
+    const instruction = { ja: "ボタンを押すと、選択した条件に合うWikipediaの記事を検索します。", zh: "点击按钮，搜索符合所选条件的 Wikipedia 文章。", en: "Press the button to search Wikipedia for articles matching your selection.", la: "Preme bullam ut articulos Vicipaediae secundum selectionem quaeras." }[getLanguage()];
+    return `
+      ${!this.#selectedCity ? `<a class="back-link" href="#/">${icon("back", 16)} ${t("backHome")}</a>` : `<button type="button" class="back-link" data-selection-back="${this.#selectedCategory ? "category" : "city"}">${icon("back", 16)} ${this.#selectedCategory ? t("chooseCategory") : t("chooseCity")}</button>`}
+      <section class="country-section country-selector card" aria-labelledby="selection-title">
+        <p class="muted">${esc(country.name)}${this.#selectedCity ? ` → ${esc(this.#selectedCity)}` : ""}${selectedCategory ? ` → ${esc(selectedCategory.name)}` : ""}</p>
+        <p class="country-selector__step">${!this.#selectedCity ? "1 / 3" : !this.#selectedCategory ? "2 / 3" : "3 / 3"}</p>
+        <h1 id="selection-title" class="world-heading" data-selection-title tabindex="-1">${esc(title)}</h1>
+        ${!this.#selectedCity ? `
+          <div class="map-filter country-selector__options" role="group" aria-label="${t("chooseCity")}">
+            ${cityOptions.map((city) => `<button type="button" class="map-chip" data-city="${esc(city.name)}">${esc(city.name)} ${icon("next", 16)}</button>`).join("")}
+          </div>
+          ${!cityOptions.length ? `<p class="muted">No cities are available for this country.</p>` : ""}` : !this.#selectedCategory ? `
+          <div class="map-filter country-selector__options" role="group" aria-label="${t("chooseCategory")}">
+            ${categoryOptions.map((category) => `<button type="button" class="map-chip" data-category="${esc(category.nameEn)}">${esc(category.name)} ${icon("next", 16)}</button>`).join("")}
+          </div>` : `
+          <p>${instruction}</p>
+          <button type="button" class="btn btn--teal" data-show-articles>${t("showArticles")} ${icon("next", 16)}</button>`}
+      </section>`;
+
     const trips = country.trips ?? [];
 
     const cities = (country.regions ?? []).map(
@@ -203,7 +231,7 @@ export class CountryScene extends BaseScene {
     );
     const categories = this.#categories;
     const categoryLabel = this.#categories.find((c) => c.nameEn === this.#selectedCategory)?.name ?? this.#selectedCategory;
-    const title = !this.#selectedCity ? "都市を選んでください" : !this.#selectedCategory ? "カテゴリを選んでください" : "選択した内容で記事を表示";
+    const legacyTitle = !this.#selectedCity ? "都市を選んでください" : !this.#selectedCategory ? "カテゴリを選んでください" : "選択した内容で記事を表示";
     return `
       ${!this.#selectedCity ? `<a class="back-link" href="#/">${icon("back", 16)} 国の選択に戻る</a>` : `<button type="button" class="back-link" data-selection-back="${this.#selectedCategory ? "category" : "city"}">${icon("back", 16)} ${this.#selectedCategory ? "カテゴリ" : "都市"}の選択に戻る</button>`}
       <section class="country-section country-selector card" aria-labelledby="selection-title">
@@ -234,8 +262,17 @@ export class CountryScene extends BaseScene {
   }
 
   #articleSelector(country, me) {
-    const selectedCategory = this.#categories.find((c) => c.nameEn === this.#selectedCategory);
-    const categoryLabel = selectedCategory?.name ?? this.#selectedCategory;
+    const selectedCategory = this.#categories.find((category) => category.nameEn === this.#selectedCategory);
+    const heading = `${this.#selectedCity} · ${selectedCategory?.name ?? this.#selectedCategory}`;
+    return `
+      <section class="country-section country-selector card" aria-labelledby="country-trips-title">
+        <h2 id="country-trips-title" class="world-heading">${esc(heading)}${this.#articleLoading ? " · Searching" : ` · ${this.#articles.length} articles`}</h2>
+        ${this.#articleError ? `<p class="muted" role="alert">${esc(this.#articleError)}</p>` : ""}
+        ${this.#articleLoading ? `<p class="muted">${t("searchArticles")}</p>` : this.#articles.length ? `<ul class="country-trips">${this.#articles.map((article, index) => wikipediaArticleCard(article, index)).join("")}</ul>` : !this.#articleError ? `<p class="muted">${t("noArticles")}</p>` : ""}
+      </section>`;
+
+    const legacyCategory = this.#categories.find((c) => c.nameEn === this.#selectedCategory);
+    const categoryLabel = legacyCategory?.name ?? this.#selectedCategory;
     return `
       <section class="country-section country-selector card" aria-labelledby="country-trips-title">
         <h2 id="country-trips-title" class="world-heading">${esc(this.#selectedCity)} · ${esc(categoryLabel)}の記事${this.#articleLoading ? "（検索中）" : `（${this.#articles.length}件）`}</h2>
