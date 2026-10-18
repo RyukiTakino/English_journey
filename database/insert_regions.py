@@ -49,7 +49,13 @@ regions_by_country ={
         ("オークランド", "Auckland"),
         ("ウェリントン", "Wellington"),
         ("クライストチャーチ", "Christchurch")
-    ]
+    ],
+
+    "Philippines": [
+    ("マニラ", "Manila"),
+    ("セブ", "Cebu"),
+    ("ダバオ", "Davao")
+    ],
 }
 
 for country_name, regions in regions_by_country.items():

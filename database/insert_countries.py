@@ -22,6 +22,7 @@ countries = [
     ("アメリカ", "United States"),
     ("シンガポール", "Singapore"),
     ("ニュージーランド", "New Zealand"),
+    ("フィリピン", "Philippines"),
 ]
 
 
