@@ -14,6 +14,7 @@
  */
 import { esc } from "./components/html.js";
 import { EVENTS } from "../application/events.js";
+import { applyTranslations } from "../application/i18n.js";
 
 export class Router {
   /** 画面切り替えの通し番号。読み込み中に別の画面へ移ったかを判定するのに使う */
@@ -37,6 +38,7 @@ export class Router {
   /** 起動する。以後 URL（#以降）が変わるたびに画面を切り替える */
   start() {
     window.addEventListener("hashchange", () => this.go());
+    window.addEventListener("languagechange", () => this.go());
     return this.go();
   }
 
@@ -76,6 +78,7 @@ export class Router {
     if (token !== this.#token) return; // 同上
 
     this.appEl.innerHTML = scene.render();
+    applyTranslations(this.appEl);
     this.#current = scene;
     scene.mount(this.appEl);
     window.scrollTo(0, 0);

@@ -352,6 +352,22 @@ a.route__link:hover .route__node { transform: translateY(-3px); }
 .country-article h3 { margin: 0 0 4px; color: var(--navy); }
 .country-article p { margin: 0; }
 @media (max-width: 600px) { .country-article { align-items: flex-start; flex-direction: column; } }
+
+@media (max-width: 760px) {
+  .country-hero { padding: var(--space-3); border-radius: var(--radius); }
+  .country-hero__desc { max-width: 100%; }
+  .country-facts { grid-template-columns: 1fr; }
+  .country-fact { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+  .country-fact dd { text-align: right; }
+  .country-phrase { padding: var(--space-3); }
+  .country-selector { padding: var(--space-3); }
+  .country-selector .map-filter { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .country-selector .map-chip { min-width: 0; padding-inline: var(--space-2); }
+  .country-trips { grid-template-columns: 1fr; }
+  .map-list { grid-template-columns: 1fr; }
+  .tour-head { grid-template-columns: 1fr; }
+  .tour-head__cover { max-width: 180px; margin: 0 auto; }
+}
 .country-trip { position: relative; display: flex; }
 .country-trip__card { display: flex; width: 100%; }
 .country-trip__card > .trip-card { width: 100%; }

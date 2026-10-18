@@ -13,14 +13,15 @@ import { EVENTS } from "../../application/events.js";
 import { img } from "../assets.js";
 import { esc } from "./html.js";
 import { icon } from "./icons.js";
+import { getLanguage, languageLabel, nextLanguage, setLanguage, t } from "../../application/i18n.js";
 
 /** ナビの項目。key は、画面の種類（ROUTES の name）から対応づける */
 const NAV = [
-  { key: "home", href: "#/", label: "ホーム", icon: "icons/icon-home.png" },
-  { key: "map", href: "#/map", label: "地図", icon: "icons/icon-map.png" },
-  { key: "tour", href: "#/tour", label: "世界一周", icon: "icons/icon-globe.png" },
-  { key: "words", href: "#/words", label: "単語帳", icon: "icons/icon-book.png" },
-  { key: "me", href: "#/me", label: "マイページ", icon: "icons/icon-award.png" }
+  { key: "home", href: "#/", label: "home", icon: "icons/icon-home.png" },
+  { key: "map", href: "#/map", label: "map", icon: "icons/icon-map.png" },
+  { key: "tour", href: "#/tour", label: "tour", icon: "icons/icon-globe.png" },
+  { key: "words", href: "#/words", label: "words", icon: "icons/icon-book.png" },
+  { key: "me", href: "#/me", label: "me", icon: "icons/icon-award.png" }
 ];
 
 /** 画面の種類（ROUTES の name）→ ナビのどの項目を光らせるか */
@@ -51,10 +52,21 @@ export class AppShell {
     this.#renderNav("home");
     this.#renderHud();
     this.#renderSound();
+    this.#renderLanguage();
 
     events.on(EVENTS.ROUTE_CHANGED, ({ name }) => this.#renderNav(NAV_OF[name] ?? "home"));
     events.on(EVENTS.ME_CHANGED, () => this.#renderHud());
     events.on(EVENTS.COUNTRIES_LOADED, () => this.#renderHud());
+    window.addEventListener("languagechange", () => {
+      this.#renderNav("home");
+      this.#renderHud();
+      this.#renderSound();
+      this.#renderLanguage();
+    });
+
+    this.#ctx.languageToggle?.addEventListener("click", () => {
+      setLanguage(nextLanguage());
+    });
 
     // 音のボタン（押したらオン・オフを入れ替えて、見た目を描き直す）
     this.#soundEl.addEventListener("click", (e) => {
@@ -74,7 +86,7 @@ export class AppShell {
   #renderNav(activeKey) {
     const link = (n, large) => `
       <a href="${n.href}" class="${n.key === activeKey ? "is-on" : ""}" ${n.key === activeKey ? 'aria-current="page"' : ""}>
-        ${img(n.icon, { cls: "nav-icon", width: large ? 30 : 36 })}<span>${esc(n.label)}</span>
+        ${img(n.icon, { cls: "nav-icon", width: large ? 30 : 36 })}<span>${esc(t(n.label))}</span>
       </a>`;
     this.#navEl.innerHTML = NAV.map((n) => link(n, true)).join("");
     this.#tabbarEl.innerHTML = NAV.map((n) => link(n, false)).join("");
@@ -101,5 +113,13 @@ export class AppShell {
         ${icon(kind === "se" ? (on ? "volume" : "mute") : "music", 20)}${on ? "" : '<span class="icon-btn__slash"></span>'}
       </button>`;
     this.#soundEl.innerHTML = btn("se", sound.seEnabled, "効果音") + btn("bgm", sound.bgmEnabled, "BGM");
+  }
+
+  #renderLanguage() {
+    const button = this.#ctx.languageToggle;
+    if (!button) return;
+    button.textContent = languageLabel();
+    button.title = t("switchTo");
+    button.setAttribute("aria-label", t("switchTo"));
   }
 }

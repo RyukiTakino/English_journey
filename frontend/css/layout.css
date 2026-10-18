@@ -99,6 +99,20 @@
   border-radius: 2px;
 }
 .sound-toggles { display: flex; gap: var(--space-1); }
+.language-toggle {
+  min-width: 42px;
+  min-height: 36px;
+  padding: 0 9px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+  font: inherit;
+  font-size: .76rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.language-toggle:hover { background: rgba(255, 255, 255, .2); }
 
 /* ----- 画面の中身 ----- */
 .app-main {
@@ -123,6 +137,9 @@
   .app-header__inner { gap: var(--space-2); min-height: 52px; }
   .logo { font-size: 1.25rem; }
   .hud__item span { display: none; }
+  .app-header__right { min-width: 0; }
+  .hud { min-width: 0; }
+  .language-toggle { min-width: 40px; min-height: 34px; }
   .app-main { padding: var(--space-3) var(--space-3) calc(var(--tabbar-h) + var(--space-5)); }
   h1 { font-size: 1.5rem; }
 
@@ -160,6 +177,7 @@
   .sound-toggles { display: none; }
   .app-header__inner { gap: var(--space-2); padding: 0 var(--space-2); }
   .app-header__right { gap: var(--space-1); }
+  .language-toggle { min-width: 38px; padding: 0 7px; }
   .hud { gap: 4px; }
   .hud__item { padding: 3px 8px; font-size: .85rem; }
 }

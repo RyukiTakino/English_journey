@@ -92,7 +92,7 @@ const toast = new Toast(document.getElementById("toast"));
 const modal = new Modal();
 
 // 画面に渡す道具一式。api は渡さない（画面は actions 経由で通信する）
-const ctx = { store, events, actions, settings, sound, guide, toast, modal };
+const ctx = { store, events, actions, settings, sound, guide, toast, modal, languageToggle: document.getElementById("language-toggle") };
 
 // ----- URL と画面の対応表。画面を増やすときは、ここに1行足す -----
 // pattern は URL の # 以降に対する正規表現。() で囲んだ部分が、画面の params として渡される
