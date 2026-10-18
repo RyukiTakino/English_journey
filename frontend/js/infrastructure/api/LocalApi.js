@@ -203,6 +203,7 @@ function keywordGrade(text, summary) {
 
 // ---------- Wikipedia（ブラウザから直接取得） ----------
 const wikiCache = new Map();
+const wikiSearchCache = new Map();
 function wikiSummary(lang, title) {
   const key = `${lang}:${title}`;
   if (!wikiCache.has(key)) {
@@ -214,6 +215,35 @@ function wikiSummary(lang, title) {
     );
   }
   return wikiCache.get(key);
+}
+
+function wikiSearch(country, keyword = "") {
+  const query = [country, keyword].filter(Boolean).join(" ").trim();
+  const key = query.toLowerCase();
+  if (!wikiSearchCache.has(key)) {
+    const params = new URLSearchParams({ action: "query", list: "search", srsearch: query, srlimit: "10", format: "json", origin: "*" });
+    wikiSearchCache.set(key, fetch(`https://en.wikipedia.org/w/api.php?${params}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => (data?.query?.search ?? []).map((item) => ({
+        title: item.title,
+        description: (item.snippet || "").replace(/<[^>]*>/g, ""),
+        url: `https://en.wikipedia.org/wiki/${encodeURIComponent(item.title.replaceAll(" ", "_"))}`
+      })))
+      .catch(() => []));
+  }
+  return wikiSearchCache.get(key);
+}
+
+function wikiArticle(title) {
+  const params = new URLSearchParams({ action: "query", prop: "extracts|info", explaintext: "1", inprop: "url", redirects: "1", titles: title, format: "json", origin: "*" });
+  return fetch(`https://en.wikipedia.org/w/api.php?${params}`)
+    .then((r) => (r.ok ? r.json() : null))
+    .then((data) => {
+      const page = Object.values(data?.query?.pages ?? {})[0];
+      if (!page || page.missing) return null;
+      return { title: page.title, content: page.extract || "", url: page.fullurl || `https://en.wikipedia.org/wiki/${encodeURIComponent(page.title.replaceAll(" ", "_"))}` };
+    })
+    .catch(() => null);
 }
 
 // ---------- 本体 ----------
@@ -363,6 +393,21 @@ export class LocalApi {
         { id: 2, name: "建築", nameEn: "Architecture" },
         { id: 3, name: "文化", nameEn: "Culture" }
       ];
+    }
+
+    // Wikipediaの記事一覧・本文（ローカルモードでも学習フローを使えるようにする）
+    if (p === "/api/articles" && method === "GET") {
+      const country = url.searchParams.get("country")?.trim();
+      const keyword = url.searchParams.get("keyword")?.trim() || "";
+      if (!country) fail(400, "INVALID_COUNTRY", "国名が必要です。");
+      return wikiSearch(country, keyword);
+    }
+    if (p === "/api/article" && method === "GET") {
+      const title = url.searchParams.get("title")?.trim();
+      if (!title) fail(400, "INVALID_TITLE", "記事タイトルが必要です。");
+      const article = await wikiArticle(title);
+      if (!article) fail(404, "NOT_FOUND", "記事が見つかりません。");
+      return article;
     }
 
     // --- 行きたいリスト ---
