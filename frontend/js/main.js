@@ -55,7 +55,7 @@ const apiMode = params.get("api") ?? "hybrid";
 // ?mark=1 … 確認モード：モック由来の文章を "Test" にする（どこが本物のサーバーから取れているかを見分けるため。今は既定でオン）
 //   ?mark=0 で、ふだんの表示（モックの文章）に戻る。
 // TODO(フロント): バックエンドが出来上がったら、既定をオフにする。
-const mark = params.get("mark") !== "0" && apiMode === "hybrid";
+const mark = params.get("mark") === "1" && apiMode === "hybrid";
 const transport = { local: () => new LocalApi(), http: () => new HttpApi(""), hybrid: () => new HybridApi("", { mark }) }[apiMode]?.() ?? new HybridApi("", { mark });
 const api = new ApiClient(transport);
 

@@ -411,7 +411,7 @@ export class LocalApi {
     }
 
     // --- 行きたいリスト ---
-    if ((m = p.match(/^\/api\/wants\/(\w+)$/))) {
+    if ((m = p.match(/^\/api\/wants\/([^/]+)$/))) {
       if (!seed.trips[m[1]]) fail(404, "NOT_FOUND", "記事が見つかりません。");
       prog.wants = prog.wants.filter((x) => x !== m[1]);
       if (method === "PUT") prog.wants.unshift(m[1]);
@@ -419,7 +419,7 @@ export class LocalApi {
     }
 
     // --- リーディング ---
-    if ((m = p.match(/^\/api\/trips\/(\w+)\/lesson$/))) {
+    if ((m = p.match(/^\/api\/trips\/([^/]+)\/lesson$/))) {
       const L = seed.lessons[m[1]] || fail(404, "NOT_FOUND", "記事が見つかりません。");
       return {
         id: m[1],
@@ -433,7 +433,7 @@ export class LocalApi {
         canRegenerate: false
       };
     }
-    if ((m = p.match(/^\/api\/lessons\/(\w+)\/grade$/)) && method === "POST") {
+    if ((m = p.match(/^\/api\/lessons\/([^/]+)\/grade$/)) && method === "POST") {
       const L = seed.lessons[m[1]] || fail(404, "NOT_FOUND", "記事が見つかりません。");
       const trip = seed.trips[m[1]];
       const { correct, results } = checkAnswers(L.questions, body.answers);
