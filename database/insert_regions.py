@@ -31,9 +31,25 @@ regions_by_country ={
         ("ロンドン","London"),
         ("エディンバラ","Edinburgh"),
         ("マンチェスター","Manchester")
+    ],
+
+        "United States": [
+        ("ニューヨーク", "New York"),
+        ("ロサンゼルス", "Los Angeles"),
+        ("サンフランシスコ", "San Francisco")
+    ],
+
+    "Singapore": [
+        ("シンガポール中心部", "Downtown Core"),
+        ("セントーサ", "Sentosa"),
+        ("ジュロン", "Jurong")
+    ],
+
+    "New Zealand": [
+        ("オークランド", "Auckland"),
+        ("ウェリントン", "Wellington"),
+        ("クライストチャーチ", "Christchurch")
     ]
-
-
 }
 
 for country_name, regions in regions_by_country.items():

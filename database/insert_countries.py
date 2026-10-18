@@ -18,7 +18,10 @@ countries = [
     ("オーストラリア", "Australia"),
     ("カナダ", "Canada"),
     ("フランス", "France"),
-    ("イギリス", "United Kingdom")
+    ("イギリス", "United Kingdom"),
+    ("アメリカ", "United States"),
+    ("シンガポール", "Singapore"),
+    ("ニュージーランド", "New Zealand"),
 ]
 
 
