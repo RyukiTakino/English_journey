@@ -80,6 +80,10 @@ export class HybridApi {
       "/api/youtube/summary/grade",
     ];
 
+    if (method === "GET" && pathname === "/api/youtube/news") {
+      return this.#http.request(method, path, body);
+    }
+
     if (method === "POST" && youtubeRoutes.includes(pathname)) {
       return this.#http.request(method, path, body);
     }

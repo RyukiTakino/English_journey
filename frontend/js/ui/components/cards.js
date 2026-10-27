@@ -76,10 +76,12 @@ export function tripCard(trip, country, me) {
  * @param {import("../../domain/models.js").Country} country
  * @param {import("../../domain/models.js").Me|null} me
  */
-export function newsCard(country, me) {
+export function newsCard(country, me, city = "") {
   const done = isDone(me, "listen", country.id);
+  const cityLabel = city || country.capital;
+  const cityPath = city ? `/${encodeURIComponent(city)}` : "";
   return `
-    <a class="trip-card trip-card--news" href="#/listen/${esc(country.id)}">
+    <a class="trip-card trip-card--news" href="#/listen/${esc(country.id)}${cityPath}">
       <div class="trip-card__thumb" data-photo="${esc(country.trips[0]?.imageKey ?? "")}" style="--c:${esc(country.color)}">
         <span class="trip-card__play">${icon("play", 24)}</span>
         <span class="trip-card__tag">NEWS</span>
@@ -87,8 +89,8 @@ export function newsCard(country, me) {
       </div>
       <div class="trip-card__body">
         <div class="meta-row"><span class="chip chip--news">ニュース</span></div>
-        <h3>${esc(country.name)}のニュースを聴く</h3>
-        <p class="muted small">ニュースを聴いて、内容の問題に答えます。</p>
+        <h3>${esc(cityLabel)}の最近のニュースを聴く</h3>
+        <p class="muted small">YouTubeの新着ニュースを選んで、要約と問題に挑戦します。</p>
       </div>
     </a>`;
 }

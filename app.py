@@ -1,5 +1,6 @@
 import requests
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
+import os
 from services.openai_services import generate_quiz, grade_summary
 from database.queries import (
     get_categories,
@@ -8,15 +9,27 @@ from database.queries import (
 )
 from services.youtube_services import (
     analyze_youtube_video,
+    grade_youtube_summary as grade_youtube_summary_from_audio,
+    generate_youtube_quiz,
     get_cached_video,
+    search_youtube_news,
 )
 from services.wikipedia_service import (
     search_wikipedia,
     get_wikipedia_article,
 )
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
+app = Flask(
+    __name__,
+    static_folder=FRONTEND_DIR,
+    static_url_path=""
+)
+@app.route("/")
+def index():
+    return send_from_directory(FRONTEND_DIR, "index.html")
 
 # 国一覧を取得するAPI
 @app.route("/api/countries", methods=["GET"])
@@ -194,8 +207,44 @@ def analyze_youtube():
         return jsonify({
             "error": (
                 "動画の分析に失敗しました。"
-                "公開動画のURLやGemini APIの利用状況を確認してください。"
+                "公開動画のURL、音声取得環境、OpenAI APIの利用状況を確認してください。"
             )
+        }), 502
+
+@app.route("/api/youtube/news", methods=["GET"])
+def youtube_news():
+    country = request.args.get("country", "").strip()
+    city = request.args.get("city", "").strip()
+    if not country or not city:
+        return jsonify({"error": "国と都市を指定してください。"}), 400
+    try:
+        return jsonify(search_youtube_news(country, city))
+    except RuntimeError as e:
+        return jsonify({"error": str(e)}), 503
+    except requests.RequestException:
+        app.logger.exception("YouTube Data API request failed")
+        return jsonify({"error": "YouTubeのニュース検索に失敗しました。時間をおいて再度お試しください。"}), 502
+
+@app.route("/api/youtube/quiz", methods=["POST"])
+def create_youtube_quiz():
+    data = request.get_json(silent=True) or {}
+    video_id = data.get("video_id", "").strip()
+
+    if not video_id:
+        return jsonify({
+            "error": "分析済みのYouTube動画を指定してください。"
+        }), 400
+
+    try:
+        return jsonify(generate_youtube_quiz(video_id))
+
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 404
+
+    except Exception:
+        app.logger.exception("YouTube quiz generation failed")
+        return jsonify({
+            "error": "動画の音声から問題を作成できませんでした。"
         }), 502
 
 @app.route("/api/youtube/summary/grade", methods=["POST"])
@@ -222,18 +271,8 @@ def grade_youtube_summary():
             "error": "動画の分析結果がありません。先に動画を分析してください。"
         }), 404
 
-    reference_content = (
-        video["summary"]
-        + "\n\n重要なポイント:\n"
-        + "\n".join(video["key_points"])
-    )
-
     try:
-        result = grade_summary(
-            video["title"],
-            reference_content,
-            summary
-        )
+        result = grade_youtube_summary_from_audio(video_id, summary)
 
         return jsonify(result)
 

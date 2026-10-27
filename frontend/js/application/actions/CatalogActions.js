@@ -93,41 +93,26 @@ export class CatalogActions {
 
     // ---------- YouTube学習 ----------
 
-  /** YouTube動画を分析する */
-  analyzeYoutubeVideo(url, title = "YouTube Video") {
-    return this.#api.analyzeYoutubeVideo(url, title);
+  /** 選択都市の最近のYouTubeニュースを検索する */
+  searchYoutubeNews(country, city) {
+    return this.#api.searchYoutubeNews(country, city);
   }
 
-  /** 動画からクイズを生成する */
-  generateYoutubeQuiz(videoId) {
-    return this.#api.generateYoutubeQuiz(videoId);
-  }
-
-  /** 動画の要約を採点する */
-  gradeYoutubeSummary(videoId, summary) {
-    return this.#api.gradeYoutubeSummary(videoId, summary);
-  }
-
-    /**
-   * YouTube動画をGeminiで分析する
+  /**
+   * YouTube動画の音声をOpenAIで分析する
    * @param {string} url YouTube動画のURL
    * @param {string} title 動画タイトル
    */
-  async analyzeYoutubeVideo(url, title = "YouTube Video") {
-    return await this.#api.post("/api/youtube/analyze", {
-      url,
-      title,
-    });
+  analyzeYoutubeVideo(url, title = "YouTube Video") {
+    return this.#api.analyzeYoutubeVideo(url, title);
   }
 
   /**
    * 動画の分析結果からクイズを生成する
    * @param {string} videoId YouTube動画ID
    */
-  async generateYoutubeQuiz(videoId) {
-    return await this.#api.post("/api/youtube/quiz", {
-      video_id: videoId,
-    });
+  generateYoutubeQuiz(videoId) {
+    return this.#api.generateYoutubeQuiz(videoId);
   }
 
   /**
@@ -135,10 +120,7 @@ export class CatalogActions {
    * @param {string} videoId YouTube動画ID
    * @param {string} summary ユーザーが書いた英語の要約
    */
-  async gradeYoutubeSummary(videoId, summary) {
-    return await this.#api.post("/api/youtube/summary/grade", {
-      video_id: videoId,
-      summary,
-    });
+  gradeYoutubeSummary(videoId, summary) {
+    return this.#api.gradeYoutubeSummary(videoId, summary);
   }
 }

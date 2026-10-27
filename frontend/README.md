@@ -25,10 +25,12 @@ ES Modules は `file://` では動かないので、次のどちらかで、サ�
 ### バックエンドもいっしょに動かす（本物のデータを見るとき）
 
 ```
-pip install flask requests
+pip install flask requests openai python-dotenv yt-dlp imageio-ffmpeg
 python app.py                      # もう 1 つのターミナルで、リポジトリの直下から。http://127.0.0.1:5000
 python frontend/serve.py           # フロント（frontend/ の中なら python serve.py）。/api/ は、上の Flask に中継される
 ```
+
+YouTube Data APIで都市の直近30日以内のニュース動画を検索するには、Google CloudでYouTube Data API v3を有効にしてAPIキーを発行し、リポジトリ直下の`.env`に`YOUTUBE_API_KEY=...`を設定してください。APIキーが無い場合はニュース検索画面に設定案内を表示します。都市検索結果は10分キャッシュし、YouTube Data APIの割当量を抑えます。
 
 画面の左下に赤い帯「API確認モード」が出て、**「Test」と表示される所がモック、それ以外の文章がサーバー（DB・Wikipedia）から取れた内容**です（`?mark=0` で消せます）。
 

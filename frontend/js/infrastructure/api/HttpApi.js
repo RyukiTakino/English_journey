@@ -55,9 +55,10 @@ export class HttpApi {
     // 200 番台以外はエラー。サーバーが返したエラー内容を ApiError にして投げる
     if (!res.ok) {
       const err = data.error || {};
+      const message = typeof err === "string" ? err : err.message;
       throw new ApiError(
-        err.code || `HTTP_${res.status}`,
-        err.message || `エラーが発生しました（${res.status}）`,
+        typeof err === "string" ? `HTTP_${res.status}` : err.code || `HTTP_${res.status}`,
+        message || `エラーが発生しました（${res.status}）`,
         res.status
       );
     }

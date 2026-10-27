@@ -113,6 +113,54 @@
 .np__script[hidden] { display: none; }
 .np__script-tip { margin-top: var(--space-2); font-family: var(--font); }
 
+.youtube-study { display: grid; gap: var(--space-3); padding: var(--space-3); }
+.youtube-study__head h2 { margin: var(--space-1) 0 0; color: var(--navy); font-size: 1.25rem; }
+.youtube-study > p { margin: 0; }
+.youtube-study__form, .youtube-study__summary-form { display: grid; gap: var(--space-2); }
+.youtube-study__form label, .youtube-study__summary-form label { font-weight: 800; color: var(--navy); }
+.youtube-study__url-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2); }
+.youtube-study__url-row input, .youtube-study__summary-form textarea {
+  box-sizing: border-box; width: 100%; min-width: 0; min-height: 48px; padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--line); border-radius: var(--radius-sm); background: var(--bg); color: var(--ink); font: inherit;
+}
+.youtube-study__summary-form textarea { resize: vertical; line-height: 1.6; }
+.youtube-study__url-row input:focus-visible, .youtube-study__summary-form textarea:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+.youtube-study__video { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius-sm); background: #000; }
+.youtube-study__video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.youtube-study__analysis, .youtube-study__grade { padding-top: var(--space-3); border-top: 1px solid var(--line); }
+.youtube-study__analysis h3, .youtube-study__quiz h3, .youtube-study__grade h3 { margin: 0 0 var(--space-2); color: var(--navy); }
+.youtube-study__analysis h4, .youtube-study__grade h4 { margin: var(--space-3) 0 var(--space-1); color: var(--ink-2); font-size: .95rem; }
+.youtube-study__analysis p, .youtube-study__grade p { margin: 0 0 var(--space-2); line-height: 1.7; }
+.youtube-study__english { font-family: var(--serif); font-size: 1.05rem; }
+.youtube-study__analysis ul, .youtube-study__grade ul { display: grid; gap: var(--space-1); margin: 0; padding-left: 1.25rem; line-height: 1.6; }
+.youtube-study__quiz { display: grid; gap: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--line); }
+.youtube-study__question { min-width: 0; margin: 0; padding: var(--space-3); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.youtube-study__question legend { max-width: 100%; padding: 0 var(--space-1); font-weight: 800; line-height: 1.5; }
+.youtube-study__choices { display: grid; gap: var(--space-2); }
+.youtube-study__choice { display: flex; align-items: flex-start; gap: var(--space-2); padding: var(--space-2); border-radius: var(--radius-sm); background: var(--bg); line-height: 1.5; overflow-wrap: anywhere; }
+.youtube-study__choice input { flex: none; margin-top: .25em; accent-color: var(--primary); }
+.youtube-study__choice.is-correct { background: var(--ok-soft); }
+.youtube-study__choice.is-incorrect { background: var(--accent-soft); }
+.youtube-study__explanation { margin: var(--space-2) 0 0; padding: var(--space-2); background: var(--surface-2); border-radius: var(--radius-sm); line-height: 1.6; }
+.youtube-study__score { margin: 0; font-weight: 800; color: var(--primary-dark); }
+.youtube-study__summary-form { padding-top: var(--space-3); border-top: 1px solid var(--line); }
+.youtube-study__summary-form .btn { justify-self: start; min-height: 44px; }
+.youtube-study__error { margin: 0; color: var(--accent-dark); font-weight: 700; }
+.youtube-news-list { display: grid; gap: var(--space-3); }
+.youtube-news-item { display: grid; grid-template-columns: minmax(120px, 190px) minmax(0, 1fr); gap: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--line); }
+.youtube-news-item__image { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-sm); background: var(--surface-2); }
+.youtube-news-item__body { min-width: 0; }
+.youtube-news-item__body h3 { margin: 0 0 var(--space-1); color: var(--navy); font-size: 1.05rem; line-height: 1.45; overflow-wrap: anywhere; }
+.youtube-news-item__body p { margin: 0 0 var(--space-2); line-height: 1.55; overflow-wrap: anywhere; }
+.youtube-news-item__body .btn { min-height: 44px; }
+
+@media (max-width: 520px) {
+  .youtube-study__url-row { grid-template-columns: 1fr; }
+  .youtube-study__url-row .btn { min-height: 48px; }
+  .youtube-news-item { grid-template-columns: 1fr; }
+  .youtube-news-item__image { max-width: 100%; }
+}
+
 .news-summary h3 { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-2); font-size: 1.05rem; color: var(--navy); }
 .news-summary p { margin: 0 0 var(--space-2); }
 .news-summary__en { font-family: var(--serif); font-size: 1.05rem; color: var(--ink-2); }

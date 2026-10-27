@@ -128,7 +128,7 @@
 DB に無い項目（`code`・`region`・`lat`・`lng`・`color`・`tourOrder`・`capital` など、`Trip` の `city`・`tip`・`level`・`minutes`）は、
 今は `frontend/data/seed.json` の手書きの値です（`tools/data/make_seed.py` で作っています）。
 **TODO(Backend)**: これらの列を DB に足すか、別の取得元（Wikipedia など）を決める。
-**TODO(API)**: 記事・問題・ニュースを、Wikipedia と Gemini から作る（作れないときは seed の手書き教材）。
+**TODO(API)**: 記事・問題・ニュースを、Wikipedia と OpenAI から作る（作れないときは seed の手書き教材）。
 
 
 ## 結合の状況（2026-10-17 更新）
@@ -144,6 +144,7 @@ DB に無い項目（`code`・`region`・`lat`・`lng`・`color`・`tourOrder`�
 | 国の **地域（都市）** | `GET /api/regions?country=`（DB の `regions`） | **結合済み**（国の詳細の「主な地域」） |
 | **カテゴリ**（食事・建築・文化） | `GET /api/categories`（DB の `categories`） | **結合済み**（国の詳細の「記事のカテゴリ」） |
 | `GET /api/articles`（Wikipedia の記事検索） | `app.py` | まだ使っていない |
+| 都市の最近のYouTubeニュース・動画学習 | `/api/youtube/news`、`/api/youtube/analyze`、`/api/youtube/quiz`、`/api/youtube/summary/grade` | **結合済み**。YouTube Data APIで直近30日以内の動画を検索し、選んだ動画の音声をOpenAI音声モデルへ直接送る。字幕・文字起こしは使わない |
 | 国ごとの記事の一覧 | DB の `trips` は**廃止**された（地域×カテゴリに変更） | **未結合**。今の記事一覧は、モックの観光地 |
 | 記事の本文・問題・採点、ニュース、単語、行きたい、学習記録、スタンプ・バッジ | まだ無い | **未結合**（モックが代わりに動作） |
 
@@ -169,5 +170,6 @@ DB に無い項目（`code`・`region`・`lat`・`lng`・`color`・`tourOrder`�
 ### 開発のやり方
 
 - 開発サーバー（`frontend/serve.py`）が、`/api/` をバックエンド（既定は `http://127.0.0.1:5000`）へ中継します。CORS の設定は要りません。
-- 初回セットアップ: `py -m venv .venv` のあと、`.venv\Scripts\python -m pip install flask requests openai python-dotenv google-genai`。
+- 初回セットアップ: `py -m venv .venv` のあと、`.venv\Scripts\python -m pip install flask requests openai python-dotenv yt-dlp imageio-ffmpeg`。
 - バックエンドの起動: リポジトリの直下で `.venv\Scripts\python app.py`。
+- YouTube都市ニュース検索: Google CloudでYouTube Data API v3を有効化し、`.env`に`YOUTUBE_API_KEY`を設定する。`GET /api/youtube/news?country=Australia&city=Sydney`は直近30日以内・新着順で検索し、結果を10分キャッシュする。

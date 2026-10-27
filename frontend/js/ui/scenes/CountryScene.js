@@ -96,7 +96,7 @@ export class CountryScene extends BaseScene {
 
       <section class="country-section" aria-labelledby="country-news-title">
         <h2 id="country-news-title" class="world-heading">${icon("volume", 22)} ニュースを聴く</h2>
-        <div class="country-news">${newsCard(c, me)}</div>
+        <div class="country-news">${newsCard(c, me, (c.regions ?? []).find((region) => region.name === this.#selectedCity)?.nameEn ?? this.#selectedCity)}</div>
       </section>`;
   }
 
@@ -217,6 +217,7 @@ export class CountryScene extends BaseScene {
             ${cityOptions.map((city) => `<button type="button" class="map-chip" data-city="${esc(city.name)}">${esc(city.name)} ${icon("next", 16)}</button>`).join("")}
           </div>
           ${!cityOptions.length ? `<p class="muted">No cities are available for this country.</p>` : ""}` : !this.#selectedCategory ? `
+          <a class="btn btn--teal" href="#/listen/${esc(country.id)}/${esc((country.regions ?? []).find((region) => region.name === this.#selectedCity)?.nameEn ?? this.#selectedCity)}">${esc(this.#selectedCity)}の最近のニュースを探す ${icon("next", 16)}</a>
           <div class="map-filter country-selector__options" role="group" aria-label="${t("chooseCategory")}">
             ${categoryOptions.map((category) => `<button type="button" class="map-chip" data-category="${esc(category.nameEn)}">${esc(category.name)} ${icon("next", 16)}</button>`).join("")}
           </div>` : `

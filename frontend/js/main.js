@@ -103,7 +103,7 @@ const ROUTES = [
   { name: "country", pattern: /^\/country\/([^/]+)$/, scene: CountryScene },
   { name: "wikipedia-article", pattern: /^\/article\/([^/]+)\/(.+)$/, scene: WikipediaArticleScene },
   { name: "read", pattern: /^\/read\/([^/]+)$/, scene: ReadingScene },
-  { name: "listen", pattern: /^\/listen\/([^/]+)$/, scene: ListeningScene },
+  { name: "listen", pattern: /^\/listen\/([^/]+)(?:\/([^/]+))?$/, scene: ListeningScene },
   { name: "map", pattern: /^\/map$/, scene: MapScene },
   { name: "tour", pattern: /^\/tour$/, scene: TourScene },
   { name: "words", pattern: /^\/words$/, scene: WordsScene },

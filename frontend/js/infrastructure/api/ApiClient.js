@@ -254,6 +254,12 @@ export class ApiClient {
   }
     // ---------- YouTube学習 ----------
 
+  /** GET /api/youtube/news?country=...&city=... */
+  searchYoutubeNews(country, city) {
+    const params = new URLSearchParams({ country, city });
+    return this.#get(`/api/youtube/news?${params}`);
+  }
+
   /**
    * POST /api/youtube/analyze
    * YouTube動画をGeminiで分析する
