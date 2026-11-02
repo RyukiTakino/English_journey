@@ -2,6 +2,15 @@ import requests
 
 WIKIPEDIA_API_URL = "https://en.wikipedia.org/w/api.php"
 
+# Wikipedia API用のUser-Agent
+WIKIPEDIA_HEADERS = {
+    "User-Agent": (
+        "EnglishJourney/1.0 "
+        "(https://english-journey-eg07.onrender.com/) "
+        "Python-requests"
+    )
+}
+
 
 def search_wikipedia(country_name, keyword="", limit=10):
     """
@@ -31,9 +40,7 @@ def search_wikipedia(country_name, keyword="", limit=10):
     response = requests.get(
         WIKIPEDIA_API_URL,
         params=params,
-        headers={
-            "User-Agent": "EnglishJourney/1.0 (educational project)"
-        },
+        headers=WIKIPEDIA_HEADERS,
         timeout=10,
     )
 
@@ -84,9 +91,7 @@ def get_wikipedia_article(title):
     response = requests.get(
         WIKIPEDIA_API_URL,
         params=params,
-        headers={
-            "User-Agent": "EnglishJourney/1.0 (educational project)"
-        },
+        headers=WIKIPEDIA_HEADERS,
         timeout=10,
     )
 
